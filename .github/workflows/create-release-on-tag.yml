@@ -1,0 +1,15 @@
+name: Create Release on Tags
+
+on:
+  push:
+    tags:
+      - '**'
+    branches-ignore:
+      - '**'
+
+jobs:
+  create-github-release:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Tag detected = ${{ github.ref }}"
+      - uses: actions/checkout@v3
