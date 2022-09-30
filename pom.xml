@@ -13,6 +13,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<propertiesEncoding>ISO-8859-1</propertiesEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 		<maven.compiler.release>11</maven.compiler.release>
 		<docker.image>fakesmtp</docker.image>
