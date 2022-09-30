@@ -165,6 +165,20 @@
 				</executions>
 			</plugin>
 
+			<!-- For releases -->
+			<plugin>
+				<groupId>com.amashchenko.maven.plugin</groupId>
+				<artifactId>gitflow-maven-plugin</artifactId>
+				<version>1.18.0</version>
+				<configuration>
+					<gitFlowConfig>
+						<productionBranch>master</productionBranch>
+						<developmentBranch>master</developmentBranch>
+						<versionTagPrefix>v</versionTagPrefix>
+					</gitFlowConfig>
+				</configuration>
+			</plugin>
+
 			<!-- Docker -->
 			<plugin>
 				<groupId>com.spotify</groupId>
