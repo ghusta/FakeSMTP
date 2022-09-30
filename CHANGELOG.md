@@ -1,3 +1,7 @@
+# v2.2.1
+
+- Dependencies upgrade
+
 # v2.2
 
 - Use Java 11
