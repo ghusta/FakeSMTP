@@ -1,5 +1,8 @@
 = FakeSMTP
 
+[link=https://github.com/ghusta/FakeSMTP/actions/workflows/maven.yml]
+image::https://github.com/ghusta/FakeSMTP/actions/workflows/maven.yml/badge.svg[]
+
 FakeSMTP is a Free Fake SMTP Server with GUI for testing emails in applications easily.
 It is written in Java.
 
