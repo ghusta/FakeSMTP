@@ -2,6 +2,8 @@
 
 [link=https://github.com/ghusta/FakeSMTP/actions/workflows/maven.yml]
 image::https://github.com/ghusta/FakeSMTP/actions/workflows/maven.yml/badge.svg[]
+[link=https://github.com/ghusta/FakeSMTP/releases/latest]
+image::https://img.shields.io/github/v/release/ghusta/FakeSMTP.svg?logo=github[]
 
 FakeSMTP is a Free Fake SMTP Server with GUI for testing emails in applications easily.
 It is written in Java.
