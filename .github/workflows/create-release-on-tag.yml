@@ -16,7 +16,7 @@ jobs:
       - name: Check tag name compliance with SemVer
         id: check-tag
         run: |
-          if [[ ! ${{ github.ref_name }} =~ ^(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$ ]]; then
+          if [[ ! ${{ github.ref_name }} =~ ^v(0|([1-9]\d*))\.(0|([1-9]\d*))\.(0|([1-9]\d*))$ ]]; then
             echo "Tag name doesn't comply with SemVer (basic check) -- See https://semver.org/"
             echo ::set-output name=match::false
             false
