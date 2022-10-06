@@ -1,6 +1,7 @@
 # v2.2.2
 
 - Upgrade logback to 1.4.3
+- Upgrade commons-io to 2.11.0
 
 # v2.2.1
 
