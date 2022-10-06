@@ -1,3 +1,7 @@
+# v2.2.2
+
+- Upgrade logback to 1.4.3
+
 # v2.2.1
 
 - Dependencies upgrade
