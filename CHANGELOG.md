@@ -1,3 +1,7 @@
+# v2.2.3
+
+- Refactoring: Replace old _org.subethamail:subethasmtp_ by _com.github.davidmoten:subethasmtp_ ([GitHub project](https://github.com/davidmoten/subethasmtp))
+
 # v2.2.2
 
 - Upgrade logback to 1.4.3
