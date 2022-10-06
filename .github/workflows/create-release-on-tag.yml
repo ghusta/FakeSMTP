@@ -37,6 +37,7 @@ jobs:
           project_version=$(mvn help:evaluate -q -Dexpression=project.version -DforceStdout=true)
           echo "Project version fetched = $project_version"
           echo "project_version=$project_version" >> $GITHUB_ENV
+          echo "::set-output name=project_version::${project_version}"
 
       - name: Build Maven artifact
         id: maven-build
