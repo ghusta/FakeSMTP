@@ -32,17 +32,18 @@ jobs:
           cache: 'maven'
 
       - name: Extract project version from Maven
+        id: extract-project-version
         run: |
           project_version=$(mvn help:evaluate -q -Dexpression=project.version -DforceStdout=true)
           echo "Project version fetched = $project_version"
           echo "project_version=$project_version" >> $GITHUB_ENV
 
       - name: Build Maven artifact
-        id: maven_build
+        id: maven-build
         run: mvn -ntp package -DskipTests
 
       - name: Create Release
-        id: create_release
+        id: create-release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -59,7 +60,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create-release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./target/fakeSMTP-${{ env.project_version }}.jar
           asset_name: fakeSMTP-${{ env.project_version }}.jar
           asset_content_type: application/octet-stream
