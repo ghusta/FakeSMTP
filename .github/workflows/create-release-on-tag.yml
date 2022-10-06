@@ -45,14 +45,14 @@ jobs:
         id: maven-build
         run: mvn -ntp package -DskipTests
 
-      - name: Create Release
+      - name: Create GitHub Release
         id: create-release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
 
