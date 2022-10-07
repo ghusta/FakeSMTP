@@ -35,13 +35,14 @@ public enum SMTPServerHandler {
 	 * @throws OutOfRangePortException when port is out of range.
 	 * @throws IllegalArgumentException when port is out of range.
 	 */
-	public void startServer(int port, InetAddress bindAddress) throws BindPortException, OutOfRangePortException {
+	public void startServer(int port, InetAddress bindAddress) throws BindPortException, OutOfRangePortException, UnknownHostException {
 		LOGGER.debug("Starting server on port {}", port);
 		try {
+			InetAddress anyLocalAddress = InetAddress.getByName("0.0.0.0");
 			smtpServer = new SMTPServer.Builder()
 					.simpleMessageListener(myListener)
 					.authenticationHandlerFactory(new SMTPAuthHandlerFactory())
-					.bindAddress(bindAddress == null ? InetAddress.getByName("0.0.0.0") : bindAddress)
+					.bindAddress(bindAddress == null ? anyLocalAddress : bindAddress)
 					.port(port)
 					.build();
 			smtpServer.start();
@@ -56,8 +57,6 @@ public enum SMTPServerHandler {
 				LOGGER.error("", exception);
 				throw exception;
 			}
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
 		}
 	}
 
