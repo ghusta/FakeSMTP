@@ -1,39 +1,43 @@
 package com.nilhcem.fakesmtp.core;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import java.util.Locale;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class I18nTest {
 	private static Locale defaultLocale;
 
-	@BeforeClass
+	@BeforeAll
 	public static void initLocale() {
 		defaultLocale = Locale.getDefault();
 		Locale.setDefault(Locale.TAIWAN);
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void resetLocale() {
 		Locale.setDefault(defaultLocale);
 	}
 
 	@Test
-	public void uniqueInstance() {
+	void uniqueInstance() {
 		I18n a = I18n.INSTANCE;
 		I18n b = I18n.INSTANCE;
 		assertSame(a, b);
 	}
 
 	@Test
-	public void getEmptyValueWhenKeyIsNotFound() {
+	void getEmptyValueWhenKeyIsNotFound() {
 		assertTrue(I18n.INSTANCE.get("this.key.doesnt.exist").isEmpty());
 	}
 
 	@Test
-	public void getValueWhenKeyIsFound() {
-		assertTrue(!I18n.INSTANCE.get("menubar.file").isEmpty());
+	void getValueWhenKeyIsFound() {
+		assertFalse(I18n.INSTANCE.get("menubar.file").isEmpty());
 	}
 }

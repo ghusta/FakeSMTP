@@ -1,23 +1,26 @@
 package com.nilhcem.fakesmtp.core;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ConfigurationTest {
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class ConfigurationTest {
 	@Test
-	public void uniqueInstance() {
+	void uniqueInstance() {
 		Configuration a = Configuration.INSTANCE;
 		Configuration b = Configuration.INSTANCE;
 		assertSame(a, b);
 	}
 
 	@Test
-	public void getEmptyValueWhenKeyIsNotFound() {
+	void getEmptyValueWhenKeyIsNotFound() {
 		assertTrue(Configuration.INSTANCE.get("this.key.doesnt.exist").isEmpty());
 	}
 
 	@Test
-	public void getValueWhenKeyIsFound() {
-		assertTrue(!Configuration.INSTANCE.get("application.name").isEmpty());
+	void getValueWhenKeyIsFound() {
+		assertFalse(Configuration.INSTANCE.get("application.name").isEmpty());
 	}
 }
