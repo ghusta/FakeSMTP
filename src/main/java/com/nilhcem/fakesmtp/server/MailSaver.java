@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -170,7 +171,7 @@ public final class MailSaver extends Observable {
 
 		// Copy String to file
 		try {
-			FileUtils.writeStringToFile(file, mailContent);
+			FileUtils.writeStringToFile(file, mailContent, Charset.defaultCharset());
 		} catch (IOException e) {
 			// If we can't save file, we display the error in the SMTP logs
 			Logger smtpLogger = LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class);
