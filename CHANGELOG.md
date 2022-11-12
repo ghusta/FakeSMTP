@@ -1,3 +1,7 @@
+# v2.3.0
+
+- Migration to package _jakarta.mail_ (see [Jakarta Mail](https://jakarta.ee/specifications/mail/2.0/jakarta-mail-spec-2.0.html))
+
 # v2.2.3
 
 - Refactoring: Replace old _org.subethamail:subethasmtp_ by _com.github.davidmoten:subethasmtp_ ([GitHub project](https://github.com/davidmoten/subethasmtp))
