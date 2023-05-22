@@ -1,3 +1,8 @@
+# v2.3.1
+
+- Upgrade logback to 1.4.7
+- Upgrade commons-io to 2.12.0
+
 # v2.3.0
 
 - Migration to package _jakarta.mail_ (see [Jakarta Mail](https://jakarta.ee/specifications/mail/2.0/jakarta-mail-spec-2.0.html))
