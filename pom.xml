@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>com.github.davidmoten</groupId>
 			<artifactId>subethasmtp</artifactId>
-			<version>6.0.5</version>
+			<version>6.0.6</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.sun.mail</groupId>
