@@ -1,3 +1,9 @@
+# v2.3.2
+
+- Upgrade subethasmtp to 6.0.7
+- Upgrade logback to 1.4.11
+- Upgrade commons-io to 2.14.0
+
 # v2.3.1
 
 - Upgrade logback to 1.4.7
