@@ -1,3 +1,7 @@
+# v2.3.3
+
+- Ensure compatibility with **Java 21**
+
 # v2.3.2
 
 - Upgrade subethasmtp to 6.0.7
