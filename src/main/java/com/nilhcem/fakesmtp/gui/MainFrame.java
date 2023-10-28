@@ -8,7 +8,7 @@ import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -58,7 +58,7 @@ public final class MainFrame {
 
 		MainWindowListener windowListener = new MainWindowListener(this);
 
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -76,12 +76,7 @@ public final class MainFrame {
 		mainFrame.setIconImage(iconImage);
 
 		// Add shutdown hook to stop server if enabled
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			@Override
-			public void run() {
-				SMTPServerHandler.INSTANCE.stopServer();
-			}
-		});
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> SMTPServerHandler.INSTANCE.stopServer()));
 
 		// Restore last saved smtp port (if not overridden by the user)
 		String smtpPort = ArgsHandler.INSTANCE.getPort();
