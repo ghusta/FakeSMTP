@@ -3,6 +3,7 @@
 - Refactoring : Use `org.apache.commons.cli.Option.Builder` provided with commons-cli 1.5
 - Add option "--help" to CLI
 - Upgrade commons-cli to 1.6.0
+- Upgrade commons-io to 2.15.0
 
 # v2.3.3
 
