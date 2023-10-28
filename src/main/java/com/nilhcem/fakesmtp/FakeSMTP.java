@@ -57,6 +57,11 @@ public final class FakeSMTP {
 			return;
 		}
 
+		if (ArgsHandler.INSTANCE.printHelp()) {
+			ArgsHandler.INSTANCE.displayUsage();
+			return;
+		}
+
 		if (ArgsHandler.INSTANCE.shouldStartInBackground()) {
 			try {
 				SMTPServerHandler.INSTANCE.startServer(getPort(), getBindAddress());

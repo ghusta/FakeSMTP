@@ -1,3 +1,8 @@
+# v2.3.4
+
+- Refactoring : Use `org.apache.commons.cli.Option.Builder` provided with commons-cli 1.5
+- Add option "--help" to CLI
+
 # v2.3.3
 
 - Ensure compatibility with **Java 21**
