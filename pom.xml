@@ -234,6 +234,20 @@
 				<version>3.4.1</version>
 				<executions>
 					<execution>
+						<id>enforce-java-version</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireJavaVersion>
+									<version>11</version>
+								</requireJavaVersion>
+							</rules>
+							<fail>true</fail>
+						</configuration>
+					</execution>
+					<execution>
 						<id>enforce-banned-dependencies</id>
 						<goals>
 							<goal>enforce</goal>
