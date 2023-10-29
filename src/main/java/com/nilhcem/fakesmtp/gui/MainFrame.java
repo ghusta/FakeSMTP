@@ -110,7 +110,8 @@ public final class MainFrame {
 			LOGGER.error("Could not save configuration", ex);
 		}
 		// Check for SMTP server running and stop it
-		if (SMTPServerHandler.INSTANCE.getSmtpServer().isRunning()) {
+		if (SMTPServerHandler.INSTANCE.getSmtpServer() != null
+				&& SMTPServerHandler.INSTANCE.getSmtpServer().isRunning()) {
 			SMTPServerHandler.INSTANCE.getSmtpServer().stop();
 		}
 
