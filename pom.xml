@@ -14,7 +14,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-		<maven.compiler.release>11</maven.compiler.release>
+		<java.version>11</java.version>
 		<docker.image>fakesmtp</docker.image>
 	</properties>
 
@@ -125,6 +125,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
+					<release>${java.version}</release>
 					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
@@ -241,7 +242,7 @@
 						<configuration>
 							<rules>
 								<requireJavaVersion>
-									<version>11</version>
+									<version>${java.version}</version>
 								</requireJavaVersion>
 							</rules>
 							<fail>true</fail>
