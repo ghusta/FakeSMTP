@@ -1,3 +1,8 @@
+# v2.3.5
+
+- Fix: Check is SMTPServer instance exists before closing
+- Upgrade miglayout-swing to 11.2
+
 # v2.3.4
 
 - Refactoring : Use `org.apache.commons.cli.Option.Builder` provided with commons-cli 1.5
