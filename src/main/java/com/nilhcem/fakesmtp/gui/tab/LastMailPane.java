@@ -54,7 +54,7 @@ public final class LastMailPane implements Observer {
 	public synchronized void update(Observable o, Object data) {
 		if (o instanceof MailSaver) {
 			EmailModel model = (EmailModel) data;
-			lastMailArea.setText(model.getEmailStr());
+			lastMailArea.setText(model.emailStr());
 		} else if (o instanceof ClearAllButton) {
 			lastMailArea.setText("");
 		}

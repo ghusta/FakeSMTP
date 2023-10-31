@@ -191,14 +191,14 @@ public final class MailsListPane implements Observer {
 			EmailModel email = (EmailModel) arg;
 			String subject;
 			try {
-				subject = MimeUtility.decodeText(email.getSubject());
+				subject = MimeUtility.decodeText(email.subject());
 			} catch (UnsupportedEncodingException e) {
 				LOGGER.error("", e);
-				subject = email.getSubject();
+				subject = email.subject();
 			}
 
-			model.addRow(new Object[] {dateFormat.format(email.getReceivedDate()), email.getFrom(), email.getTo(), subject});
-			UIModel.INSTANCE.getListMailsMap().put(nbElements++, email.getFilePath());
+			model.addRow(new Object[] {dateFormat.format(email.receivedDate()), email.from(), email.to(), subject});
+			UIModel.INSTANCE.getListMailsMap().put(nbElements++, email.filePath());
 		} else if (o instanceof ClearAllButton) {
 			// Delete information from the map
 			UIModel.INSTANCE.getListMailsMap().clear();

@@ -44,20 +44,20 @@ public class MailServerTest {
 		Observer mockObserver = (o, arg) -> {
 			EmailModel model = (EmailModel)arg;
 
-			assertEquals(from, model.getFrom());
-			assertEquals(to, model.getTo());
-			assertEquals(subject, model.getSubject());
-			assertEquals(to, model.getTo());
-			assertNotNull(model.getEmailStr());
-			assertFalse(model.getEmailStr().isEmpty());
-			assertNotNull(model.getFilePath());
-			assertFalse(model.getFilePath().isEmpty());
+			assertEquals(from, model.from());
+			assertEquals(to, model.to());
+			assertEquals(subject, model.subject());
+			assertEquals(to, model.to());
+			assertNotNull(model.emailStr());
+			assertFalse(model.emailStr().isEmpty());
+			assertNotNull(model.filePath());
+			assertFalse(model.filePath().isEmpty());
 
-			File file = new File(model.getFilePath());
+			File file = new File(model.filePath());
 			assertTrue(file.exists());
 
 			// Delete
-			UIModel.INSTANCE.getListMailsMap().put(0, model.getFilePath());
+			UIModel.INSTANCE.getListMailsMap().put(0, model.filePath());
 			saver.deleteEmails();
 			assertFalse(file.exists());
 		};
