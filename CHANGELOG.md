@@ -1,6 +1,6 @@
 # v2.3.5
 
-- Fix: Check is SMTPServer instance exists before closing
+- Fix: Check if SMTPServer instance exists before closing
 - Upgrade miglayout-swing to 11.2
 
 # v2.3.4
