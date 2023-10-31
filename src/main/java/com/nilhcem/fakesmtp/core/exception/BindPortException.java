@@ -1,5 +1,7 @@
 package com.nilhcem.fakesmtp.core.exception;
 
+import java.io.Serial;
+
 /**
  * Thrown if the SMTP port cannot be bound while trying to start the server.
  * <p>
@@ -16,6 +18,7 @@ package com.nilhcem.fakesmtp.core.exception;
  */
 public final class BindPortException extends AbstractPortException {
 
+	@Serial
 	private static final long serialVersionUID = -4019988153141714187L;
 
 	public BindPortException(Exception e, int port) {

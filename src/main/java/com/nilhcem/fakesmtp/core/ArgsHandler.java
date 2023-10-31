@@ -188,14 +188,14 @@ public enum ArgsHandler {
 	}
 
 	/**
-	 * @return whether or not the SMTP server must be started automatically at launch.
+	 * @return whether the SMTP server must be started automatically at launch.
 	 */
 	public boolean shouldStartServerAtLaunch() {
 		return startServerAtLaunch;
 	}
 
 	/**
-	 * @return whether or not the SMTP server must be running without a GUI, only if started at launch (if {@code shouldStartServerAtLaunch()} returns true}).
+	 * @return whether the SMTP server must be running without a GUI, only if started at launch (if {@code shouldStartServerAtLaunch()} returns true).
 	 * @see #shouldStartServerAtLaunch
 	 */
 	public boolean shouldStartInBackground() {
@@ -224,7 +224,7 @@ public enum ArgsHandler {
 	}
 
 	/**
-	 * @return whether or not the SMTP server should disable the persistence in order to avoid the overhead that it adds.
+	 * @return whether the SMTP server should disable the persistence in order to avoid the overhead that it adds.
 	 * This is particularly useful when we launch performance tests that massively send emails.
 	 */
 	public boolean memoryModeEnabled() {

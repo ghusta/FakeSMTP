@@ -76,7 +76,7 @@ public final class MainFrame {
 		mainFrame.setIconImage(iconImage);
 
 		// Add shutdown hook to stop server if enabled
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> SMTPServerHandler.INSTANCE.stopServer()));
+		Runtime.getRuntime().addShutdownHook(new Thread(SMTPServerHandler.INSTANCE::stopServer));
 
 		// Restore last saved smtp port (if not overridden by the user)
 		String smtpPort = ArgsHandler.INSTANCE.getPort();

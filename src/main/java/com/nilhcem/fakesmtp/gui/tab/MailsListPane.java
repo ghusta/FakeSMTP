@@ -23,6 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Observable;
@@ -51,6 +52,7 @@ public final class MailsListPane implements Observer {
 	 * Table with non-editable cells.
 	 */
 	private final JTable table = new JTable() {
+		@Serial
 		private static final long serialVersionUID = 6332956458868628779L;
 
 		@Override
@@ -63,6 +65,7 @@ public final class MailsListPane implements Observer {
 	 * Table model with non-editable cells.
 	 */
 	private final DefaultTableModel model = new DefaultTableModel() {
+		@Serial
 		private static final long serialVersionUID = -6716294637919469299L;
 
 		@Override
@@ -72,7 +75,7 @@ public final class MailsListPane implements Observer {
 	};
 
 	/**
-	 * Creates the table and sets its cells as non editable.
+	 * Creates the table and sets its cells as non-editable.
 	 * <p>
 	 * Adds some mouse events on the table, to display emails, when a user clicks on
 	 * a specific row.<br>

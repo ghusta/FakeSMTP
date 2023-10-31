@@ -12,7 +12,6 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ public class AboutActionListener implements ActionListener {
 		Font font = label.getFont();
 
 		// create some css from the label's font
-		StringBuffer style = new StringBuffer("font-family:").append(font.getFamily()).append(";font-weight:");
+		StringBuilder style = new StringBuilder("font-family:").append(font.getFamily()).append(";font-weight:");
 		if (font.isBold()) {
 			style.append("bold");
 		} else {

@@ -1,5 +1,6 @@
 package com.nilhcem.fakesmtp.core.exception;
 
+import java.io.Serial;
 import java.net.UnknownHostException;
 
 /**
@@ -13,6 +14,7 @@ import java.net.UnknownHostException;
  */
 public class InvalidHostException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = -8263018939961075449L;
 	private final String host;
 

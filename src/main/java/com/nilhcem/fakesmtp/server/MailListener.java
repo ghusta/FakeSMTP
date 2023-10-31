@@ -1,6 +1,5 @@
 package com.nilhcem.fakesmtp.server;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.subethamail.smtp.helper.SimpleMessageListener;
 
@@ -41,7 +40,7 @@ public final class MailListener implements SimpleMessageListener {
      * Receives emails and forwards them to the {@link MailSaver} object.
      */
 	@Override
-	public void deliver(String from, String recipient, InputStream data) throws IOException {
+	public void deliver(String from, String recipient, InputStream data) {
 		saver.saveEmailAndNotify(from, recipient, data);
 	}
 }

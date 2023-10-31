@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Saves emails and notifies components so they can refresh their views with new data.
+ * Saves emails and notifies components, so they can refresh their views with new data.
  *
  * @author Nilhcem
  * @since 1.0

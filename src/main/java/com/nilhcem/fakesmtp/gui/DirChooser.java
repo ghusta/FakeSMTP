@@ -23,7 +23,7 @@ import com.nilhcem.fakesmtp.model.UIModel;
 public final class DirChooser extends Observable implements Observer {
 
 	private final JFileChooser dirChooser = new JFileChooser();
-	private Component parent = null;
+	private Component parent;
 
 	/**
 	 * Creates a {@code JFileChooser} component and sets it to be for directories only.
