@@ -12,8 +12,8 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements the About action.
@@ -21,12 +21,11 @@ import org.slf4j.LoggerFactory;
  * @author Vest
  * @since 2.1
  */
+@Slf4j
 public class AboutActionListener implements ActionListener {
 
 	private final I18n i18n = I18n.INSTANCE;
 	private final Container parent;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(AboutActionListener.class);
 
 	/**
 	 * @param parent The parent container that is used for the About dialog window.
@@ -85,7 +84,7 @@ public class AboutActionListener implements ActionListener {
 					desktop.browse(new URI(url));
 				}
 			} catch (Exception e) {
-				LOGGER.error("", e);
+				log.error("", e);
 			}
 		}
 	}

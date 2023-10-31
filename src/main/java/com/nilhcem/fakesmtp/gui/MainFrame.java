@@ -6,7 +6,7 @@ import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
 import com.nilhcem.fakesmtp.gui.listeners.MainWindowListener;
 import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.Dimension;
@@ -15,7 +15,6 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import org.slf4j.Logger;
 
 /**
  * Provides the main window of the application.
@@ -23,9 +22,8 @@ import org.slf4j.Logger;
  * @author Nilhcem
  * @since 1.0
  */
+@Slf4j
 public final class MainFrame {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(MainFrame.class);
 
 	private final JFrame mainFrame = new JFrame(Configuration.INSTANCE.get("application.title"));
 	private final MenuBar menu = new MenuBar(this);
@@ -99,7 +97,7 @@ public final class MainFrame {
 	}
 
 	public void close() {
-		LOGGER.debug("Closing the application and saving the configuration");
+		log.debug("Closing the application and saving the configuration");
 
 		Configuration.INSTANCE.set("smtp.default.port", panel.getPortText().get().getText());
 		Configuration.INSTANCE.set("emails.default.dir", panel.getSaveMsgTextField().get().getText());
@@ -107,7 +105,7 @@ public final class MainFrame {
 		try {
 			Configuration.INSTANCE.saveToUserProfile();
 		} catch (IOException ex) {
-			LOGGER.error("Could not save configuration", ex);
+			log.error("Could not save configuration", ex);
 		}
 		// Check for SMTP server running and stop it
 		if (SMTPServerHandler.INSTANCE.getSmtpServer() != null

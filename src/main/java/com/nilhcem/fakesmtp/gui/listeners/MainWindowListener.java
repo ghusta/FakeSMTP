@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Responsible for window minimizing and closing. If SystemTray is supported,
@@ -24,12 +24,11 @@ import org.slf4j.LoggerFactory;
  * @author Vest
  * @since 2.1
  */
+@Slf4j
 public class MainWindowListener extends WindowAdapter {
 
 	private TrayIcon trayIcon;
 	private final boolean useTray;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(MainWindowListener.class);
 
 	/**
 	 * @param mainFrame The MainFrame class used for closing actions from TrayPopup.
@@ -81,7 +80,7 @@ public class MainWindowListener extends WindowAdapter {
 				tray.add(trayIcon);
 				frame.dispose();
 			} catch (AWTException ex) {
-				LOGGER.error("Couldn't create a tray icon, the minimizing is not possible", ex);
+				log.error("Couldn't create a tray icon, the minimizing is not possible", ex);
 			}
 		} else {
 			frame.setVisible(true);
