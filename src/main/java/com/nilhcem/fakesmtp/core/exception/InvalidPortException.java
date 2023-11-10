@@ -1,5 +1,7 @@
 package com.nilhcem.fakesmtp.core.exception;
 
+import java.io.Serial;
+
 /**
  * Thrown if the SMTP port is invalid while trying to start the server.
  * <p>
@@ -10,6 +12,7 @@ package com.nilhcem.fakesmtp.core.exception;
  * @since 1.0
  */
 public final class InvalidPortException extends Exception {
+	@Serial
 	private static final long serialVersionUID = -3964366344520192790L;
 
 	public InvalidPortException(Exception e) {

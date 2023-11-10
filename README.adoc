@@ -30,7 +30,7 @@ to be "root" to start the port `25`, otherwise, try another port &gt;= `1024`.
 == Usage
 
 The fakeSMTP.jar is auto-executable.
-If your desktop environment supports it, you can directly double click
+If your desktop environment supports it, you can directly double-click
 on the .jar file.
 Otherwise, run the following command:
 

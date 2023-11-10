@@ -12,9 +12,8 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements the About action.
@@ -22,12 +21,11 @@ import org.slf4j.LoggerFactory;
  * @author Vest
  * @since 2.1
  */
+@Slf4j
 public class AboutActionListener implements ActionListener {
 
 	private final I18n i18n = I18n.INSTANCE;
 	private final Container parent;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(AboutActionListener.class);
 
 	/**
 	 * @param parent The parent container that is used for the About dialog window.
@@ -43,7 +41,7 @@ public class AboutActionListener implements ActionListener {
 		Font font = label.getFont();
 
 		// create some css from the label's font
-		StringBuffer style = new StringBuffer("font-family:").append(font.getFamily()).append(";font-weight:");
+		StringBuilder style = new StringBuilder("font-family:").append(font.getFamily()).append(";font-weight:");
 		if (font.isBold()) {
 			style.append("bold");
 		} else {
@@ -55,8 +53,8 @@ public class AboutActionListener implements ActionListener {
 		String link = i18n.get("menubar.about.dialog.link");
 		String appVersion = Configuration.INSTANCE.get("application.version");
 		JEditorPane ep = new JEditorPane("text/html",
-				String.format("<html><body style=\"%s\">%s<br /><a href=\"%s\">%s</a></body></html>",
-						style, String.format(i18n.get("menubar.about.dialog"), appVersion),
+				"<html><body style=\"%s\">%s<br /><a href=\"%s\">%s</a></body></html>".formatted(
+						style, i18n.get("menubar.about.dialog").formatted(appVersion),
 						link, link));
 
 		// handle link events
@@ -69,8 +67,8 @@ public class AboutActionListener implements ActionListener {
 		ep.setBackground(label.getBackground());
 
 		// show
-		JOptionPane.showMessageDialog(parent, ep, String.format(i18n.get("menubar.about.title"),
-			Configuration.INSTANCE.get("application.name")), JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(parent, ep, i18n.get("menubar.about.title").formatted(
+				Configuration.INSTANCE.get("application.name")), JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**
@@ -86,7 +84,7 @@ public class AboutActionListener implements ActionListener {
 					desktop.browse(new URI(url));
 				}
 			} catch (Exception e) {
-				LOGGER.error("", e);
+				log.error("", e);
 			}
 		}
 	}

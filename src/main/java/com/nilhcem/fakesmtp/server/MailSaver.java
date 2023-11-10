@@ -4,6 +4,7 @@ import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.model.UIModel;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +21,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Saves emails and notifies components so they can refresh their views with new data.
+ * Saves emails and notifies components, so they can refresh their views with new data.
  *
  * @author Nilhcem
  * @since 1.0
  */
+@Slf4j
 public final class MailSaver extends Observable {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MailSaver.class);
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	// This can be a static variable since it is Thread Safe
 	private static final Pattern SUBJECT_PATTERN = Pattern.compile("^Subject: (.*)$");
@@ -55,24 +56,18 @@ public final class MailSaver extends Observable {
 			}
 
 			if (!matches) {
-				LOGGER.debug("Destination {} doesn't match relay domains", to);
+				log.debug("Destination {} doesn't match relay domains", to);
 				return;
 			}
 		}
 
 		// We move everything that we can move outside the synchronized block to limit the impact
-		EmailModel model = new EmailModel();
-		model.setFrom(from);
-		model.setTo(to);
 		String mailContent = convertStreamToString(data);
-		model.setSubject(getSubjectFromStr(mailContent));
-		model.setEmailStr(mailContent);
+		String subject = getSubjectFromStr(mailContent);
 
 		synchronized (getLock()) {
 			String filePath = saveEmailToFile(mailContent);
-
-			model.setReceivedDate(new Date());
-			model.setFilePath(filePath);
+			EmailModel model = new EmailModel(new Date(), from, to, subject, mailContent, filePath);
 
 			setChanged();
 			notifyObservers(model);
@@ -92,10 +87,10 @@ public final class MailSaver extends Observable {
 			if (file.exists()) {
 				try {
 					if (!file.delete()) {
-						LOGGER.error("Impossible to delete file {}", value);
+						log.error("Impossible to delete file {}", value);
 					}
 				} catch (SecurityException e) {
-					LOGGER.error("", e);
+					log.error("", e);
 				}
 			}
 		}
@@ -138,7 +133,7 @@ public final class MailSaver extends Observable {
 				}
 			}
 		} catch (IOException e) {
-			LOGGER.error("", e);
+			log.error("", e);
 		}
 		return sb.toString();
 	}
@@ -153,7 +148,7 @@ public final class MailSaver extends Observable {
 		if (ArgsHandler.INSTANCE.memoryModeEnabled()) {
 			return null;
 		}
-		String filePath = String.format("%s%s%s", UIModel.INSTANCE.getSavePath(), File.separator,
+		String filePath = "%s%s%s".formatted(UIModel.INSTANCE.getSavePath(), File.separator,
 				dateFormat.format(new Date()));
 
 		// Create file
@@ -198,7 +193,7 @@ public final class MailSaver extends Observable {
 				 }
 			}
 		} catch (IOException e) {
-			LOGGER.error("", e);
+			log.error("", e);
 		}
 		return "";
 	}

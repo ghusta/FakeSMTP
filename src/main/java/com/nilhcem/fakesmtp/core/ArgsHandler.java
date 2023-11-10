@@ -27,82 +27,57 @@ import java.util.stream.Stream;
 public enum ArgsHandler {
 	INSTANCE;
 
-	private static final String OPT_EMAILS_DIR_SHORT = "o";
-	private static final String OPT_EMAILS_DIR_LONG = "output-dir";
-	private static final String OPT_EMAILS_DESC = "Emails output directory";
-	private final Option optionEmailsDir = Option.builder(OPT_EMAILS_DIR_SHORT)
-			.longOpt(OPT_EMAILS_DIR_LONG)
+	private final Option optionEmailsDir = Option.builder("o")
+			.longOpt("output-dir")
 			.hasArg(true)
 			.required(false)
-			.desc(OPT_EMAILS_DESC)
+			.desc("Emails output directory")
 			.build();
 
-	private static final String OPT_AUTOSTART_SHORT = "s";
-	private static final String OPT_AUTOSTART_LONG = "start-server";
-	private static final String OPT_AUTOSTART_DESC = "Automatically starts the SMTP server at launch";
-	private final Option optionAutoStart = Option.builder(OPT_AUTOSTART_SHORT)
-			.longOpt(OPT_AUTOSTART_LONG)
+	private final Option optionAutoStart = Option.builder("s")
+			.longOpt("start-server")
 			.hasArg(false)
-			.desc(OPT_AUTOSTART_DESC)
+			.desc("Automatically starts the SMTP server at launch")
 			.build();
 
-	private static final String OPT_PORT_SHORT = "p";
-	private static final String OPT_PORT_LONG = "port";
-	private static final String OPT_PORT_DESC = "SMTP port number";
-	private final Option optionPort = Option.builder(OPT_PORT_SHORT)
-			.longOpt(OPT_PORT_LONG)
+	private final Option optionPort = Option.builder("p")
+			.longOpt("port")
 			.hasArg(true)
 			.type(Number.class)
-			.desc(OPT_PORT_DESC)
+			.desc("SMTP port number")
 			.build();
 
-	private static final String OPT_BACKGROUNDSTART_SHORT = "b";
-	private static final String OPT_BACKGROUNDSTART_LONG = "background";
-	private static final String OPT_BACKGROUNDSTART_DESC = "If specified, does not start the GUI. Must be used with the -" + OPT_AUTOSTART_SHORT + " (--" +  OPT_AUTOSTART_LONG + ") argument";
-	private final Option optionBackgroundStart = Option.builder(OPT_BACKGROUNDSTART_SHORT)
-			.longOpt(OPT_BACKGROUNDSTART_LONG)
+	private final Option optionBackgroundStart = Option.builder("b")
+			.longOpt("background")
 			.hasArg(false)
-			.desc(OPT_BACKGROUNDSTART_DESC)
+			.desc("If specified, does not start the GUI. Must be used with the -" + "s" + " (--" + "start-server" + ") argument")
 			.build();
 
-	private static final String OPT_RELAYDOMAINS_SHORT = "r";
-	private static final String OPT_RELAYDOMAINS_LONG = "relay-domains";
-	private static final String OPT_RELAYDOMAINS_DESC = "Comma separated email domain(s) for which relay is accepted. If not specified, relays to any domain. If specified, relays only emails matching these domain(s), dropping (not saving) others";
-	private static final char OPT_RELAYDOMAINS_SEPARATOR = ',';
-	private final Option optionRelayDomains = Option.builder(OPT_RELAYDOMAINS_SHORT)
-			.longOpt(OPT_RELAYDOMAINS_LONG)
+	private final Option optionRelayDomains = Option.builder("r")
+			.longOpt("relay-domains")
 			.hasArgs()
-			.valueSeparator(OPT_RELAYDOMAINS_SEPARATOR)
+			.valueSeparator(',')
 			.required(false)
-			.desc(OPT_RELAYDOMAINS_DESC)
+			.desc("Comma separated email domain(s) for which relay is accepted. If not specified, relays to any domain. If specified, relays only emails matching these domain(s), dropping (not saving) others")
 			.build();
 
-	private static final String OPT_MEMORYMODE_SHORT = "m";
-	private static final String OPT_MEMORYMODE_LONG = "memory-mode";
-	private static final String OPT_MEMORYMODE_DESC = "Disable the persistence in order to avoid the overhead that it adds";
-	private final Option optionMemoryMode = Option.builder(OPT_MEMORYMODE_SHORT)
-			.longOpt(OPT_MEMORYMODE_LONG)
+	private final Option optionMemoryMode = Option.builder("m")
+			.longOpt("memory-mode")
 			.hasArg(false)
-			.desc(OPT_MEMORYMODE_DESC)
+			.desc("Disable the persistence in order to avoid the overhead that it adds")
 			.build();
 
-	private static final String OPT_BINDADDRESS_SHORT = "a";
-	private static final String OPT_BINDADDRESS_LONG = "bind-address";
-	private static final String OPT_BINDADDRESS_DESC = "IP address or hostname to bind to. Binds to all local IP addresses if not specified. Only works together with the -" + OPT_BACKGROUNDSTART_SHORT + " (--" +  OPT_BACKGROUNDSTART_LONG + ") argument.";
-	private final Option optionBindAddress = Option.builder(OPT_BINDADDRESS_SHORT)
-			.longOpt(OPT_BINDADDRESS_LONG)
+	private final Option optionBindAddress = Option.builder("a")
+			.longOpt("bind-address")
 			.hasArg(true)
 			.required(false)
-			.desc(OPT_BINDADDRESS_DESC)
+			.desc("IP address or hostname to bind to. Binds to all local IP addresses if not specified. Only works together with the -" + "b" + " (--" + "background" + ") argument.")
 			.build();
 
-	private static final String OPT_EMLVIEWER_SHORT = "e";
-	private static final String OPT_EMLVIEWER_LONG = "eml-viewer";
-	private static final String OPT_EMLVIEWER_DESC = "Executable of program used for viewing emails";
-	private final Option optionEmlViewer = Option.builder(OPT_EMLVIEWER_SHORT)
-			.longOpt(OPT_EMLVIEWER_LONG)
+	private final Option optionEmlViewer = Option.builder("e")
+			.longOpt("eml-viewer")
 			.hasArg(true)
-			.desc(OPT_EMLVIEWER_DESC)
+			.desc("Executable of program used for viewing emails")
 			.build();
 
 	private final Options options;
@@ -188,14 +163,14 @@ public enum ArgsHandler {
 	}
 
 	/**
-	 * @return whether or not the SMTP server must be started automatically at launch.
+	 * @return whether the SMTP server must be started automatically at launch.
 	 */
 	public boolean shouldStartServerAtLaunch() {
 		return startServerAtLaunch;
 	}
 
 	/**
-	 * @return whether or not the SMTP server must be running without a GUI, only if started at launch (if {@code shouldStartServerAtLaunch()} returns true}).
+	 * @return whether the SMTP server must be running without a GUI, only if started at launch (if {@code shouldStartServerAtLaunch()} returns true).
 	 * @see #shouldStartServerAtLaunch
 	 */
 	public boolean shouldStartInBackground() {
@@ -224,7 +199,7 @@ public enum ArgsHandler {
 	}
 
 	/**
-	 * @return whether or not the SMTP server should disable the persistence in order to avoid the overhead that it adds.
+	 * @return whether the SMTP server should disable the persistence in order to avoid the overhead that it adds.
 	 * This is particularly useful when we launch performance tests that massively send emails.
 	 */
 	public boolean memoryModeEnabled() {

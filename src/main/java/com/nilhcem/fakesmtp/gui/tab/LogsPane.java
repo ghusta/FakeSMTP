@@ -84,7 +84,7 @@ public final class LogsPane implements Observer {
 	public void update(Observable o, Object log) {
 		if (o instanceof SMTPLogsObservable) {
 			// Update and scroll pane to the bottom
-			logsArea.append(String.format("%s - %s%n", dateFormat.format(new Date()), log));
+			logsArea.append("%s - %s%n".formatted(dateFormat.format(new Date()), log));
 			logsArea.setCaretPosition(logsArea.getText().length());
 		} else if (o instanceof ClearAllButton) {
 			// Remove text

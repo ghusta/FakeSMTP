@@ -8,9 +8,8 @@ import java.net.UnknownHostException;
 
 import javax.swing.UIManager;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.apple.eawt.Application;
 import com.nilhcem.fakesmtp.core.ArgsHandler;
@@ -25,8 +24,8 @@ import com.nilhcem.fakesmtp.server.SMTPServerHandler;
  * @author Nilhcem
  * @since 1.0
  */
+@Slf4j
 public final class FakeSMTP {
-	private static final Logger LOGGER = LoggerFactory.getLogger(FakeSMTP.class);
 
 	private FakeSMTP() {
 		throw new UnsupportedOperationException();
@@ -66,11 +65,11 @@ public final class FakeSMTP {
 			try {
 				SMTPServerHandler.INSTANCE.startServer(getPort(), getBindAddress());
 			} catch (NumberFormatException e) {
-				LOGGER.error("Error: Invalid port number", e);
+				log.error("Error: Invalid port number", e);
 			} catch (UnknownHostException e) {
-				LOGGER.error("Error: Invalid bind address", e);
+				log.error("Error: Invalid bind address", e);
 			} catch (Exception e) {
-				LOGGER.error("Failed to auto-start server in background", e);
+				log.error("Failed to auto-start server in background", e);
 			}
 		} else {
             System.setProperty("mail.mime.decodetext.strict", "false");
@@ -85,9 +84,9 @@ public final class FakeSMTP {
 							Application.getApplication().setDockIconImage(Toolkit.getDefaultToolkit().getImage(envelopeImage));
 						}
 					} catch (RuntimeException e) {
-						LOGGER.debug("Error: {} - This is probably because we run on a non-Mac platform and these components are not implemented", e.getMessage());
+						log.debug("Error: {} - This is probably because we run on a non-Mac platform and these components are not implemented", e.getMessage());
 					} catch (Exception e) {
-						LOGGER.error("", e);
+						log.error("", e);
 					}
 
 					System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -96,7 +95,7 @@ public final class FakeSMTP {
 					try {
 						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					} catch (Exception e) {
-						LOGGER.error("", e);
+						log.error("", e);
 					}
 
 					new MainFrame();

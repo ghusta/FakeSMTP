@@ -13,11 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Observer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MailServerTest {
 	private static MailSaver saver;
@@ -29,7 +24,7 @@ public class MailServerTest {
 
 	@Test
 	void testGetLock() {
-		assertSame(saver, saver.getLock());
+		assertThat(saver.getLock()).isSameAs(saver);
 	}
 
 	@Test
@@ -44,22 +39,22 @@ public class MailServerTest {
 		Observer mockObserver = (o, arg) -> {
 			EmailModel model = (EmailModel)arg;
 
-			assertEquals(from, model.getFrom());
-			assertEquals(to, model.getTo());
-			assertEquals(subject, model.getSubject());
-			assertEquals(to, model.getTo());
-			assertNotNull(model.getEmailStr());
-			assertFalse(model.getEmailStr().isEmpty());
-			assertNotNull(model.getFilePath());
-			assertFalse(model.getFilePath().isEmpty());
+			assertThat(model.from()).isEqualTo(from);
+			assertThat(model.to()).isEqualTo(to);
+			assertThat(model.subject()).isEqualTo(subject);
+			assertThat(model.to()).isEqualTo(to);
+			assertThat(model.emailStr()).isNotNull();
+			assertThat(model.emailStr()).isNotEmpty();
+			assertThat(model.filePath()).isNotNull();
+			assertThat(model.filePath()).isNotEmpty();
 
-			File file = new File(model.getFilePath());
-			assertTrue(file.exists());
+			File file = new File(model.filePath());
+			assertThat(file).exists();
 
 			// Delete
-			UIModel.INSTANCE.getListMailsMap().put(0, model.getFilePath());
+			UIModel.INSTANCE.getListMailsMap().put(0, model.filePath());
 			saver.deleteEmails();
-			assertFalse(file.exists());
+			assertThat(file.exists()).isFalse();
 		};
 		saver.addObserver(mockObserver);
 		assertThat(saver.countObservers()).isNotZero();
@@ -76,10 +71,10 @@ public class MailServerTest {
 			.append("Line 3 will be removed").append(br)
 			.append("Line 4 will be removed").append(br)
 			.append("Date: Thu, 15 May 2042 04:42:42 +0800 (CST)").append(br)
-			.append(String.format("From: \"%s\" <%s>%n", from, from))
-			.append(String.format("To: \"%s\" <%s>%n", to, to))
+			.append("From: \"%s\" <%s>%n".formatted(from, from))
+			.append("To: \"%s\" <%s>%n".formatted(to, to))
 			.append("Message-ID: <17000042.0.1300000000042.JavaMail.wtf@OMG00042>").append(br)
-			.append(String.format("Subject: %s%n", subject))
+			.append("Subject: %s%n".formatted(subject))
 			.append("MIME-Version: 1.0").append(br)
 			.append("Content-Type: text/plain; charset=us-ascii").append(br)
 			.append("Content-Transfer-Encoding: 7bit").append(br).append(br)

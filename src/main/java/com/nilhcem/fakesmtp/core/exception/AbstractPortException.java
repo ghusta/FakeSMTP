@@ -1,5 +1,7 @@
 package com.nilhcem.fakesmtp.core.exception;
 
+import java.io.Serial;
+
 /**
  * Abstract class to simplify creation of exceptions due to a SMTP port error.
  *
@@ -7,6 +9,7 @@ package com.nilhcem.fakesmtp.core.exception;
  * @since 1.0
  */
 abstract class AbstractPortException extends Exception {
+	@Serial
 	private static final long serialVersionUID = 9011196541962512429L;
 	private final int port;
 

@@ -1,3 +1,7 @@
+# v2.4.0
+
+- Use Java 17
+
 # v2.3.5
 
 - Fix: Check if SMTPServer instance exists before closing
