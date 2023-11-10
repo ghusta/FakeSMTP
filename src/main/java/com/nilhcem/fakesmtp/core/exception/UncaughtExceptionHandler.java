@@ -55,7 +55,7 @@ public final class UncaughtExceptionHandler implements Thread.UncaughtExceptionH
 	 */
 	private void showException(Thread t, Throwable e) {
 		LOGGER.error("", e);
-		String msg = String.format("Unexpected problem on thread %s: %s", t.getName(), e.getMessage());
+		String msg = "Unexpected problem on thread %s: %s".formatted(t.getName(), e.getMessage());
 		JOptionPane.showMessageDialog(parentComponent, msg);
 	}
 }

@@ -53,8 +53,8 @@ public class AboutActionListener implements ActionListener {
 		String link = i18n.get("menubar.about.dialog.link");
 		String appVersion = Configuration.INSTANCE.get("application.version");
 		JEditorPane ep = new JEditorPane("text/html",
-				String.format("<html><body style=\"%s\">%s<br /><a href=\"%s\">%s</a></body></html>",
-						style, String.format(i18n.get("menubar.about.dialog"), appVersion),
+				"<html><body style=\"%s\">%s<br /><a href=\"%s\">%s</a></body></html>".formatted(
+						style, i18n.get("menubar.about.dialog").formatted(appVersion),
 						link, link));
 
 		// handle link events
@@ -67,8 +67,8 @@ public class AboutActionListener implements ActionListener {
 		ep.setBackground(label.getBackground());
 
 		// show
-		JOptionPane.showMessageDialog(parent, ep, String.format(i18n.get("menubar.about.title"),
-			Configuration.INSTANCE.get("application.name")), JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(parent, ep, i18n.get("menubar.about.title").formatted(
+				Configuration.INSTANCE.get("application.name")), JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**

@@ -117,10 +117,10 @@ public final class MailsListPane implements Observer {
 								}
 							} catch (IOException ioe) {
 								LOGGER.error("", ioe);
-								displayError(String.format(i18n.get("mailslist.err.open"), file.getAbsolutePath()));
+								displayError(i18n.get("mailslist.err.open").formatted(file.getAbsolutePath()));
 							}
 						} else {
-							displayError(String.format(i18n.get("mailslist.err.find"), file.getAbsolutePath()));
+							displayError(i18n.get("mailslist.err.find").formatted(file.getAbsolutePath()));
 						}
 					}
 				}
@@ -221,7 +221,7 @@ public final class MailsListPane implements Observer {
 	 */
 	private void displayError(String error) {
 		JOptionPane.showMessageDialog(mailsListPane.getParent(), error,
-			String.format(i18n.get("mailslist.err.title"), Configuration.INSTANCE.get("application.name")),
+				i18n.get("mailslist.err.title").formatted(Configuration.INSTANCE.get("application.name")),
 			JOptionPane.ERROR_MESSAGE);
 	}
 }

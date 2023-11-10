@@ -41,15 +41,15 @@ public final class StartServerButton extends Observable implements Observer {
 		try {
 			UIModel.INSTANCE.toggleButton();
 		} catch (InvalidHostException ihe) {
-			displayError(String.format(i18n.get("startsrv.err.invalidHost"), ihe.getHost()));
+			displayError(i18n.get("startsrv.err.invalidHost").formatted(ihe.getHost()));
 		} catch (InvalidPortException ipe) {
-			displayError(String.format(i18n.get("startsrv.err.invalidPort")));
+			displayError(i18n.get("startsrv.err.invalidPort").formatted());
 		} catch (BindPortException bpe) {
-			displayError(String.format(i18n.get("startsrv.err.bound"), bpe.getPort()));
+			displayError(i18n.get("startsrv.err.bound").formatted(bpe.getPort()));
 		} catch (OutOfRangePortException orpe) {
-			displayError(String.format(i18n.get("startsrv.err.range"), orpe.getPort()));
+			displayError(i18n.get("startsrv.err.range").formatted(orpe.getPort()));
 		} catch (RuntimeException re) {
-			displayError(String.format(i18n.get("startsrv.err.default"), re.getMessage()));
+			displayError(i18n.get("startsrv.err.default").formatted(re.getMessage()));
 		}
 
 		if (UIModel.INSTANCE.isStarted()) {
@@ -76,7 +76,7 @@ public final class StartServerButton extends Observable implements Observer {
 	 */
 	private void displayError(String error) {
 		JOptionPane.showMessageDialog(button.getParent(), error,
-			String.format(i18n.get("startsrv.err.title"), Configuration.INSTANCE.get("application.name")),
+				i18n.get("startsrv.err.title").formatted(Configuration.INSTANCE.get("application.name")),
 			JOptionPane.ERROR_MESSAGE);
 	}
 

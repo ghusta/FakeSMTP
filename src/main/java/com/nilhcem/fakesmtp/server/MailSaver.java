@@ -148,7 +148,7 @@ public final class MailSaver extends Observable {
 		if (ArgsHandler.INSTANCE.memoryModeEnabled()) {
 			return null;
 		}
-		String filePath = String.format("%s%s%s", UIModel.INSTANCE.getSavePath(), File.separator,
+		String filePath = "%s%s%s".formatted(UIModel.INSTANCE.getSavePath(), File.separator,
 				dateFormat.format(new Date()));
 
 		// Create file

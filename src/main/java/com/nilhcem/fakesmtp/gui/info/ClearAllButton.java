@@ -36,7 +36,7 @@ public final class ClearAllButton extends Observable implements Observer {
 		button.setToolTipText(i18n.get("clearall.tooltip"));
 		button.addActionListener(e -> {
 			int answer = JOptionPane.showConfirmDialog(button.getParent(), i18n.get("clearall.delete.email"),
-				String.format(i18n.get("clearall.title"), Configuration.INSTANCE.get("application.name")),
+					i18n.get("clearall.title").formatted(Configuration.INSTANCE.get("application.name")),
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (answer == JOptionPane.CLOSED_OPTION) {
 				return;

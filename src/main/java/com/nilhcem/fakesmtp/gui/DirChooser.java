@@ -33,8 +33,8 @@ public final class DirChooser extends Observable implements Observer {
 	public DirChooser(Component parent) {
 		this.parent = parent;
 		dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		dirChooser.setDialogTitle(String.format(I18n.INSTANCE.get("dirchooser.title"),
-			Configuration.INSTANCE.get("application.name")));
+		dirChooser.setDialogTitle(I18n.INSTANCE.get("dirchooser.title").formatted(
+				Configuration.INSTANCE.get("application.name")));
 		dirChooser.setApproveButtonText(I18n.INSTANCE.get("dirchooser.approve.btn"));
 	}
 
