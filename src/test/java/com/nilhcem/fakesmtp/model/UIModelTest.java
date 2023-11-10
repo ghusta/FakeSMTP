@@ -7,28 +7,25 @@ import com.nilhcem.fakesmtp.core.exception.OutOfRangePortException;
 import com.nilhcem.fakesmtp.core.test.TestConfig;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class UIModelTest {
 	@Test
 	void uniqueInstance() {
 		UIModel a = UIModel.INSTANCE;
 		UIModel b = UIModel.INSTANCE;
-		assertSame(a, b);
+		assertThat(b).isSameAs(a);
 	}
 
 	@Test
 	void shouldHaveZeroMsgReceivedFirst() {
-		assertEquals(0, UIModel.INSTANCE.getNbMessageReceived());
+		assertThat(UIModel.INSTANCE.getNbMessageReceived()).isEqualTo(0);
 	}
 
 	@Test
 	void testInvalidPort() {
-		assertThrows(InvalidPortException.class, () -> {
+		assertThatExceptionOfType(InvalidPortException.class).isThrownBy(() -> {
 			UIModel.INSTANCE.setPort("INVALID");
 			UIModel.INSTANCE.toggleButton();
 		});
@@ -36,7 +33,7 @@ class UIModelTest {
 
 	@Test
 	void testInvalidHost() {
-		assertThrows(InvalidHostException.class, () -> {
+		assertThatExceptionOfType(InvalidHostException.class).isThrownBy(() -> {
 			UIModel.INSTANCE.setHost("INVALID");
 			UIModel.INSTANCE.toggleButton();
 		});
@@ -45,12 +42,12 @@ class UIModelTest {
 	@Test
 	void testIsStarted() throws BindPortException, OutOfRangePortException, InvalidPortException, InvalidHostException {
 		UIModel.INSTANCE.setPort(Integer.toString(TestConfig.PORT_UNIT_TESTS));
-		assertFalse(UIModel.INSTANCE.isStarted());
+		assertThat(UIModel.INSTANCE.isStarted()).isFalse();
 
 		UIModel.INSTANCE.toggleButton();
-		assertTrue(UIModel.INSTANCE.isStarted());
+		assertThat(UIModel.INSTANCE.isStarted()).isTrue();
 
 		UIModel.INSTANCE.toggleButton();
-		assertFalse(UIModel.INSTANCE.isStarted());
+		assertThat(UIModel.INSTANCE.isStarted()).isFalse();
 	}
 }

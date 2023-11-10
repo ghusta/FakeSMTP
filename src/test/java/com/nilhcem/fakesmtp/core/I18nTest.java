@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class I18nTest {
 	private static Locale defaultLocale;
@@ -28,16 +26,16 @@ public class I18nTest {
 	void uniqueInstance() {
 		I18n a = I18n.INSTANCE;
 		I18n b = I18n.INSTANCE;
-		assertSame(a, b);
+		assertThat(b).isSameAs(a);
 	}
 
 	@Test
 	void getEmptyValueWhenKeyIsNotFound() {
-		assertTrue(I18n.INSTANCE.get("this.key.doesnt.exist").isEmpty());
+		assertThat(I18n.INSTANCE.get("this.key.doesnt.exist")).isEmpty();
 	}
 
 	@Test
 	void getValueWhenKeyIsFound() {
-		assertFalse(I18n.INSTANCE.get("menubar.file").isEmpty());
+		assertThat(I18n.INSTANCE.get("menubar.file")).isNotEmpty();
 	}
 }

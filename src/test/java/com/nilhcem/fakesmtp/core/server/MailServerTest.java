@@ -13,11 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Observer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MailServerTest {
 	private static MailSaver saver;
@@ -29,7 +24,7 @@ public class MailServerTest {
 
 	@Test
 	void testGetLock() {
-		assertSame(saver, saver.getLock());
+		assertThat(saver.getLock()).isSameAs(saver);
 	}
 
 	@Test
@@ -44,22 +39,22 @@ public class MailServerTest {
 		Observer mockObserver = (o, arg) -> {
 			EmailModel model = (EmailModel)arg;
 
-			assertEquals(from, model.from());
-			assertEquals(to, model.to());
-			assertEquals(subject, model.subject());
-			assertEquals(to, model.to());
-			assertNotNull(model.emailStr());
-			assertFalse(model.emailStr().isEmpty());
-			assertNotNull(model.filePath());
-			assertFalse(model.filePath().isEmpty());
+			assertThat(model.from()).isEqualTo(from);
+			assertThat(model.to()).isEqualTo(to);
+			assertThat(model.subject()).isEqualTo(subject);
+			assertThat(model.to()).isEqualTo(to);
+			assertThat(model.emailStr()).isNotNull();
+			assertThat(model.emailStr()).isNotEmpty();
+			assertThat(model.filePath()).isNotNull();
+			assertThat(model.filePath()).isNotEmpty();
 
 			File file = new File(model.filePath());
-			assertTrue(file.exists());
+			assertThat(file).exists();
 
 			// Delete
 			UIModel.INSTANCE.getListMailsMap().put(0, model.filePath());
 			saver.deleteEmails();
-			assertFalse(file.exists());
+			assertThat(file.exists()).isFalse();
 		};
 		saver.addObserver(mockObserver);
 		assertThat(saver.countObservers()).isNotZero();
