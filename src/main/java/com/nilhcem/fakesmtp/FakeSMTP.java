@@ -1,9 +1,7 @@
 package com.nilhcem.fakesmtp;
 
 import java.awt.EventQueue;
-import java.awt.Toolkit;
 import java.net.InetAddress;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Optional;
 
@@ -12,7 +10,6 @@ import javax.swing.UIManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.ParseException;
 
-import com.apple.eawt.Application;
 import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
@@ -27,6 +24,12 @@ import com.nilhcem.fakesmtp.server.SMTPServerHandler;
  */
 @Slf4j
 public final class FakeSMTP {
+
+	public static final String OS_NAME = System.getProperty("os.name", "");
+	/**
+	 * See : org.apache.commons.lang3.SystemUtils#IS_OS_MAC
+	 */
+	public static final boolean IS_OS_MAC = OS_NAME.startsWith("Mac");
 
 	private FakeSMTP() {
 		throw new UnsupportedOperationException();
@@ -79,31 +82,22 @@ public final class FakeSMTP {
             System.setProperty("mail.mime.decodetext.strict", "false");
             Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
 
-            EventQueue.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						URL envelopeImage = getClass().getResource(Configuration.getInstance().get("application.icon.path"));
-						if (envelopeImage != null) {
-							Application.getApplication().setDockIconImage(Toolkit.getDefaultToolkit().getImage(envelopeImage));
-						}
-					} catch (RuntimeException e) {
-						log.debug("Error: {} - This is probably because we run on a non-Mac platform and these components are not implemented", e.getMessage());
-					} catch (Exception e) {
-						log.error("", e);
-					}
-
+			EventQueue.invokeLater(() -> {
+				if (IS_OS_MAC) {
+					// see (written in 2003) : https://www.oracle.com/technical-resources/articles/javase/javatomac.html
+					// see also : https://bugs.openjdk.org/browse/JDK-8188085
 					System.setProperty("apple.laf.useScreenMenuBar", "true");
-					System.setProperty("com.apple.mrj.application.apple.menu.about.name", Configuration.getInstance().get("application.name"));
-					UIManager.put("swing.boldMetal", Boolean.FALSE);
-					try {
-						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					} catch (Exception e) {
-						log.error("", e);
-					}
-					// Start GUI
-					new MainFrame();
+					System.setProperty("com.apple.mrj.application.apple.menu.about.name", Configuration.INSTANCE.get("application.name"));
 				}
+				UIManager.put("swing.boldMetal", Boolean.FALSE);
+				try {
+					// see : https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Exception e) {
+					log.error("", e);
+				}
+                // Start GUI
+				new MainFrame();
 			});
 		}
 	}

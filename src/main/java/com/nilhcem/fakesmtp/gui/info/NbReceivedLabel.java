@@ -1,11 +1,9 @@
 package com.nilhcem.fakesmtp.gui.info;
 
-import com.apple.eawt.Application;
 import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.MailSaver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +16,8 @@ import java.util.Observer;
  * @author Nilhcem
  * @since 1.0
  */
+@Slf4j
 public final class NbReceivedLabel implements Observer {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(NbReceivedLabel.class);
 
 	private final JLabel nbReceived = new JLabel("0");
 
@@ -57,30 +54,19 @@ public final class NbReceivedLabel implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o instanceof ClearAllButton) {
+        if (o instanceof ClearAllButton) {
 			UIModel.INSTANCE.setNbMessageReceived(0);
-			updateDockIconBadge("");
 			nbReceived.setText("0");
 		}
 	}
 
-	public void onNewMail(EmailModel email) {
-		UIModel model = UIModel.INSTANCE;
-		int countMsg = model.getNbMessageReceived() + 1;
-		String countMsgStr = Integer.toString(countMsg);
+    public void onNewMail(EmailModel email) {
+        UIModel model = UIModel.INSTANCE;
+        int countMsg = model.getNbMessageReceived() + 1;
+        String countMsgStr = Integer.toString(countMsg);
 
-		model.setNbMessageReceived(countMsg);
-		updateDockIconBadge(countMsgStr);
-		nbReceived.setText(countMsgStr);
-	}
+        model.setNbMessageReceived(countMsg);
+        nbReceived.setText(countMsgStr);
+    }
 
-	private void updateDockIconBadge(String badgeValue) {
-		try {
-			Application.getApplication().setDockIconBadge(badgeValue);
-		} catch (RuntimeException e) {
-			LOGGER.debug("Error: {} - This is probably because we run on a non-Mac platform and these components are not implemented", e.getMessage());
-		} catch (Exception e) {
-			LOGGER.error("", e);
-		}
-	}
 }
