@@ -39,7 +39,7 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - name: OWASP Dependency Check
-        run: mvn org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=7.0 -ntp
+        run: mvn -ntp org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=7.0
       - uses: actions/upload-artifact@v3
         with:
           name: dependency-check-report
