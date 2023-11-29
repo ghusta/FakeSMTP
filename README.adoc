@@ -1,7 +1,7 @@
 = FakeSMTP
 
-[link=https://github.com/ghusta/FakeSMTP/actions/workflows/maven.yml]
-image::https://github.com/ghusta/FakeSMTP/actions/workflows/maven.yml/badge.svg[]
+[link=https://github.com/ghusta/FakeSMTP/actions/workflows/maven-build.yml]
+image::https://github.com/ghusta/FakeSMTP/actions/workflows/maven-build.yml/badge.svg[]
 [link=https://github.com/ghusta/FakeSMTP/releases/latest]
 image::https://img.shields.io/github/v/release/ghusta/FakeSMTP.svg?logo=github[]
 

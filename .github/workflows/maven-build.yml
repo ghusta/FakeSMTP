@@ -8,6 +8,7 @@ on:
     branches:
       - master
       - feature/**
+      - 3.0.x
     tags-ignore:
       - '**'
   pull_request:
