@@ -26,9 +26,9 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - name: Display Maven version
-        run: mvn -v
+        run: ./mvnw -v
       - name: Build with Maven
-        run: mvn -ntp package -DskipTests
+        run: ./mvnw -ntp package -DskipTests
 
   owasp-dependency-check:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - name: OWASP Dependency Check
-        run: mvn -ntp org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=7.0
+        run: ./mvnw -ntp org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=7.0
       - uses: actions/upload-artifact@v3
         with:
           name: dependency-check-report
