@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -83,15 +85,12 @@ public final class MailSaver extends Observable {
 			return;
 		}
 		for (String value : mails.values()) {
-			File file = new File(value);
-			if (file.exists()) {
-				try {
-					if (!file.delete()) {
-						log.error("Impossible to delete file {}", value);
-					}
-				} catch (SecurityException e) {
-					log.error("", e);
+			try {
+				if (!Files.deleteIfExists(Paths.get(value))) {
+					log.error("Impossible to delete file {}", value);
 				}
+			} catch (IOException | SecurityException e) {
+				log.error(e.toString(), e);
 			}
 		}
 	}
