@@ -7,16 +7,18 @@ import com.nilhcem.fakesmtp.gui.info.NbReceivedLabel;
 import com.nilhcem.fakesmtp.gui.info.PortTextField;
 import com.nilhcem.fakesmtp.gui.info.SaveMsgField;
 import com.nilhcem.fakesmtp.gui.info.StartServerButton;
+import com.nilhcem.fakesmtp.gui.reactive.ConsumerSubscriber;
 import com.nilhcem.fakesmtp.gui.tab.LastMailPane;
 import com.nilhcem.fakesmtp.gui.tab.LogsPane;
 import com.nilhcem.fakesmtp.gui.tab.MailsListPane;
+import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.MailSaver;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 import java.util.Observable;
 
 /**
@@ -25,6 +27,7 @@ import java.util.Observable;
  * @author Nilhcem
  * @since 1.0
  */
+@Slf4j
 public final class MainPanel {
 	// I18n
 	private final I18n i18n = I18n.INSTANCE;
@@ -41,6 +44,8 @@ public final class MainPanel {
 
 	// Port
 	private final JLabel portLabel = new JLabel(i18n.get("mainpanel.listening.port"));
+
+	@Getter
 	private final PortTextField portText = new PortTextField();
 	private final StartServerButton startServerBtn = new StartServerButton();
 
@@ -50,6 +55,8 @@ public final class MainPanel {
 
 	// Save incoming messages to
 	private final JLabel saveMessages = new JLabel(i18n.get("mainpanel.save.messages"));
+
+	@Getter
 	private final SaveMsgField saveMsgTextField = new SaveMsgField();
 
 	// Tab pane
@@ -118,10 +125,17 @@ public final class MainPanel {
 
 		// When a message is received
 		MailSaver mailSaver = SMTPServerHandler.INSTANCE.getMailSaver();
-		mailSaver.addObserver(nbReceivedLabel);
-		mailSaver.addObserver(mailsListPane);
-		mailSaver.addObserver(lastMailPane);
-		mailSaver.addObserver(clearAll);
+//		mailSaver.addObserver(nbReceivedLabel);
+//		mailSaver.addObserver(mailsListPane);
+//		mailSaver.addObserver(lastMailPane);
+//		mailSaver.addObserver(clearAll);
+
+		mailSaver.getEmailPublisher().subscribe(new ConsumerSubscriber<>(emailModel -> {
+			nbReceivedLabel.onNewMail(emailModel);
+			mailsListPane.onNewMail(emailModel);
+			lastMailPane.onNewMail(emailModel);
+			clearAll.onNewMail(emailModel);
+		}));
 
 		// When we click on "clear all"
 		clearAll.addObserver(nbReceivedLabel);
@@ -189,21 +203,4 @@ public final class MainPanel {
 		receivedLabel.setLabelFor(nbReceivedLabel.get());
 	}
 
-	/**
-	 * Returns reference to portText field. Used for saving last values to file
-	 *
-	 * @return reference to portText field. Used for saving last values to file
-	 */
-	public PortTextField getPortText() {
-		return portText;
-	}
-
-	/**
-	 * Returns reference to saveMsgTextField. Used for saving last values to file
-     *
-     * @return reference to saveMsgTextField. Used for saving last values to file
-	 */
-	public SaveMsgField getSaveMsgTextField() {
-		return saveMsgTextField;
-	}
 }

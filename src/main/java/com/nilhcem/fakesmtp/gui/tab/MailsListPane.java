@@ -7,16 +7,13 @@ import com.nilhcem.fakesmtp.gui.info.ClearAllButton;
 import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.MailSaver;
+import jakarta.mail.internet.MimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.mail.internet.MimeUtility;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Desktop;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
@@ -188,19 +185,7 @@ public final class MailsListPane implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o instanceof MailSaver) {
-			EmailModel email = (EmailModel) arg;
-			String subject;
-			try {
-				subject = MimeUtility.decodeText(email.subject());
-			} catch (UnsupportedEncodingException e) {
-				LOGGER.error("", e);
-				subject = email.subject();
-			}
-
-			model.addRow(new Object[] {dateTimeFormatter.format(email.receivedDate()), email.from(), email.to(), subject});
-			UIModel.INSTANCE.getListMailsMap().put(nbElements++, email.filePath());
-		} else if (o instanceof ClearAllButton) {
+			if (o instanceof ClearAllButton) {
 			// Delete information from the map
 			UIModel.INSTANCE.getListMailsMap().clear();
 
@@ -213,6 +198,19 @@ public final class MailsListPane implements Observer {
 				LOGGER.error("", e);
 			}
 		}
+	}
+
+	public void onNewMail(EmailModel email ) {
+		String subject;
+		try {
+			subject = MimeUtility.decodeText(email.subject());
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.error("", e);
+			subject = email.subject();
+		}
+
+		model.addRow(new Object[] {dateTimeFormatter.format(email.receivedDate()), email.from(), email.to(), subject});
+		UIModel.INSTANCE.getListMailsMap().put(nbElements++, email.filePath());
 	}
 
 	/**

@@ -2,12 +2,11 @@ package com.nilhcem.fakesmtp.gui.info;
 
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.I18n;
-import com.nilhcem.fakesmtp.server.MailSaver;
+import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
 
 import javax.swing.*;
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Button to clear all the information from the main panel.
@@ -19,7 +18,7 @@ import java.util.Observer;
  * @author Nilhcem
  * @since 1.0
  */
-public final class ClearAllButton extends Observable implements Observer {
+public final class ClearAllButton extends Observable {
 
 	private final I18n i18n = I18n.INSTANCE;
 	private final JButton button = new JButton(i18n.get("clearall.button"));
@@ -64,16 +63,10 @@ public final class ClearAllButton extends Observable implements Observer {
 		return button;
 	}
 
-	/**
-	 * Enables the button, so that the user can clear/delete emails.
-	 * <p>
-	 * This method will be called by a {@link MailSaver} object when an email will be received.
-	 * </p>
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		if (o instanceof MailSaver && !button.isEnabled()) {
+	public void onNewMail(EmailModel email) {
+		if (!button.isEnabled()) {
 			button.setEnabled(true);
 		}
 	}
+
 }
