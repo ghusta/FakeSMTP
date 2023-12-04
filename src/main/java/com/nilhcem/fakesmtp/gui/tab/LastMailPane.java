@@ -4,8 +4,7 @@ import com.nilhcem.fakesmtp.gui.info.ClearAllButton;
 import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.server.MailSaver;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -52,11 +51,13 @@ public final class LastMailPane implements Observer {
 	 */
 	@Override
 	public synchronized void update(Observable o, Object data) {
-		if (o instanceof MailSaver) {
-			EmailModel model = (EmailModel) data;
-			lastMailArea.setText(model.emailStr());
-		} else if (o instanceof ClearAllButton) {
+		if (o instanceof ClearAllButton) {
 			lastMailArea.setText("");
 		}
 	}
+
+	public void onNewMail(EmailModel email) {
+		lastMailArea.setText(email.emailStr());
+	}
+
 }

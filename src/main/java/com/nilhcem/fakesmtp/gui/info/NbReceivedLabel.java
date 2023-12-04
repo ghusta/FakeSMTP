@@ -1,17 +1,16 @@
 package com.nilhcem.fakesmtp.gui.info;
 
-import java.awt.Font;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.JLabel;
-
+import com.apple.eawt.Application;
+import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.MailSaver;
-
-import com.apple.eawt.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Label class to display the number of received emails.
@@ -58,19 +57,21 @@ public final class NbReceivedLabel implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o instanceof MailSaver) {
-			UIModel model = UIModel.INSTANCE;
-			int countMsg = model.getNbMessageReceived() + 1;
-			String countMsgStr = Integer.toString(countMsg);
-
-			model.setNbMessageReceived(countMsg);
-			updateDockIconBadge(countMsgStr);
-			nbReceived.setText(countMsgStr);
-		} else if (o instanceof ClearAllButton) {
+		if (o instanceof ClearAllButton) {
 			UIModel.INSTANCE.setNbMessageReceived(0);
 			updateDockIconBadge("");
 			nbReceived.setText("0");
 		}
+	}
+
+	public void onNewMail(EmailModel email) {
+		UIModel model = UIModel.INSTANCE;
+		int countMsg = model.getNbMessageReceived() + 1;
+		String countMsgStr = Integer.toString(countMsg);
+
+		model.setNbMessageReceived(countMsg);
+		updateDockIconBadge(countMsgStr);
+		nbReceived.setText(countMsgStr);
 	}
 
 	private void updateDockIconBadge(String badgeValue) {

@@ -23,7 +23,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
+import java.util.concurrent.Flow;
+import java.util.concurrent.SubmissionPublisher;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +35,7 @@ import java.util.regex.Pattern;
  * @since 1.0
  */
 @Slf4j
-public final class MailSaver extends Observable {
+public final class MailSaver {
 
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	// This can be a static variable since it is Thread Safe
@@ -52,6 +53,17 @@ public final class MailSaver extends Observable {
 	 * Use n to use nanos (9 digits) instead of milliseconds (3 digits)
 	 */
 	private final DateTimeFormatter dateTimeFormatForFilename = DateTimeFormatter.ofPattern("yyyyMMdd.HHmmss.n");
+
+	private final SubmissionPublisher<EmailModel> emailPublisher;
+
+	public MailSaver() {
+		// can pass Executor as arg
+		this.emailPublisher = new SubmissionPublisher<>();
+	}
+
+	public Flow.Publisher<EmailModel> getEmailPublisher() {
+		return emailPublisher;
+	}
 
 	/**
 	 * Saves incoming email in file system and notifies observers.
@@ -87,8 +99,7 @@ public final class MailSaver extends Observable {
 			String filePath = saveEmailToFile(mailContent);
 			EmailModel model = new EmailModel(LocalDateTime.now(), from, to, subject, mailContent, filePath);
 
-			setChanged();
-			notifyObservers(model);
+			emailPublisher.submit(model);
 		}
 	}
 
