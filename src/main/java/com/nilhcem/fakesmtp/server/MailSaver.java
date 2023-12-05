@@ -9,13 +9,18 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -35,7 +40,18 @@ public final class MailSaver extends Observable {
 	// This can be a static variable since it is Thread Safe
 	private static final Pattern SUBJECT_PATTERN = Pattern.compile("^Subject: (.*)$");
 
-	private final SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyhhmmssSSS");
+	/*
+		DateTimeFormatter symbols used :
+		S fraction-of-second fraction 978
+		n nano-of-second number 987654321
+		H hour-of-day (0-23) number 0
+	 */
+
+	/**
+	 * Use HH for (0-23) hour format.
+	 * Use n to use nanos (9 digits) instead of milliseconds (3 digits)
+	 */
+	private final DateTimeFormatter dateTimeFormatForFilename = DateTimeFormatter.ofPattern("yyyyMMdd.HHmmss.n");
 
 	/**
 	 * Saves incoming email in file system and notifies observers.
@@ -69,7 +85,7 @@ public final class MailSaver extends Observable {
 
 		synchronized (getLock()) {
 			String filePath = saveEmailToFile(mailContent);
-			EmailModel model = new EmailModel(new Date(), from, to, subject, mailContent, filePath);
+			EmailModel model = new EmailModel(LocalDateTime.now(), from, to, subject, mailContent, filePath);
 
 			setChanged();
 			notifyObservers(model);
@@ -148,7 +164,7 @@ public final class MailSaver extends Observable {
 			return null;
 		}
 		String filePath = "%s%s%s".formatted(UIModel.INSTANCE.getSavePath(), File.separator,
-				dateFormat.format(new Date()));
+				dateTimeFormatForFilename.format(LocalDateTime.now()));
 
 		// Create file
 		int i = 0;

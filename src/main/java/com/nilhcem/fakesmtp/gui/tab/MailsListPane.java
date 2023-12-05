@@ -25,7 +25,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -45,7 +46,7 @@ public final class MailsListPane implements Observer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MailsListPane.class);
 	private final I18n i18n = I18n.INSTANCE;
 	private final JScrollPane mailsListPane = new JScrollPane();
-	private final SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
+	private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM);
 	private final int[] widths = new int[] {85, 140, 140}; // widths of columns in tab
 
 	/**
@@ -197,7 +198,7 @@ public final class MailsListPane implements Observer {
 				subject = email.subject();
 			}
 
-			model.addRow(new Object[] {dateFormat.format(email.receivedDate()), email.from(), email.to(), subject});
+			model.addRow(new Object[] {dateTimeFormatter.format(email.receivedDate()), email.from(), email.to(), subject});
 			UIModel.INSTANCE.getListMailsMap().put(nbElements++, email.filePath());
 		} else if (o instanceof ClearAllButton) {
 			// Delete information from the map

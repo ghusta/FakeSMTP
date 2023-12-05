@@ -1,6 +1,6 @@
 package com.nilhcem.fakesmtp.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * A model representing a received email.
@@ -13,7 +13,7 @@ import java.util.Date;
  * @since 1.0
  */
 public record EmailModel(
-		Date receivedDate,
+		LocalDateTime receivedDate,
 		String from,
 		String to,
 		String subject,
