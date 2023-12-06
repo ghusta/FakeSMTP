@@ -87,9 +87,28 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 		<java.version>17</java.version>
+
+		<javafx.version>21.0.1</javafx.version>
+		<junit.version>5.10.1</junit.version>
+		<lombok.version>1.18.30</lombok.version>
+
+		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+
 		<docker.image>fakesmtp</docker.image>
 	</properties>
 	<dependencies>
+		<!-- JavaFX libs -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+
 		<!-- MIG Layout: layout for Swing -->
 		<dependency>
 			<groupId>com.miglayout</groupId>
@@ -153,7 +172,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.32</version>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -161,7 +180,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>5.10.2</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -205,6 +224,13 @@
 				<configuration>
 					<release>${java.version}</release>
 					<showDeprecation>true</showDeprecation>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 
@@ -221,6 +247,16 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.4.1</version>
+			</plugin>
+
+			<!-- Launch app with : mvn javafx:run -->
+			<plugin>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>${javafx.maven.plugin.version}</version>
+				<configuration>
+					<mainClass>com.nilhcem.fakesmtp.gui.javafx.FakeSmtpApplication</mainClass>
+				</configuration>
 			</plugin>
 
 			<plugin>

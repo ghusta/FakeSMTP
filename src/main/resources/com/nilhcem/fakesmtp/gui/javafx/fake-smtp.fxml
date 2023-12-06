@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="470.0" prefWidth="473.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nilhcem.fakesmtp.gui.javafx.FakeSmtpController">
+   <top>
+      <Label fx:id="welcomeLabel" text="Label" BorderPane.alignment="CENTER"/>
+   </top>
+   <center>
+      <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER"/>
+   </center>
+   <bottom>
+      <Label fx:id="statusLabel" text="%mainpanel.listening.port" BorderPane.alignment="CENTER"/>
+   </bottom>
+</BorderPane>
