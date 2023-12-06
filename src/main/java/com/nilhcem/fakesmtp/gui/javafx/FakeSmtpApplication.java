@@ -3,10 +3,12 @@ package com.nilhcem.fakesmtp.gui.javafx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -29,6 +31,9 @@ public class FakeSmtpApplication extends Application {
 
         // for i18n
         ResourceBundle messages = ResourceBundle.getBundle("i18n/messages");
+
+        // app icons
+        stage.getIcons().add(new Image(Objects.requireNonNull(FakeSmtpApplication.class.getResourceAsStream("/icon.gif"))));
 
         FXMLLoader fxmlLoader = new FXMLLoader(FakeSmtpApplication.class.getResource("fake-smtp.fxml"), messages);
         Scene scene = new Scene(fxmlLoader.load(), 640, 400);
