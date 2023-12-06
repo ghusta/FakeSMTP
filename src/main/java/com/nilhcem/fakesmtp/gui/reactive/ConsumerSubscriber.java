@@ -2,6 +2,7 @@ package com.nilhcem.fakesmtp.gui.reactive;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
 import java.util.concurrent.Flow;
 import java.util.function.Consumer;
 
@@ -17,6 +18,7 @@ public class ConsumerSubscriber<T> implements Flow.Subscriber<T> {
     private final Consumer<T> consumer;
 
     public ConsumerSubscriber(Consumer<T> consumer) {
+        Objects.requireNonNull(consumer);
         this.consumer = consumer;
     }
 
