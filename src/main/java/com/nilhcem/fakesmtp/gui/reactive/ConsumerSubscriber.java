@@ -41,4 +41,12 @@ public class ConsumerSubscriber<T> implements Flow.Subscriber<T> {
     public void onComplete() {
         // nothing to do
     }
+
+    /**
+     * Calls {@link Flow.Subscription#cancel()}.
+     */
+    public void cancelSubscription() {
+        subscription.cancel();
+    }
+
 }
