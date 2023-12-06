@@ -50,7 +50,7 @@ public enum ArgsHandler {
 	private final Option optionBackgroundStart = Option.builder("b")
 			.longOpt("background")
 			.hasArg(false)
-			.desc("If specified, does not start the GUI. Must be used with the -" + "s" + " (--" + "start-server" + ") argument")
+			.desc("If specified, does not start the GUI. Must be used with the -s (--start-server) argument")
 			.build();
 
 	private final Option optionRelayDomains = Option.builder("r")
@@ -58,7 +58,8 @@ public enum ArgsHandler {
 			.hasArgs()
 			.valueSeparator(',')
 			.required(false)
-			.desc("Comma separated email domain(s) for which relay is accepted. If not specified, relays to any domain. If specified, relays only emails matching these domain(s), dropping (not saving) others")
+			.desc("Comma separated email domain(s) for which relay is accepted. If not specified, relays to any domain. " +
+					"If specified, relays only emails matching these domain(s), dropping (not saving) others")
 			.build();
 
 	private final Option optionMemoryMode = Option.builder("m")
@@ -71,7 +72,8 @@ public enum ArgsHandler {
 			.longOpt("bind-address")
 			.hasArg(true)
 			.required(false)
-			.desc("IP address or hostname to bind to. Binds to all local IP addresses if not specified. Only works together with the -" + "b" + " (--" + "background" + ") argument.")
+			.desc("IP address or hostname to bind to. Binds to all local IP addresses if not specified. " +
+					"Only works together with the -b (--background) argument.")
 			.build();
 
 	private final Option optionEmlViewer = Option.builder("e")
@@ -140,7 +142,7 @@ public enum ArgsHandler {
 			List<String> values = Stream.of(relaydomains)
 					.map(String::trim)
 					.filter(s -> !s.isBlank())
-					.collect(Collectors.toList());
+					.toList();
 			UIModel.INSTANCE.setRelayDomains(values);
 		}
 
