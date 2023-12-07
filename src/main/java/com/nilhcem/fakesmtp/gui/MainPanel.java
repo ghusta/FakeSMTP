@@ -11,7 +11,6 @@ import com.nilhcem.fakesmtp.gui.reactive.ConsumerSubscriber;
 import com.nilhcem.fakesmtp.gui.tab.LastMailPane;
 import com.nilhcem.fakesmtp.gui.tab.LogsPane;
 import com.nilhcem.fakesmtp.gui.tab.MailsListPane;
-import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.MailSaver;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
 import lombok.Getter;
@@ -82,7 +81,7 @@ public final class MainPanel {
 		assignLabelsToFields();
 		addObservers(menu);
 		buildGUI();
-		checkArgs();
+		syncWithArgs();
 	}
 
 	/**
@@ -178,7 +177,7 @@ public final class MainPanel {
 	 * <li>if the user has chosen to auto-start the SMTP server, then it toggles automatically the "start server" button.</li></ul>
 	 * </p>
 	 */
-	private void checkArgs() {
+	private void syncWithArgs() {
 		ArgsHandler args = ArgsHandler.INSTANCE;
 
 		if (args.getPort() != null) {
