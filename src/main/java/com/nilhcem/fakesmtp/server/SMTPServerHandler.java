@@ -69,7 +69,7 @@ public enum SMTPServerHandler {
 	 * </p>
 	 */
 	public void stopServer() {
-		if (smtpServer.isRunning()) {
+		if (smtpServer != null && smtpServer.isRunning()) {
 			log.debug("Stopping server");
 			smtpServer.stop();
 		}
