@@ -1,5 +1,7 @@
 package com.nilhcem.fakesmtp.gui.info;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,6 +12,7 @@ import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.I18n;
 import com.nilhcem.fakesmtp.core.exception.*;
 import com.nilhcem.fakesmtp.model.UIModel;
+import com.nilhcem.fakesmtp.server.SMTPServerHandler;
 
 /**
  * Button to start the SMTP server.
@@ -39,7 +42,7 @@ public final class StartServerButton extends Observable implements Observer {
 	 */
 	public void toggleButton() {
 		try {
-			UIModel.INSTANCE.toggleButton();
+			startServerIfNeeded(UIModel.INSTANCE);
 		} catch (InvalidHostException ihe) {
 			displayError(i18n.get("startsrv.err.invalidHost").formatted(ihe.getHost()));
 		} catch (InvalidPortException ipe) {
@@ -58,6 +61,33 @@ public final class StartServerButton extends Observable implements Observer {
 		}
 		setChanged();
 		notifyObservers();
+	}
+
+	/**
+	 * @throws InvalidPortException    when the port is invalid.
+	 * @throws BindPortException       when the port cannot be bound.
+	 * @throws OutOfRangePortException when the port is out of range.
+	 * @throws InvalidHostException    when the address cannot be resolved.
+	 */
+	private void startServerIfNeeded(UIModel uiModel) throws OutOfRangePortException, BindPortException, InvalidPortException, InvalidHostException {
+		if (uiModel.isServerStarted()) {
+			// Do nothing. We can't stop the server. User has to quit the app (issue with SubethaSMTP)
+		} else {
+			try {
+				int port = Integer.parseInt(uiModel.getPort());
+				InetAddress host = null;
+				if (uiModel.getHost() != null && !uiModel.getHost().isEmpty()) {
+					host = InetAddress.getByName(uiModel.getHost());
+				}
+
+				SMTPServerHandler.INSTANCE.startServer(port, host);
+			} catch (NumberFormatException e) {
+				throw new InvalidPortException(e);
+			} catch (UnknownHostException e) {
+				throw new InvalidHostException(e, uiModel.getHost());
+			}
+		}
+		uiModel.setServerStarted(!uiModel.isServerStarted());
 	}
 
 	/**
