@@ -26,7 +26,7 @@ public enum I18n {
 	/**
 	 * Initializes resource bundle with the JVM's default locale.
 	 * <p>
-	 * If the JVM's default locale doesn't have any resource file, will take the en_US resources instead.
+	 * If the JVM's default locale doesn't have any resource file, will take the <code>en</code> resources instead.
 	 * </p>
 	 */
 	I18n() {
@@ -36,8 +36,8 @@ public enum I18n {
 			bundle = ResourceBundle.getBundle(I18n.RESOURCE_FILE, Locale.getDefault());
 		} catch (MissingResourceException mre) {
 			logger.error("{}", mre.getMessage());
-			logger.info("Will use default bundle (en_US) instead");
-			bundle = ResourceBundle.getBundle(I18n.RESOURCE_FILE, Locale.US);
+			logger.info("Will use default bundle (en) instead");
+			bundle = ResourceBundle.getBundle(I18n.RESOURCE_FILE, Locale.ENGLISH);
 		}
 		resources = bundle;
 	}
