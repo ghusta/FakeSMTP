@@ -61,6 +61,21 @@ public class Configuration {
 		return INSTANCE;
 	}
 
+	/**
+	 * Returns merged properties (application and user).
+	 */
+	public Properties getAllProperties() {
+		return this.config;
+	}
+
+	public Properties getUserProperties() {
+		final Properties userConfig = new Properties();
+		this.config.entrySet().stream()
+				.filter(this::authorizedUserConfig)
+				.forEach(entry -> userConfig.put(entry.getKey(), entry.getValue()));
+		return userConfig;
+	}
+
 	private boolean authorizedUserConfig(Map.Entry<Object, Object> entry) {
 		return userSettingsKeys.stream().anyMatch(s -> s.equals(entry.getKey()));
 	}

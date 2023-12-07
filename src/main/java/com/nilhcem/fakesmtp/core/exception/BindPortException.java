@@ -24,4 +24,9 @@ public final class BindPortException extends AbstractPortException {
 	public BindPortException(Exception e, int port) {
 		super(e, port);
 	}
+
+	@Override
+	public String getMessage() {
+		return "Port %d not available".formatted(getPort());
+	}
 }

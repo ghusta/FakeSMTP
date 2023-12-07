@@ -109,6 +109,18 @@
 			<version>${javafx.version}</version>
 		</dependency>
 
+		<!-- Icons for JavaFX -->
+		<dependency>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-javafx</artifactId>
+			<version>12.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-fontawesome5-pack</artifactId>
+			<version>12.3.1</version>
+		</dependency>
+
 		<!-- MIG Layout: layout for Swing -->
 		<dependency>
 			<groupId>com.miglayout</groupId>

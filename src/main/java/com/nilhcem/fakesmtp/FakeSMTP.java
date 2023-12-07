@@ -87,7 +87,7 @@ public final class FakeSMTP {
 					// see (written in 2003) : https://www.oracle.com/technical-resources/articles/javase/javatomac.html
 					// see also : https://bugs.openjdk.org/browse/JDK-8188085
 					System.setProperty("apple.laf.useScreenMenuBar", "true");
-					System.setProperty("com.apple.mrj.application.apple.menu.about.name", Configuration.INSTANCE.get("application.name"));
+					System.setProperty("com.apple.mrj.application.apple.menu.about.name", Configuration.getInstance().get("application.name"));
 				}
 				UIManager.put("swing.boldMetal", Boolean.FALSE);
 				try {

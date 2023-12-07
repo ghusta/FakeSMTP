@@ -1,6 +1,8 @@
 package com.nilhcem.fakesmtp.server;
 
 import java.io.InputStream;
+import java.util.Objects;
+
 import org.subethamail.smtp.helper.SimpleMessageListener;
 
 /**
@@ -18,6 +20,7 @@ public final class MailListener implements SimpleMessageListener {
 	 * @param saver a {@code MailServer} object used to save emails and notify components.
 	 */
 	public MailListener(MailSaver saver) {
+		Objects.requireNonNull(saver);
 		this.saver = saver;
 	}
 

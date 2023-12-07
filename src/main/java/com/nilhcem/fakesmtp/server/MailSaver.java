@@ -111,10 +111,10 @@ public final class MailSaver {
 		if (ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			return;
 		}
-		for (String value : mails.values()) {
+		for (String path : mails.values()) {
 			try {
-				if (!Files.deleteIfExists(Paths.get(value))) {
-					log.error("Impossible to delete file {}", value);
+				if (!Files.deleteIfExists(Paths.get(path))) {
+					log.error("Impossible to delete file {}", path);
 				}
 			} catch (IOException | SecurityException e) {
 				log.error(e.toString(), e);

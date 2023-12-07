@@ -3,57 +3,82 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
 <BorderPane prefHeight="470.0" prefWidth="473.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nilhcem.fakesmtp.gui.javafx.FakeSmtpController">
-   <top>
-      <GridPane gridLinesVisible="false" hgap="5" vgap="5">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-         <columnConstraints>
-            <ColumnConstraints minWidth="100.0" prefWidth="150.0"/>
-            <ColumnConstraints minWidth="50.0" prefWidth="200.0"/>
-            <ColumnConstraints minWidth="50.0" prefWidth="150.0"/>
-            <ColumnConstraints minWidth="50.0" prefWidth="50.0"/>
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-         </rowConstraints>
+    <top>
+        <GridPane gridLinesVisible="false" hgap="5" vgap="5">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints minWidth="50.0" prefWidth="50.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" />
+            </rowConstraints>
 
-         <Label fx:id="listeningPortLabel" text="%mainpanel.listening.port" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-         <TextField fx:id="portNumberTextField" maxWidth="60" promptText="Port number" GridPane.columnIndex="1"
-                    GridPane.rowIndex="0"/>
-         <Button fx:id="startServerButton" onAction="#onStartServer" text="%startsrv.start" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-         <ProgressIndicator fx:id="startProgressIndicator" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+            <Label fx:id="listeningPortLabel" text="%mainpanel.listening.port" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <TextField fx:id="portNumberTextField" maxWidth="Infinity" promptText="%porttextfield.tooltip" HBox.hgrow="ALWAYS" />
+                <Button fx:id="startServerButton" onAction="#onStartServer" text="%startsrv.start" />
+            </HBox>
+            <ProgressIndicator fx:id="startProgressIndicator" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
-         <Label text="%mainpanel.save.messages" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-         <TextField fx:id="emailsDirectoryTextField" editable="false" promptText="Répertoire" GridPane.columnIndex="1"
-                    GridPane.rowIndex="1"/>
-         <Button fx:id="emailsDirChooserButton" onAction="#onChooseEmailsDirecory" text="Select dir"
-                 GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <Label text="%mainpanel.save.messages" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <TextField fx:id="emailsDirectoryTextField" editable="false" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                <Button fx:id="emailsDirChooserButton" onAction="#onChooseEmailsDirectory">
+                    <graphic>
+                        <FontIcon iconLiteral="far-folder-open" iconSize="16" />
+                    </graphic>
+                </Button>
+            </HBox>
 
-         <Label text="%mainpanel.messages.received" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-         <Label fx:id="numberMailsReceivedLabel" style="-fx-font-weight: bold;" text="0" GridPane.columnIndex="1"
-                GridPane.rowIndex="2"/>
-
-      </GridPane>
-   </top>
-   <center>
-      <TabPane style="-fx-background-color: #ffff99;">
-
-      </TabPane>
-   </center>
-   <bottom>
-      <ButtonBar style="-fx-background-color: #99ccff;">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-         <buttons>
-            <Button fx:id="clearAllButton" mnemonicParsing="false" text="%clearall.button"/>
-            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#onExit" text="%menubar.exit"/>
-         </buttons>
-      </ButtonBar>
-   </bottom>
+            <Label text="%mainpanel.messages.received" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label fx:id="numberMailsReceivedLabel" style="-fx-font-weight: bold;" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        </GridPane>
+    </top>
+    <center>
+        <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffff99;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="%mainpanel.tab.mailslist">
+                    <BorderPane>
+                        <center>
+                            <TableView fx:id="emailsTableView" onContextMenuRequested="#onEmailsListContextMenu" onKeyReleased="#onEmailsListKeyReleased" onMouseClicked="#onEmailsListClick" prefHeight="200.0" prefWidth="400.0">
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                </columnResizePolicy>
+                            </TableView>
+                        </center>
+                    </BorderPane>
+                </Tab>
+                <Tab text="%mainpanel.tab.smtplog">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <TextArea fx:id="smtpLogTextArea" editable="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </AnchorPane>
+                </Tab>
+                <Tab text="%mainpanel.tab.lastmessage">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <TextArea fx:id="lastMessageTextArea" editable="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </AnchorPane>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <bottom>
+        <ButtonBar>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+            <buttons>
+                <Button fx:id="clearAllButton" mnemonicParsing="false" onAction="#onClearAll" text="%clearall.button" />
+                <Button fx:id="quitButton" mnemonicParsing="false" onAction="#onExit" text="%menubar.exit" />
+            </buttons>
+        </ButtonBar>
+    </bottom>
 </BorderPane>

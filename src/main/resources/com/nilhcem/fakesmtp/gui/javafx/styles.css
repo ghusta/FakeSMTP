@@ -1,0 +1,21 @@
+/*
+ * Reference : https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
+ */
+
+.root {
+    -fx-font-size: 1.0em;
+}
+
+.button {
+}
+
+.label {
+}
+
+.debug-button {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, yellow 0%, green 100%);
+}
+
+.blue-bg {
+    -fx-background-color: #99ccff;
+}
