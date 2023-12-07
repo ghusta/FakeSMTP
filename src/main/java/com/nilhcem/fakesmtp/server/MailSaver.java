@@ -108,7 +108,7 @@ public final class MailSaver {
 	 */
 	public void deleteEmails() {
 		Map<Integer, String> mails = UIModel.INSTANCE.getListMailsMap();
-		if (ArgsHandler.INSTANCE.memoryModeEnabled()) {
+		if (ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			return;
 		}
 		for (String value : mails.values()) {
@@ -171,7 +171,7 @@ public final class MailSaver {
 	 * @return the path of the created file.
 	 */
 	private String saveEmailToFile(String mailContent) {
-		if (ArgsHandler.INSTANCE.memoryModeEnabled()) {
+		if (ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			return null;
 		}
 		String filePath = "%s%s%s".formatted(UIModel.INSTANCE.getSavePath(), File.separator,

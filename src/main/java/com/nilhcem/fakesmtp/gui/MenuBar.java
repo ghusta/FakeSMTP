@@ -78,7 +78,7 @@ public final class MenuBar extends Observable {
 
 		JMenuItem mailsLocation = new JMenuItem(i18n.get("menubar.messages.location"));
 		mailsLocation.setMnemonic(i18n.get("menubar.mnemo.msglocation").charAt(0));
-		if (ArgsHandler.INSTANCE.memoryModeEnabled()) {
+		if (ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			mailsLocation.setEnabled(false);
 		} else {
 			mailsLocation.addActionListener(e -> {

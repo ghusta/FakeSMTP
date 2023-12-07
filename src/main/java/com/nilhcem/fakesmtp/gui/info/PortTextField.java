@@ -91,7 +91,7 @@ public final class PortTextField extends Observable implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o instanceof StartServerButton) {
-			portTextField.setEnabled(!UIModel.INSTANCE.isStarted());
+			portTextField.setEnabled(!UIModel.INSTANCE.isServerStarted());
 		}
 	}
 }

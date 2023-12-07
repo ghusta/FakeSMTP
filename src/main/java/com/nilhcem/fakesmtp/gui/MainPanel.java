@@ -185,11 +185,11 @@ public final class MainPanel {
 			portText.setText(args.getPort());
 		}
 
-		if (args.shouldStartServerAtLaunch()) {
+		if (args.isStartServerAtLaunch()) {
 			startServerBtn.toggleButton();
 		}
 
-		if (args.memoryModeEnabled()) {
+		if (args.isMemoryModeEnabled()) {
 			saveMsgTextField.get().setEnabled(false);
 		}
 	}

@@ -37,7 +37,7 @@ public final class SaveMsgField extends Observable implements Observer {
 		saveMsgField.setEditable(false);
 		saveMsgField.setBackground(bg);
 
-		if (!ArgsHandler.INSTANCE.memoryModeEnabled()) {
+		if (!ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			// Add a MouseListener
 			saveMsgField.addMouseListener(new MouseAdapter() {
 				@Override

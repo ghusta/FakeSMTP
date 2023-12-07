@@ -56,7 +56,7 @@ public final class FakeSMTP {
 			return;
 		}
 
-		if (ArgsHandler.INSTANCE.printHelp()) {
+		if (ArgsHandler.INSTANCE.isPrintHelp()) {
 			ArgsHandler.INSTANCE.displayUsage();
 			return;
 		}

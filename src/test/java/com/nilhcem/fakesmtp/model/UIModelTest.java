@@ -42,12 +42,12 @@ class UIModelTest {
 	@Test
 	void testIsStarted() throws BindPortException, OutOfRangePortException, InvalidPortException, InvalidHostException {
 		UIModel.INSTANCE.setPort(Integer.toString(TestConfig.PORT_UNIT_TESTS));
-		assertThat(UIModel.INSTANCE.isStarted()).isFalse();
+		assertThat(UIModel.INSTANCE.isServerStarted()).isFalse();
 
 		UIModel.INSTANCE.toggleButton();
-		assertThat(UIModel.INSTANCE.isStarted()).isTrue();
+		assertThat(UIModel.INSTANCE.isServerStarted()).isTrue();
 
 		UIModel.INSTANCE.toggleButton();
-		assertThat(UIModel.INSTANCE.isStarted()).isFalse();
+		assertThat(UIModel.INSTANCE.isServerStarted()).isFalse();
 	}
 }

@@ -4,6 +4,7 @@ package com.nilhcem.fakesmtp.core;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.nilhcem.fakesmtp.model.UIModel;
+import lombok.Getter;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -15,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -84,13 +84,47 @@ public enum ArgsHandler {
 
 	private final Options options;
 
+	/**
+	 * The port, as specified by the user, or a {@code null} string if unspecified.
+	 */
+	@Getter
 	private String port;
+
+	/**
+	 * The bind address, as specified by the user, or a {@code null} string if unspecified.
+	 */
+	@Getter
 	private String bindAddress;
+
+	/**
+	 * The output directory, as specified by the user, or a {@code null} string if unspecified.
+	 */
+	@Getter
 	private String outputDirectory;
+
+	/**
+	 * The name of executable used for viewing eml files, as specified by the user, or a {@code null} string if unspecified.
+	 */
+	@Getter
 	private String emlViewer;
+
+	@Getter
 	private boolean backgroundStart;
+
+	/**
+	 * Whether the SMTP server must be started automatically at launch.
+	 */
+	@Getter
 	private boolean startServerAtLaunch;
+
+	/**
+	 * Whether the SMTP server should disable the persistence in order to avoid the overhead that it adds.
+	 * This is particularly useful when we launch performance tests that massively send emails.
+	 */
+	@Getter
 	private boolean memoryModeEnabled;
+
+	@Getter
 	private boolean printHelp = false;
 
 	/**
@@ -160,59 +194,12 @@ public enum ArgsHandler {
 		formatter.printHelp(String.format(Locale.US, "java -jar %s [OPTION]...", getJarName()), options);
 	}
 
-	public boolean printHelp() {
-		return printHelp;
-	}
-
 	/**
-	 * @return whether the SMTP server must be started automatically at launch.
-	 */
-	public boolean shouldStartServerAtLaunch() {
-		return startServerAtLaunch;
-	}
-
-	/**
-	 * @return whether the SMTP server must be running without a GUI, only if started at launch (if {@code shouldStartServerAtLaunch()} returns true).
-	 * @see #shouldStartServerAtLaunch
+	 * @return whether the SMTP server must be running without a GUI, only if started at launch (if {@code startServerAtLaunch} returns true).
+	 * @see #startServerAtLaunch
 	 */
 	public boolean shouldStartInBackground() {
 		return startServerAtLaunch && backgroundStart;
-	}
-
-	/**
-	 * @return the port, as specified by the user, or a {@code null} string if unspecified.
-	 */
-	public String getPort() {
-		return port;
-	}
-
-	/**
-	 * @return the bind address, as specified by the user, or a {@code null} string if unspecified.
-	 */
-	public String getBindAddress() {
-		return bindAddress;
-	}
-
-	/**
-	 * @return the output directory, as specified by the user, or a {@code null} string if unspecified.
-	 */
-	public String getOutputDirectory() {
-		return outputDirectory;
-	}
-
-	/**
-	 * @return whether the SMTP server should disable the persistence in order to avoid the overhead that it adds.
-	 * This is particularly useful when we launch performance tests that massively send emails.
-	 */
-	public boolean memoryModeEnabled() {
-		return memoryModeEnabled;
-	}
-
-	/**
-	 * @return the name of executable used for viewing eml files, as specified by the user, or a {@code null} string if unspecified.
-	 */
-	public String getEmlViewer() {
-		return emlViewer;
 	}
 
 	/**

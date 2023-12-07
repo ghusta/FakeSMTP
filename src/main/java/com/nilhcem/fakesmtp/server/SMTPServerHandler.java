@@ -2,6 +2,7 @@ package com.nilhcem.fakesmtp.server;
 
 import com.nilhcem.fakesmtp.core.exception.BindPortException;
 import com.nilhcem.fakesmtp.core.exception.OutOfRangePortException;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.subethamail.smtp.server.SMTPServer;
 
@@ -18,8 +19,10 @@ import java.net.UnknownHostException;
 public enum SMTPServerHandler {
 	INSTANCE;
 
+	@Getter
 	private final MailSaver mailSaver = new MailSaver();
 	private final MailListener myListener = new MailListener(mailSaver);
+	@Getter
 	private SMTPServer smtpServer;
 
 	SMTPServerHandler() {
@@ -72,21 +75,4 @@ public enum SMTPServerHandler {
 		}
 	}
 
-	/**
-	 * Returns the {@code MailSaver} object.
-	 *
-	 * @return the {@code MailSaver} object.
-	 */
-	public MailSaver getMailSaver() {
-		return mailSaver;
-	}
-
-	/**
-	 * Returns the {@code SMTPServer} object.
-     *
-     * @return the {@code SMTPServer} object.
-	 */
-	public SMTPServer getSmtpServer() {
-		return smtpServer;
-	}
 }

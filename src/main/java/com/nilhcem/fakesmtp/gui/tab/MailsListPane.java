@@ -88,7 +88,7 @@ public final class MailsListPane implements Observer {
 			desktop = Desktop.getDesktop();
 		}
 
-		if (!ArgsHandler.INSTANCE.memoryModeEnabled()) {
+		if (!ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			table.addMouseListener(new MouseAdapter() {
 
 				@Override

@@ -6,6 +6,8 @@ import com.nilhcem.fakesmtp.core.exception.InvalidHostException;
 import com.nilhcem.fakesmtp.core.exception.InvalidPortException;
 import com.nilhcem.fakesmtp.core.exception.OutOfRangePortException;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -27,12 +29,25 @@ import java.util.Map;
 public enum UIModel {
 	INSTANCE;
 
-	private boolean started = false; // server is not started by default
-	private String portStr;
-	private String hostStr;
+	@Getter
+	@Setter
+	private boolean serverStarted = false; // server is not started by default
+	@Getter
+	@Setter
+	private String port;
+	@Getter
+	@Setter
+	private String host;
+	@Getter
+	@Setter
 	private int nbMessageReceived = 0;
+	@Getter
+	@Setter
 	private String savePath = I18n.INSTANCE.get("emails.default.dir");
+	@Getter
 	private final Map<Integer, String> listMailsMap = new HashMap<>();
+	@Getter
+	@Setter
 	private List<String> relayDomains;
 
 	UIModel() {
@@ -71,48 +86,4 @@ public enum UIModel {
 		started = !started;
 	}
 
-	/**
-	 * Returns {@code true} if the server is started.
-	 *
-	 * @return {@code true} if the server is started.
-	 */
-	public boolean isStarted() {
-		return started;
-	}
-
-	public void setPort(String port) {
-		this.portStr = port;
-	}
-
-	public void setHost(String host) {
-		this.hostStr = host;
-	}
-
-	public int getNbMessageReceived() {
-		return nbMessageReceived;
-	}
-
-	public void setNbMessageReceived(int nbMessageReceived) {
-		this.nbMessageReceived = nbMessageReceived;
-	}
-
-	public String getSavePath() {
-		return savePath;
-	}
-
-	public void setSavePath(String savePath) {
-		this.savePath = savePath;
-	}
-
-	public Map<Integer, String> getListMailsMap() {
-		return listMailsMap;
-	}
-
-	public List<String> getRelayDomains() {
-		return relayDomains;
-	}
-
-	public void setRelayDomains(List<String> relayDomains) {
-		this.relayDomains = relayDomains;
-	}
 }
