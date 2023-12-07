@@ -62,7 +62,9 @@ public final class FakeSMTP {
 		}
 
 		if (ArgsHandler.INSTANCE.shouldStartInBackground()) {
+			// option AutoStart is useless (implied)
 			try {
+				log.info("Starting server...");
 				SMTPServerHandler.INSTANCE.startServer(getPort(), getBindAddress());
 			} catch (NumberFormatException e) {
 				log.error("Error: Invalid port number", e);
@@ -97,7 +99,7 @@ public final class FakeSMTP {
 					} catch (Exception e) {
 						log.error("", e);
 					}
-
+					// Start GUI
 					new MainFrame();
 				}
 			});

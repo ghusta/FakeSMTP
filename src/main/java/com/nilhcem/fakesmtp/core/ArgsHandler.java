@@ -5,6 +5,7 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.nilhcem.fakesmtp.model.UIModel;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -24,6 +25,7 @@ import java.util.stream.Stream;
  * @author Nilhcem
  * @since 1.3
  */
+@Slf4j
 public enum ArgsHandler {
 	INSTANCE;
 
@@ -50,7 +52,7 @@ public enum ArgsHandler {
 	private final Option optionBackgroundStart = Option.builder("b")
 			.longOpt("background")
 			.hasArg(false)
-			.desc("If specified, does not start the GUI. Must be used with the -s (--start-server) argument")
+			.desc("If specified, does not start the GUI. It implies auto start server.")
 			.build();
 
 	private final Option optionRelayDomains = Option.builder("r")
@@ -166,6 +168,11 @@ public enum ArgsHandler {
 		emlViewer = cmd.getOptionValue(optionEmlViewer);
 		printHelp = cmd.hasOption("h");
 
+		if (backgroundStart && startServerAtLaunch) {
+			log.warn("Option '--{}' is useless as it is implied by option '--{}'.",
+					optionAutoStart.getLongOpt(), optionBackgroundStart.getLongOpt());
+		}
+
 		// Change SMTP server log level to info if memory mode was enabled to improve performance
 		if (memoryModeEnabled) {
 			((Logger) LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class)).setLevel(Level.INFO);
@@ -199,7 +206,7 @@ public enum ArgsHandler {
 	 * @see #startServerAtLaunch
 	 */
 	public boolean shouldStartInBackground() {
-		return startServerAtLaunch && backgroundStart;
+		return /*startServerAtLaunch &&*/ backgroundStart;
 	}
 
 	/**
