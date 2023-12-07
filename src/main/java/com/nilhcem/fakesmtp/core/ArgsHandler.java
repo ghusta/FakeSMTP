@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -90,7 +91,7 @@ public enum ArgsHandler {
 	 * The port, as specified by the user, or a {@code null} string if unspecified.
 	 */
 	@Getter
-	private String port;
+	private Optional<Integer> port;
 
 	/**
 	 * The bind address, as specified by the user, or a {@code null} string if unspecified.
@@ -160,7 +161,12 @@ public enum ArgsHandler {
 			UIModel.INSTANCE.setSavePath(outputDirectory);
 		}
 
-		port = cmd.getOptionValue(optionPort);
+		Number parsedPort = (Number) cmd.getParsedOptionValue(optionPort);
+		if (parsedPort == null) {
+			port = Optional.empty();
+		} else {
+			port = Optional.of(parsedPort.intValue());
+		}
 		bindAddress = cmd.getOptionValue(optionBindAddress);
 		startServerAtLaunch = cmd.hasOption(optionAutoStart);
 		backgroundStart = cmd.hasOption(optionBackgroundStart);

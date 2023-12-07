@@ -15,6 +15,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Provides the main window of the application.
@@ -77,11 +78,8 @@ public final class MainFrame {
 		Runtime.getRuntime().addShutdownHook(new Thread(SMTPServerHandler.INSTANCE::stopServer));
 
 		// Restore last saved smtp port (if not overridden by the user)
-		String smtpPort = ArgsHandler.INSTANCE.getPort();
-		if (smtpPort == null) {
-			smtpPort = Configuration.INSTANCE.get("smtp.default.port");
-		}
-		panel.getPortText().setText(smtpPort);
+		Optional<Integer> smtpPort = ArgsHandler.INSTANCE.getPort();
+		panel.getPortText().setText(String.valueOf(smtpPort.orElseGet(() -> Integer.parseInt(Configuration.INSTANCE.get("smtp.default.port")))));
 
 		// Restore last emails directory (if not overridden by the user)
 		String emailsDir = ArgsHandler.INSTANCE.getOutputDirectory();

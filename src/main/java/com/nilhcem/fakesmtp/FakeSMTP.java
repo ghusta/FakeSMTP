@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.Optional;
 
 import javax.swing.UIManager;
 
@@ -52,6 +53,7 @@ public final class FakeSMTP {
 		try {
 			ArgsHandler.INSTANCE.handleArgs(args);
 		} catch (ParseException e) {
+			log.error(e.toString());
 			ArgsHandler.INSTANCE.displayUsage();
 			return;
 		}
@@ -111,11 +113,8 @@ public final class FakeSMTP {
 	 * @throws NumberFormatException if the specified port cannot be parsed to an integer.
 	 */
 	private static int getPort() throws NumberFormatException {
-		String portStr = ArgsHandler.INSTANCE.getPort();
-		if (portStr == null) {
-			portStr = Configuration.INSTANCE.get("smtp.default.port");
-		}
-		return Integer.parseInt(portStr);
+		Optional<Integer> port = ArgsHandler.INSTANCE.getPort();
+		return port.orElseGet(() -> Integer.parseInt(Configuration.INSTANCE.get("smtp.default.port")));
 	}
 
 	/**

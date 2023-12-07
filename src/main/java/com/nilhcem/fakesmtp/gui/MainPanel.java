@@ -180,8 +180,8 @@ public final class MainPanel {
 	private void syncWithArgs() {
 		ArgsHandler args = ArgsHandler.INSTANCE;
 
-		if (args.getPort() != null) {
-			portText.setText(args.getPort());
+		if (args.getPort().isPresent()) {
+			portText.setText(String.valueOf(args.getPort()));
 		}
 
 		if (args.isStartServerAtLaunch()) {
