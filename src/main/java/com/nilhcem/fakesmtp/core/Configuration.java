@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -23,17 +25,25 @@ public class Configuration {
 	private static final String CONFIG_FILE = "/configuration.properties";
 	private static final String USER_CONFIG_FILE = ".fakeSMTP.properties";
 
+	private final List<String> userSettingsKeys;
+
 	private final Properties config = new Properties();
 
 	/**
 	 * Opens the "{@code configuration.properties}" file and maps data.
 	 */
 	private Configuration() {
+		userSettingsKeys = List.of("smtp.default.port", "emails.default.dir");
+
 		try (InputStream in = getClass().getResourceAsStream(CONFIG_FILE)) {
 			// Load defaults settings
 			config.load(in);
 			// and override them from user settings
-			loadFromUserProfile();
+			Properties userConfig = loadFromUserProfile();
+			// merge only necessary properties
+			userConfig.entrySet().stream()
+					.filter(this::authorizedUserConfig)
+					.forEach(entry -> config.put(entry.getKey(), entry.getValue()));
 		} catch (IOException e) {
 			log.error("", e);
 		}
@@ -41,6 +51,10 @@ public class Configuration {
 
 	public static Configuration getInstance() {
 		return INSTANCE;
+	}
+
+	private boolean authorizedUserConfig(Map.Entry<Object, Object> entry) {
+		return userSettingsKeys.stream().anyMatch(s -> s.equals(entry.getKey()));
 	}
 
 	/**
@@ -73,6 +87,10 @@ public class Configuration {
 	 * @throws IOException
 	 */
 	public void saveToFile(File file) throws IOException {
+		saveToFile(file, this.config);
+	}
+
+	private void saveToFile(File file, Properties config) throws IOException {
 		try (FileOutputStream fos = new FileOutputStream(file)) {
 			config.store(fos, "Last user settings");
 		}
@@ -85,7 +103,13 @@ public class Configuration {
 	 * @throws IOException
 	 */
 	public void saveToUserProfile() throws IOException {
-		saveToFile(new File(System.getProperty("user.home"), USER_CONFIG_FILE));
+		Properties userConfig = new Properties();
+		userSettingsKeys.forEach(key -> {
+			if (this.config.get(key) != null) {
+				userConfig.put(key, this.config.get(key));
+			}
+		});
+		saveToFile(new File(System.getProperty("user.home"), USER_CONFIG_FILE), userConfig);
 	}
 
 	/**
@@ -95,13 +119,14 @@ public class Configuration {
 	 * @return INSTANCE.
 	 * @throws IOException
 	 */
-	public Configuration loadFromFile(File file) throws IOException {
+	Properties loadFromFile(File file) throws IOException {
+		Properties props = new Properties();
 		if (file.exists() && file.canRead()) {
 			try (FileInputStream fis = new FileInputStream(file)) {
-				config.load(fis);
+				props.load(fis);
 			}
 		}
-		return this;
+		return props;
 	}
 
 	/**
@@ -111,7 +136,7 @@ public class Configuration {
 	 * @return INSTANCE.
 	 * @throws IOException
 	 */
-	public Configuration loadFromUserProfile() throws IOException {
+	Properties loadFromUserProfile() throws IOException {
 		return loadFromFile(new File(System.getProperty("user.home"), USER_CONFIG_FILE));
 	}
 }
