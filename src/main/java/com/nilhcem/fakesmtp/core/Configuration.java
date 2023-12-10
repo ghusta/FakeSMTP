@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import static com.nilhcem.fakesmtp.core.Configuration.Settings.EMAILS_DEFAULT_DIR;
+import static com.nilhcem.fakesmtp.core.Configuration.Settings.SMTP_DEFAULT_PORT;
+
 /**
  * Contains and returns some project-specific configuration variables.
  *
@@ -29,11 +32,16 @@ public class Configuration {
 
 	private final Properties config = new Properties();
 
+	public static class Settings {
+		public static final String SMTP_DEFAULT_PORT = "smtp.default.port";
+		public static final String EMAILS_DEFAULT_DIR = "emails.default.dir";
+	}
+
 	/**
 	 * Opens the "{@code configuration.properties}" file and maps data.
 	 */
 	private Configuration() {
-		userSettingsKeys = List.of("smtp.default.port", "emails.default.dir");
+		userSettingsKeys = List.of(SMTP_DEFAULT_PORT, EMAILS_DEFAULT_DIR);
 
 		try (InputStream in = getClass().getResourceAsStream(CONFIG_FILE)) {
 			// Load defaults settings

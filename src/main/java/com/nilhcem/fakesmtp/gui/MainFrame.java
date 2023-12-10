@@ -2,6 +2,7 @@ package com.nilhcem.fakesmtp.gui;
 
 import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
+import com.nilhcem.fakesmtp.core.Configuration.Settings;
 import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
 import com.nilhcem.fakesmtp.gui.listeners.MainWindowListener;
 import com.nilhcem.fakesmtp.model.UIModel;
@@ -97,8 +98,8 @@ public final class MainFrame {
 	public void close() {
 		log.debug("Closing the application and saving the configuration");
 
-		Configuration.getInstance().set("smtp.default.port", panel.getPortText().get().getText());
-		Configuration.getInstance().set("emails.default.dir", panel.getSaveMsgTextField().get().getText());
+		Configuration.getInstance().set(Settings.SMTP_DEFAULT_PORT, panel.getPortText().get().getText());
+		Configuration.getInstance().set(Settings.EMAILS_DEFAULT_DIR, panel.getSaveMsgTextField().get().getText());
 
 		try {
 			Configuration.getInstance().saveToUserProfile();
