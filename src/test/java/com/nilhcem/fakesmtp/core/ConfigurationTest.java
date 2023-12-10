@@ -7,18 +7,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ConfigurationTest {
 	@Test
 	void uniqueInstance() {
-		Configuration a = Configuration.INSTANCE;
-		Configuration b = Configuration.INSTANCE;
+		Configuration a = Configuration.getInstance();
+		Configuration b = Configuration.getInstance();
 		assertThat(b).isSameAs(a);
 	}
 
 	@Test
 	void getEmptyValueWhenKeyIsNotFound() {
-		assertThat(Configuration.INSTANCE.get("this.key.doesnt.exist")).isEmpty();
+		assertThat(Configuration.getInstance().get("this.key.doesnt.exist")).isEmpty();
 	}
 
 	@Test
 	void getValueWhenKeyIsFound() {
-		assertThat(Configuration.INSTANCE.get("application.name")).isNotEmpty();
+		assertThat(Configuration.getInstance().get("application.name")).isNotEmpty();
 	}
 }

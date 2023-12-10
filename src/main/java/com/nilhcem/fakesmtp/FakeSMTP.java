@@ -83,7 +83,7 @@ public final class FakeSMTP {
 				@Override
 				public void run() {
 					try {
-						URL envelopeImage = getClass().getResource(Configuration.INSTANCE.get("application.icon.path"));
+						URL envelopeImage = getClass().getResource(Configuration.getInstance().get("application.icon.path"));
 						if (envelopeImage != null) {
 							Application.getApplication().setDockIconImage(Toolkit.getDefaultToolkit().getImage(envelopeImage));
 						}
@@ -94,7 +94,7 @@ public final class FakeSMTP {
 					}
 
 					System.setProperty("apple.laf.useScreenMenuBar", "true");
-					System.setProperty("com.apple.mrj.application.apple.menu.about.name", Configuration.INSTANCE.get("application.name"));
+					System.setProperty("com.apple.mrj.application.apple.menu.about.name", Configuration.getInstance().get("application.name"));
 					UIManager.put("swing.boldMetal", Boolean.FALSE);
 					try {
 						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -114,7 +114,7 @@ public final class FakeSMTP {
 	 */
 	private static int getPort() throws NumberFormatException {
 		Optional<Integer> port = ArgsHandler.INSTANCE.getPort();
-		return port.orElseGet(() -> Integer.parseInt(Configuration.INSTANCE.get("smtp.default.port")));
+		return port.orElseGet(() -> Integer.parseInt(Configuration.getInstance().get("smtp.default.port")));
 	}
 
 	/**

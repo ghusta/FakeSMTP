@@ -187,7 +187,7 @@ public final class MailSaver {
 			} else {
 				iStr = "";
 			}
-			file = new File(filePath + iStr + Configuration.INSTANCE.get("emails.suffix"));
+			file = new File(filePath + iStr + Configuration.getInstance().get("emails.suffix"));
 		}
 
 		// Copy String to file

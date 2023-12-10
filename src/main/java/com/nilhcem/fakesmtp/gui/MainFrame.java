@@ -26,7 +26,7 @@ import java.util.Optional;
 @Slf4j
 public final class MainFrame {
 
-	private final JFrame mainFrame = new JFrame(Configuration.INSTANCE.get("application.title"));
+	private final JFrame mainFrame = new JFrame(Configuration.getInstance().get("application.title"));
 	private final MenuBar menu = new MenuBar(this);
 	private final MainPanel panel = new MainPanel(menu);
 
@@ -49,11 +49,11 @@ public final class MainFrame {
 	 */
 	public MainFrame() {
 		((UncaughtExceptionHandler) Thread.getDefaultUncaughtExceptionHandler()).setParentComponent(panel.get());
-		Dimension frameSize = new Dimension(Integer.parseInt(Configuration.INSTANCE.get("application.min.width")),
-			Integer.parseInt(Configuration.INSTANCE.get("application.min.height")));
+		Dimension frameSize = new Dimension(Integer.parseInt(Configuration.getInstance().get("application.min.width")),
+				Integer.parseInt(Configuration.getInstance().get("application.min.height")));
 
 		Image iconImage = Toolkit.getDefaultToolkit().getImage(
-			getClass().getResource(Configuration.INSTANCE.get("application.icon.path")));
+			getClass().getResource(Configuration.getInstance().get("application.icon.path")));
 
 		MainWindowListener windowListener = new MainWindowListener(this);
 
@@ -79,12 +79,12 @@ public final class MainFrame {
 
 		// Restore last saved smtp port (if not overridden by the user)
 		Optional<Integer> smtpPort = ArgsHandler.INSTANCE.getPort();
-		panel.getPortText().setText(String.valueOf(smtpPort.orElseGet(() -> Integer.parseInt(Configuration.INSTANCE.get("smtp.default.port")))));
+		panel.getPortText().setText(String.valueOf(smtpPort.orElseGet(() -> Integer.parseInt(Configuration.getInstance().get("smtp.default.port")))));
 
 		// Restore last emails directory (if not overridden by the user)
 		String emailsDir = ArgsHandler.INSTANCE.getOutputDirectory();
 		if (emailsDir == null) {
-			emailsDir = Configuration.INSTANCE.get("emails.default.dir");
+			emailsDir = Configuration.getInstance().get("emails.default.dir");
 		}
 		if (emailsDir != null && !emailsDir.isEmpty()) {
 			panel.getSaveMsgTextField().get().setText(emailsDir);
@@ -97,11 +97,11 @@ public final class MainFrame {
 	public void close() {
 		log.debug("Closing the application and saving the configuration");
 
-		Configuration.INSTANCE.set("smtp.default.port", panel.getPortText().get().getText());
-		Configuration.INSTANCE.set("emails.default.dir", panel.getSaveMsgTextField().get().getText());
+		Configuration.getInstance().set("smtp.default.port", panel.getPortText().get().getText());
+		Configuration.getInstance().set("emails.default.dir", panel.getSaveMsgTextField().get().getText());
 
 		try {
-			Configuration.INSTANCE.saveToUserProfile();
+			Configuration.getInstance().saveToUserProfile();
 		} catch (IOException ex) {
 			log.error("Could not save configuration", ex);
 		}

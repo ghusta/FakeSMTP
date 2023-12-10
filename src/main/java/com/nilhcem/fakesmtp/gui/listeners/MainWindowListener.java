@@ -34,13 +34,13 @@ public class MainWindowListener extends WindowAdapter {
 	 * @param mainFrame The MainFrame class used for closing actions from TrayPopup.
 	 */
 	public MainWindowListener(final MainFrame mainFrame) {
-		useTray = (SystemTray.isSupported() && Boolean.parseBoolean(Configuration.INSTANCE.get("application.tray.use")));
+		useTray = (SystemTray.isSupported() && Boolean.parseBoolean(Configuration.getInstance().get("application.tray.use")));
 
 		if (useTray) {
 			final TrayPopup trayPopup = new TrayPopup(mainFrame);
 
 			final Image iconImage = Toolkit.getDefaultToolkit().getImage(getClass().
-				getResource(Configuration.INSTANCE.get("application.icon.path")));
+				getResource(Configuration.getInstance().get("application.icon.path")));
 
 			trayIcon = new TrayIcon(iconImage);
 

@@ -106,7 +106,7 @@ public final class StartServerButton extends Observable implements Observer {
 	 */
 	private void displayError(String error) {
 		JOptionPane.showMessageDialog(button.getParent(), error,
-				i18n.get("startsrv.err.title").formatted(Configuration.INSTANCE.get("application.name")),
+				i18n.get("startsrv.err.title").formatted(Configuration.getInstance().get("application.name")),
 			JOptionPane.ERROR_MESSAGE);
 	}
 

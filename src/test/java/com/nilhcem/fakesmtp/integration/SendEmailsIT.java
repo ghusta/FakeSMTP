@@ -66,7 +66,7 @@ public final class SendEmailsIT {
 	void sendEmailWithAttachment() throws EmailException {
 		// Create the attachment
 		EmailAttachment attachment = new EmailAttachment();
-		attachment.setPath("src/main/resources" + Configuration.INSTANCE.get("application.icon.path"));
+		attachment.setPath("src/main/resources" + Configuration.getInstance().get("application.icon.path"));
 		attachment.setDisposition(EmailAttachment.ATTACHMENT);
 		attachment.setDescription("Image file");
 		attachment.setName("icon.gif");

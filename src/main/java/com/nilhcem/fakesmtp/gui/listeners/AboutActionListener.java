@@ -51,7 +51,7 @@ public class AboutActionListener implements ActionListener {
 
 		// html content
 		String link = i18n.get("menubar.about.dialog.link");
-		String appVersion = Configuration.INSTANCE.get("application.version");
+		String appVersion = Configuration.getInstance().get("application.version");
 		JEditorPane ep = new JEditorPane("text/html",
 				"<html><body style=\"%s\">%s<br /><a href=\"%s\">%s</a></body></html>".formatted(
 						style, i18n.get("menubar.about.dialog").formatted(appVersion),
@@ -68,7 +68,7 @@ public class AboutActionListener implements ActionListener {
 
 		// show
 		JOptionPane.showMessageDialog(parent, ep, i18n.get("menubar.about.title").formatted(
-				Configuration.INSTANCE.get("application.name")), JOptionPane.INFORMATION_MESSAGE);
+				Configuration.getInstance().get("application.name")), JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**

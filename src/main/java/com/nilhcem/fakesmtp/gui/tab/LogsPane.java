@@ -55,7 +55,7 @@ public final class LogsPane implements Observer {
 	 */
 	private void addObserverToSmtpLogAppender() {
 		Logger smtpLogger = LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class);
-		String appenderName = Configuration.INSTANCE.get("logback.appender.name");
+		String appenderName = Configuration.getInstance().get("logback.appender.name");
 
 		@SuppressWarnings("unchecked")
 		SMTPLogsAppender<ILoggingEvent> appender = (SMTPLogsAppender<ILoggingEvent>)

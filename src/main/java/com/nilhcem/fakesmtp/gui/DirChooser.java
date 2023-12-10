@@ -34,7 +34,7 @@ public final class DirChooser extends Observable implements Observer {
 		this.parent = parent;
 		dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		dirChooser.setDialogTitle(I18n.INSTANCE.get("dirchooser.title").formatted(
-				Configuration.INSTANCE.get("application.name")));
+				Configuration.getInstance().get("application.name")));
 		dirChooser.setApproveButtonText(I18n.INSTANCE.get("dirchooser.approve.btn"));
 	}
 
@@ -65,7 +65,7 @@ public final class DirChooser extends Observable implements Observer {
 	 * </p>
 	 */
 	private void openFolderSelection() {
-		File filePath = new File(Configuration.INSTANCE.get("emails.default.dir"));
+		File filePath = new File(Configuration.getInstance().get("emails.default.dir"));
 		dirChooser.setCurrentDirectory(filePath);
 
 		int result = dirChooser.showOpenDialog(parent);

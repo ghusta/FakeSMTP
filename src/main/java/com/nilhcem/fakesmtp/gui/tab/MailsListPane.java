@@ -220,7 +220,7 @@ public final class MailsListPane implements Observer {
 	 */
 	private void displayError(String error) {
 		JOptionPane.showMessageDialog(mailsListPane.getParent(), error,
-				i18n.get("mailslist.err.title").formatted(Configuration.INSTANCE.get("application.name")),
+				i18n.get("mailslist.err.title").formatted(Configuration.getInstance().get("application.name")),
 			JOptionPane.ERROR_MESSAGE);
 	}
 }
