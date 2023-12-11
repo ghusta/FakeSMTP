@@ -1,10 +1,11 @@
 package com.nilhcem.fakesmtp.core;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.Objects;
 import java.util.ResourceBundle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Initializes resource bundle and get messages from keys.
@@ -15,12 +16,11 @@ import org.slf4j.LoggerFactory;
  * @author Nilhcem
  * @since 1.0
  */
+@Slf4j
 public enum I18n {
 	INSTANCE;
 
-	public static final String UTF8 = "UTF-8";
 	private static final String RESOURCE_FILE = "i18n/messages";
-	private final Logger logger = LoggerFactory.getLogger(I18n.class);
 	private final ResourceBundle resources;
 
 	/**
@@ -30,15 +30,8 @@ public enum I18n {
 	 * </p>
 	 */
 	I18n() {
-		ResourceBundle bundle;
-
-		try {
-			bundle = ResourceBundle.getBundle(I18n.RESOURCE_FILE, Locale.getDefault());
-		} catch (MissingResourceException mre) {
-			logger.error("{}", mre.getMessage());
-			logger.info("Will use default bundle (en) instead");
-			bundle = ResourceBundle.getBundle(I18n.RESOURCE_FILE, Locale.ENGLISH);
-		}
+		ResourceBundle bundle = ResourceBundle.getBundle(I18n.RESOURCE_FILE, Locale.getDefault());
+		Objects.requireNonNull(bundle);
 		resources = bundle;
 	}
 
@@ -55,7 +48,7 @@ public enum I18n {
 		try {
 			return resources.getString(key);
 		} catch (MissingResourceException e) {
-			logger.error("{}", e.getMessage());
+			log.error("{}", e.getMessage());
 			return "";
 		}
 	}
