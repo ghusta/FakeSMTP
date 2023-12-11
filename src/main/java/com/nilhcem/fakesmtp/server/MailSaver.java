@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public final class MailSaver {
 
-	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	private static final String LINE_SEPARATOR = System.lineSeparator();
 	// This can be a static variable since it is Thread Safe
 	private static final Pattern SUBJECT_PATTERN = Pattern.compile("^Subject: (.*)$");
 
