@@ -10,21 +10,19 @@ import ch.qos.logback.core.AppenderBase;
  *
  * @author Nilhcem
  * @since 1.0
- * @param <E> a Logback logging event.
  */
-public final class SMTPLogsAppender<E> extends AppenderBase<E> {
+public final class SMTPLogsAppender extends AppenderBase<ILoggingEvent> {
+
 	private SMTPLogsObservable observable = new SMTPLogsObservable();
 
 	/**
 	 * Receives a log from Logback, and sends it to the {@code LogsPane} object.
 	 *
-	 * @param event a Logback {@code ILoggingEvent} event.
+	 * @param loggingEvent a Logback {@code ILoggingEvent} event.
 	 */
 	@Override
-	protected void append(E event) {
-		if (event instanceof ILoggingEvent loggingEvent) {
-			observable.notifyObservers(loggingEvent.getFormattedMessage());
-		}
+	protected void append(ILoggingEvent loggingEvent) {
+		observable.notifyObservers(loggingEvent.getFormattedMessage());
 	}
 
 	/**

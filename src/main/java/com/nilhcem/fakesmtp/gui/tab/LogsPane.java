@@ -58,8 +58,7 @@ public final class LogsPane implements Observer {
 		String appenderName = Configuration.getInstance().get("logback.appender.name");
 
 		@SuppressWarnings("unchecked")
-		SMTPLogsAppender<ILoggingEvent> appender = (SMTPLogsAppender<ILoggingEvent>)
-			((AppenderAttachable<ILoggingEvent>) smtpLogger).getAppender(appenderName);
+		SMTPLogsAppender appender = (SMTPLogsAppender) ((AppenderAttachable<ILoggingEvent>) smtpLogger).getAppender(appenderName);
 		if (appender == null) {
 			LoggerFactory.getLogger(LogsPane.class).error("Can't find appender: {}", appenderName);
 		} else {
