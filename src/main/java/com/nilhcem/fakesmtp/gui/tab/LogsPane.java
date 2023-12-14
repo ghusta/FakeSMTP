@@ -24,6 +24,8 @@ import java.util.Observer;
  */
 public final class LogsPane implements Observer {
 
+	private static final Logger log = LoggerFactory.getLogger(LogsPane.class);
+	
 	private final JScrollPane logsPane = new JScrollPane();
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
 	private final JTextArea logsArea = new JTextArea();
@@ -60,7 +62,7 @@ public final class LogsPane implements Observer {
 		@SuppressWarnings("unchecked")
 		SMTPLogsAppender appender = (SMTPLogsAppender) ((AppenderAttachable<ILoggingEvent>) smtpLogger).getAppender(appenderName);
 		if (appender == null) {
-			LoggerFactory.getLogger(LogsPane.class).error("Can't find appender: {}", appenderName);
+			log.error("Can't find appender: {}", appenderName);
 		} else {
 			appender.getObservable().addObserver(this);
 		}
