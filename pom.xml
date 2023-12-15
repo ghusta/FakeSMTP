@@ -179,27 +179,29 @@
 				</executions>
 			</plugin>
 
-			<!-- Create an executable jar with dependencies -->
+			<!-- Make a Fat Jar -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.6.0</version>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifestFile>${project.basedir}/src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-					</archive>
-					<!-- Remove the "-jar-with-dependencies" at the end of the file -->
-					<appendAssemblyId>false</appendAssemblyId>
-				</configuration>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.5.1</version>
 				<executions>
 					<execution>
-						<goals>
-							<goal>single</goal>
-						</goals>
 						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<minimizeJar>false</minimizeJar>
+							<transformers>
+								<transformer
+										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>com.nilhcem.fakesmtp.FakeSMTP</Main-Class>
+										<SplashScreen-Image>META-INF/splash.png</SplashScreen-Image>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
