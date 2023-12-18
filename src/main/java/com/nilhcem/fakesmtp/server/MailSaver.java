@@ -183,7 +183,7 @@ public final class MailSaver {
 		while (file == null || file.exists()) {
 			String iStr;
 			if (i++ > 0) {
-				iStr = Integer.toString(i);
+				iStr = "_" + i;
 			} else {
 				iStr = "";
 			}
@@ -197,6 +197,7 @@ public final class MailSaver {
 			// If we can't save file, we display the error in the SMTP logs
 			Logger smtpLogger = LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class);
 			smtpLogger.error("Error: Can't save email: {}", e.getMessage());
+			return null;
 		}
 		return file.getAbsolutePath();
 	}
