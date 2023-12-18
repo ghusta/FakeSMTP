@@ -35,6 +35,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -71,7 +72,8 @@ public class FakeSmtpController implements Initializable {
 
     private final BooleanProperty serverStarting = new SimpleBooleanProperty(false);
     private final BooleanProperty serverStarted = new SimpleBooleanProperty(false);
-    private final StringProperty emailsDirectoryProperty = new SimpleStringProperty("---");
+    private final StringProperty emailsDirectory = new SimpleStringProperty("---");
+    private final BooleanProperty memoryModeEnabled = new SimpleBooleanProperty(false);
 
     @FXML
     private Label listeningPortLabel;
@@ -104,6 +106,9 @@ public class FakeSmtpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ArgsHandler argsHandler = ArgsHandler.INSTANCE;
+        memoryModeEnabled.set(argsHandler.isMemoryModeEnabled());
+
         this.messages = resourceBundle;
         Properties configProperties = Configuration.getInstance().getAllProperties();
         String appName = configProperties.getProperty("application.name");
@@ -118,8 +123,8 @@ public class FakeSmtpController implements Initializable {
         portNumberTextField.setText(smtpDefaultPort);
 
         String emailsDefaultDir = configProperties.getProperty("emails.default.dir", messages.getString("emails.default.dir"));
-        emailsDirectoryProperty.addListener((observable, oldValue, newValue) -> UIModel.INSTANCE.setSavePath(newValue));
-        emailsDirectoryProperty.set(emailsDefaultDir);
+        emailsDirectory.addListener((observable, oldValue, newValue) -> UIModel.INSTANCE.setSavePath(newValue));
+        emailsDirectory.set(emailsDefaultDir);
 
         portNumberTextField.setTooltip(new Tooltip(resourceBundle.getString("porttextfield.tooltip")));
         emailsDirChooserButton.setTooltip(new Tooltip(resourceBundle.getString("savemsgfield.tooltip")));
@@ -127,12 +132,13 @@ public class FakeSmtpController implements Initializable {
 
         startProgressIndicator.visibleProperty().bind(serverStarting);
         startServerButton.disableProperty().bind(Bindings.or(serverStarting, serverStarted));
-        emailsDirChooserButton.disableProperty().bind(serverStarting);
+        emailsDirChooserButton.disableProperty().bind(Bindings.or(serverStarting, memoryModeEnabled));
         portNumberTextField.disableProperty().bind(serverStarted);
         BooleanBinding emailsTableViewEmpty = Bindings.isEmpty(emailsTableView.getItems());
         clearAllButton.disableProperty().bind(emailsTableViewEmpty);
 
-        emailsDirectoryTextField.textProperty().bind(emailsDirectoryProperty);
+        emailsDirectoryTextField.textProperty().bind(emailsDirectory);
+        emailsDirectoryTextField.disableProperty().bind(memoryModeEnabled);
 
         portNumberTextField.textProperty().addListener((observable, oldValue, newValue) -> UIModel.INSTANCE.setPort(newValue));
 
@@ -213,6 +219,13 @@ public class FakeSmtpController implements Initializable {
         TableColumn<EmailModel, String> subjectColumn = new TableColumn<>(messages.getString("mailslist.col.subject"));
         subjectColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().subject()));
         emailsTableView.getColumns().add(subjectColumn);
+
+        // manage double-click on TableRow
+        emailsTableView.setRowFactory(param -> {
+            TableRow<EmailModel> emailModelTableRow = new TableRow<>();
+            emailModelTableRow.setOnMouseClicked(this::onEmailsListClick);
+            return emailModelTableRow;
+        });
     }
 
     private void syncModelWithArgs() {
@@ -229,11 +242,6 @@ public class FakeSmtpController implements Initializable {
 
         if (argsHandler.isStartServerAtLaunch()) {
             startServerButton.fire();
-        }
-
-        if (argsHandler.isMemoryModeEnabled()) {
-            emailsDirChooserButton.setDisable(true);
-            emailsDirectoryTextField.setDisable(true); // set opacity ?
         }
     }
 
@@ -284,15 +292,15 @@ public class FakeSmtpController implements Initializable {
     private void onChooseEmailsDirectory(ActionEvent actionEvent) {
         Window parentWindow = ((Node) actionEvent.getTarget()).getScene().getWindow();
         final DirectoryChooser directoryChooser = new DirectoryChooser();
-        if (Files.exists(Path.of(emailsDirectoryProperty.getValue()))) {
-            directoryChooser.initialDirectoryProperty().set(new File(emailsDirectoryProperty.getValue()));
+        if (Files.exists(Path.of(emailsDirectory.getValue()))) {
+            directoryChooser.initialDirectoryProperty().set(new File(emailsDirectory.getValue()));
         } else {
             directoryChooser.initialDirectoryProperty().set(new File("."));
         }
         final File selectedDirectory = directoryChooser.showDialog(parentWindow);
         if (selectedDirectory != null) {
             String absolutePath = selectedDirectory.getAbsolutePath();
-            emailsDirectoryProperty.set(absolutePath);
+            emailsDirectory.set(absolutePath);
         }
     }
 
@@ -332,7 +340,9 @@ public class FakeSmtpController implements Initializable {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
             mouseEvent.consume();
             EmailModel selectedItem = emailsTableView.getSelectionModel().getSelectedItem();
-            FakeSmtpApplication.hostServices.showDocument(Paths.get(selectedItem.filePath()).normalize().toString());
+            if (!memoryModeEnabled.get()) {
+                FakeSmtpApplication.hostServices.showDocument(Paths.get(selectedItem.filePath()).normalize().toString());
+            }
         }
     }
 
