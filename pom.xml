@@ -244,6 +244,20 @@
 				<version>3.4.1</version>
 				<executions>
 					<execution>
+						<id>enforce-maven-version</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.8</version>
+								</requireMavenVersion>
+							</rules>
+							<fail>true</fail>
+						</configuration>
+					</execution>
+					<execution>
 						<id>enforce-java-version</id>
 						<goals>
 							<goal>enforce</goal>
