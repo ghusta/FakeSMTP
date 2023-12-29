@@ -3,6 +3,7 @@ package com.nilhcem.fakesmtp.gui.reactive;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Flow;
 import java.util.function.Consumer;
 
@@ -16,10 +17,16 @@ public class ConsumerSubscriber<T> implements Flow.Subscriber<T> {
 
     private Flow.Subscription subscription;
     private final Consumer<T> consumer;
+    private Executor executor;
 
     public ConsumerSubscriber(Consumer<T> consumer) {
         Objects.requireNonNull(consumer);
         this.consumer = consumer;
+    }
+
+    public ConsumerSubscriber(Consumer<T> consumer, Executor executor) {
+        this(consumer);
+        this.executor = executor;
     }
 
     @Override
@@ -30,7 +37,11 @@ public class ConsumerSubscriber<T> implements Flow.Subscriber<T> {
 
     @Override
     public void onNext(T item) {
-        consumer.accept(item);
+        if (executor != null) {
+            executor.execute(() -> consumer.accept(item));
+        } else {
+            consumer.accept(item);
+        }
         subscription.request(1);
     }
 
