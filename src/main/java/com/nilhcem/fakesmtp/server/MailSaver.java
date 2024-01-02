@@ -52,7 +52,7 @@ public final class MailSaver {
 	 * Use HH for (0-23) hour format.
 	 * Use n to use nanos (9 digits) instead of milliseconds (3 digits)
 	 */
-	private final DateTimeFormatter dateTimeFormatForFilename = DateTimeFormatter.ofPattern("yyyyMMdd.HHmmss.n");
+	private final DateTimeFormatter dateTimeFormatForFilename = DateTimeFormatter.ofPattern("yyyyMMdd.HHmmss.nnnnnnnnn");
 
 	private final SubmissionPublisher<EmailModel> emailPublisher;
 
