@@ -1,3 +1,14 @@
+# v2.5.0
+
+- Feature: Change eml file name pattern on disk (#16)
+- Fix: Make it clear that option 'background' implies activation of option 'start-server' (#17)
+- Fix: Avoid to save unnecessary properties to user config file (#19)
+- Fix: Parse option 'port' at startup (#18)
+- Refactoring: Prefer Java 8 Date and Time API
+- Refactoring: Use Java 7 New I/O APIs
+- Refactoring: Fat Jar file : prefer Maven Shade Plugin (#21)
+- Refactoring: Use Publisher/Subscriber with emails events (replaces deprecated Observable) (#14)
+
 # v2.4.0
 
 - Use Java 17
