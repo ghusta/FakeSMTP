@@ -1,3 +1,7 @@
+# v2.5.1
+
+- Minor fixes (#23, #24)
+
 # v2.5.0
 
 - Feature: Change eml file name pattern on disk (#16)
