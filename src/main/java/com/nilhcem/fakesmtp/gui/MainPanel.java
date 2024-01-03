@@ -124,11 +124,6 @@ public final class MainPanel {
 
 		// When a message is received
 		MailSaver mailSaver = SMTPServerHandler.INSTANCE.getMailSaver();
-//		mailSaver.addObserver(nbReceivedLabel);
-//		mailSaver.addObserver(mailsListPane);
-//		mailSaver.addObserver(lastMailPane);
-//		mailSaver.addObserver(clearAll);
-
 		mailSaver.getEmailPublisher().subscribe(new ConsumerSubscriber<>(emailModel -> {
 			nbReceivedLabel.onNewMail(emailModel);
 			mailsListPane.onNewMail(emailModel);
