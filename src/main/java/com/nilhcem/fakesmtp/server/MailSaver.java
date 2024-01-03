@@ -138,25 +138,23 @@ public final class MailSaver {
 	/**
 	 * Converts an {@code InputStream} into a {@code String} object.
 	 * <p>
-	 * The method will not copy the first 4 lines of the input stream.<br>
-	 * These 4 lines are SubEtha SMTP additional information.
+	 * The method will copy the Received headers lines of the input stream depending
+	 * of SubEtha SMTP builder configuration (insertReceivedHeaders).
 	 * </p>
 	 *
 	 * @param is the InputStream to be converted.
 	 * @return the converted string object, containing data from the InputStream passed in parameters.
 	 */
 	private String convertStreamToString(InputStream is) {
-		final long lineNbToStartCopy = 4; // Do not copy the first 4 lines (received part)
+		// see: org.subethamail.smtp.internal.io.ReceivedHeaderStream
+		// see: org.subethamail.smtp.server.SMTPServer.getDisableReceivedHeaders
+		// and: org.subethamail.smtp.server.SMTPServer.Builder.insertReceivedHeaders(boolean)
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 		StringBuilder sb = new StringBuilder();
-
 		String line;
-		long lineNb = 0;
 		try {
 			while ((line = reader.readLine()) != null) {
-				if (++lineNb > lineNbToStartCopy) {
-					sb.append(line).append(LINE_SEPARATOR);
-				}
+				sb.append(line).append(LINE_SEPARATOR);
 			}
 		} catch (IOException e) {
 			log.error("", e);

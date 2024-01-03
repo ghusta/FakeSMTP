@@ -42,6 +42,7 @@ public enum SMTPServerHandler {
 		try {
 			InetAddress anyLocalAddress = InetAddress.getByName("0.0.0.0");
 			smtpServer = new SMTPServer.Builder()
+					.insertReceivedHeaders(false)
 					.simpleMessageListener(myListener)
 					.authenticationHandlerFactory(new SMTPAuthHandlerFactory())
 					.bindAddress(bindAddress == null ? anyLocalAddress : bindAddress)
