@@ -11,13 +11,84 @@
 	<description>Dummy SMTP server for testing</description>
 	<url>https://github.com/Nilhcem/FakeSMTP</url>
 
+	<!-- License -->
+	<licenses>
+		<license>
+			<name>BSD</name>
+			<url>LICENSE.txt</url>
+		</license>
+	</licenses>
+
+	<!-- List the core committers + contributors -->
+	<developers>
+		<developer>
+			<id>nilhcem</id>
+			<name>Gautier MECHLING</name>
+			<url>http://www.nilhcem.com</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/Paris</timezone>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>jasonpenny</name>
+			<url>https://github.com/jasonpenny</url>
+		</contributor>
+		<contributor>
+			<name>andreyknupp</name>
+			<url>https://github.com/andreyknupp</url>
+		</contributor>
+		<contributor>
+			<name>eugenehr</name>
+			<url>https://github.com/eugenehr</url>
+		</contributor>
+		<contributor>
+			<name>cchantep</name>
+			<url>https://github.com/cchantep</url>
+		</contributor>
+		<contributor>
+			<name>essobedo</name>
+			<url>https://github.com/essobedo</url>
+		</contributor>
+		<contributor>
+			<name>rellem</name>
+			<url>https://github.com/rellem</url>
+		</contributor>
+		<contributor>
+			<name>nakag</name>
+			<url>https://github.com/nakag</url>
+		</contributor>
+		<contributor>
+			<name>pawel-piecyk</name>
+			<url>https://github.com/pawel-piecyk</url>
+		</contributor>
+		<contributor>
+			<name>modeckimellett</name>
+			<url>https://github.com/modeckimellett</url>
+		</contributor>
+		<contributor>
+			<name>Vest</name>
+			<url>https://github.com/Vest</url>
+		</contributor>
+		<contributor>
+			<name>evrycollin</name>
+			<url>https://github.com/evrycollin</url>
+		</contributor>
+		<contributor>
+			<name>lfuelling</name>
+			<url>https://github.com/lfuelling</url>
+		</contributor>
+	</contributors>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 		<java.version>17</java.version>
 		<docker.image>fakesmtp</docker.image>
 	</properties>
-
 	<dependencies>
 		<!-- MIG Layout: layout for Swing -->
 		<dependency>
@@ -60,23 +131,23 @@
 
 		<!-- Commons IO: utilities to assist with developing IO functionality -->
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.15.1</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.15.1</version>
 		</dependency>
 
 		<!-- Commons CLI: API for presenting, processing and validating a command line interface -->
 		<dependency>
-		    <groupId>commons-cli</groupId>
-		    <artifactId>commons-cli</artifactId>
-		    <version>1.6.0</version>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.6.0</version>
 		</dependency>
 
 		<!-- Apple java extensions (to use a custom icon in the Mac Dock) -->
 		<dependency>
-		    <groupId>com.apple</groupId>
-		    <artifactId>AppleJavaExtensions</artifactId>
-		    <version>1.4</version>
+			<groupId>com.apple</groupId>
+			<artifactId>AppleJavaExtensions</artifactId>
+			<version>1.4</version>
 		</dependency>
 
 		<dependency>
@@ -194,7 +265,7 @@
 							<minimizeJar>false</minimizeJar>
 							<transformers>
 								<transformer
-										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
 										<Main-Class>com.nilhcem.fakesmtp.FakeSMTP</Main-Class>
 										<SplashScreen-Image>META-INF/splash.png</SplashScreen-Image>
@@ -301,75 +372,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<!-- List the core committers + contributors -->
-	<developers>
-		<developer>
-			<id>nilhcem</id>
-			<name>Gautier MECHLING</name>
-			<url>http://www.nilhcem.com</url>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>Europe/Paris</timezone>
-		</developer>
-	</developers>
-	<contributors>
-		<contributor>
-			<name>jasonpenny</name>
-			<url>https://github.com/jasonpenny</url>
-		</contributor>
-		<contributor>
-			<name>andreyknupp</name>
-			<url>https://github.com/andreyknupp</url>
-		</contributor>
-		<contributor>
-			<name>eugenehr</name>
-			<url>https://github.com/eugenehr</url>
-		</contributor>
-		<contributor>
-			<name>cchantep</name>
-			<url>https://github.com/cchantep</url>
-		</contributor>
-		<contributor>
-			<name>essobedo</name>
-			<url>https://github.com/essobedo</url>
-		</contributor>
-		<contributor>
-			<name>rellem</name>
-			<url>https://github.com/rellem</url>
-		</contributor>
-		<contributor>
-			<name>nakag</name>
-			<url>https://github.com/nakag</url>
-		</contributor>
-		<contributor>
-			<name>pawel-piecyk</name>
-			<url>https://github.com/pawel-piecyk</url>
-		</contributor>
-		<contributor>
-			<name>modeckimellett</name>
-			<url>https://github.com/modeckimellett</url>
-		</contributor>
-		<contributor>
-			<name>Vest</name>
-			<url>https://github.com/Vest</url>
-		</contributor>
-		<contributor>
-			<name>evrycollin</name>
-			<url>https://github.com/evrycollin</url>
-		</contributor>
-		<contributor>
-			<name>lfuelling</name>
-			<url>https://github.com/lfuelling</url>
-		</contributor>
-	</contributors>
-
-	<!-- License -->
-	<licenses>
-		<license>
-			<name>BSD</name>
-			<url>LICENSE.txt</url>
-		</license>
-	</licenses>
 </project>
