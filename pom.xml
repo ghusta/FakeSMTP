@@ -126,7 +126,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.5.5</version>
+			<version>1.5.6</version>
 		</dependency>
 
 		<!-- Commons IO: utilities to assist with developing IO functionality -->
