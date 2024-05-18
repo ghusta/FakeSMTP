@@ -1,3 +1,7 @@
+# v2.6.0
+
+- Upgrade subethasmtp to 7.1 (#25)
+
 # v2.5.1
 
 - Minor fixes (#23, #24)
