@@ -1,3 +1,7 @@
+# v2.6.1
+
+- Remove duplicate dependencies (jakarta mail/activation) (#27)
+
 # v2.6.0
 
 - Upgrade subethasmtp to 7.1 (#25)
