@@ -28,7 +28,7 @@ jobs:
       - name: Display Maven version
         run: ./mvnw -v
       - name: Build with Maven
-        run: ./mvnw -ntp package -DskipTests
+        run: ./mvnw -ntp verify -DskipTests
 
   owasp-dependency-check:
     runs-on: ubuntu-latest
