@@ -1,6 +1,7 @@
 package com.nilhcem.fakesmtp.core;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -16,9 +17,11 @@ import java.util.ResourceBundle;
  * @author Nilhcem
  * @since 1.0
  */
-@Slf4j
 public enum I18n {
+
 	INSTANCE;
+
+	private static final Logger log = LoggerFactory.getLogger(I18n.class);
 
 	private static final String RESOURCE_FILE = "i18n/messages";
 	private final ResourceBundle resources;

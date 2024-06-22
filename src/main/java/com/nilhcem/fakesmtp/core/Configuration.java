@@ -1,6 +1,7 @@
 package com.nilhcem.fakesmtp.core;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,8 +21,9 @@ import static com.nilhcem.fakesmtp.core.Configuration.Settings.SMTP_DEFAULT_PORT
  * @author Nilhcem
  * @since 1.0
  */
-@Slf4j
 public class Configuration {
+
+	private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
 	private static final Configuration INSTANCE = new Configuration();
 

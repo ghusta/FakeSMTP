@@ -3,19 +3,15 @@ package com.nilhcem.fakesmtp.gui.listeners;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.gui.MainFrame;
 import com.nilhcem.fakesmtp.gui.TrayPopup;
-import java.awt.AWTException;
-import java.awt.Frame;
-import java.awt.Image;
-import java.awt.SystemTray;
-import java.awt.Toolkit;
-import java.awt.TrayIcon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Responsible for window minimizing and closing. If SystemTray is supported,
@@ -24,8 +20,9 @@ import lombok.extern.slf4j.Slf4j;
  * @author Vest
  * @since 2.1
  */
-@Slf4j
 public class MainWindowListener extends WindowAdapter {
+
+	private static final Logger log = LoggerFactory.getLogger(MainWindowListener.class);
 
 	private TrayIcon trayIcon;
 	private final boolean useTray;

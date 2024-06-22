@@ -4,7 +4,6 @@ import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.model.UIModel;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +33,9 @@ import java.util.regex.Pattern;
  * @author Nilhcem
  * @since 1.0
  */
-@Slf4j
 public final class MailSaver {
+
+	private static final Logger log = LoggerFactory.getLogger(MailSaver.class);
 
 	private static final String LINE_SEPARATOR = System.lineSeparator();
 	// This can be a static variable since it is Thread Safe

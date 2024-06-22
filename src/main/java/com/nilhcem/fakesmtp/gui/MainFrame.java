@@ -7,12 +7,11 @@ import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
 import com.nilhcem.fakesmtp.gui.listeners.MainWindowListener;
 import com.nilhcem.fakesmtp.model.UIModel;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -24,8 +23,9 @@ import java.util.Optional;
  * @author Nilhcem
  * @since 1.0
  */
-@Slf4j
 public final class MainFrame {
+
+	private static final Logger log = LoggerFactory.getLogger(MainFrame.class);
 
 	private final JFrame mainFrame = new JFrame(Configuration.getInstance().get("application.title"));
 	private final MenuBar menu = new MenuBar(this);

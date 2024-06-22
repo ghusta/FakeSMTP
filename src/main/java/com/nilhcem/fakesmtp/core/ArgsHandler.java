@@ -5,7 +5,6 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.nilhcem.fakesmtp.model.UIModel;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -26,9 +25,11 @@ import java.util.stream.Stream;
  * @author Nilhcem
  * @since 1.3
  */
-@Slf4j
 public enum ArgsHandler {
+
 	INSTANCE;
+
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(ArgsHandler.class);
 
 	private final Option optionEmailsDir = Option.builder("o")
 			.longOpt("output-dir")

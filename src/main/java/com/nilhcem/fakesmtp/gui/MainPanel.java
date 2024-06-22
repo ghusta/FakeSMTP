@@ -14,7 +14,6 @@ import com.nilhcem.fakesmtp.gui.tab.MailsListPane;
 import com.nilhcem.fakesmtp.server.MailSaver;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -26,7 +25,6 @@ import java.util.Observable;
  * @author Nilhcem
  * @since 1.0
  */
-@Slf4j
 public final class MainPanel {
 	// I18n
 	private final I18n i18n = I18n.INSTANCE;

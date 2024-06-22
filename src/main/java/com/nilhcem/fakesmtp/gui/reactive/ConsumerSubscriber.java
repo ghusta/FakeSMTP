@@ -1,6 +1,7 @@
 package com.nilhcem.fakesmtp.gui.reactive;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -12,8 +13,9 @@ import java.util.function.Consumer;
  *
  * @param <T> Data type.
  */
-@Slf4j
 public class ConsumerSubscriber<T> implements Flow.Subscriber<T> {
+
+    private static final Logger log = LoggerFactory.getLogger(ConsumerSubscriber.class);
 
     private Flow.Subscription subscription;
     private final Consumer<T> consumer;

@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import javax.swing.UIManager;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.ParseException;
 
 import com.apple.eawt.Application;
@@ -18,6 +17,8 @@ import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
 import com.nilhcem.fakesmtp.gui.MainFrame;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Entry point of the application.
@@ -25,8 +26,9 @@ import com.nilhcem.fakesmtp.server.SMTPServerHandler;
  * @author Nilhcem
  * @since 1.0
  */
-@Slf4j
 public final class FakeSMTP {
+
+	private static final Logger log = LoggerFactory.getLogger(FakeSMTP.class);
 
 	private FakeSMTP() {
 		throw new UnsupportedOperationException();

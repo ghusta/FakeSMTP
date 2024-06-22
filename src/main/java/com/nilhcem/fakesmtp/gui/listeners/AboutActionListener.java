@@ -2,18 +2,15 @@ package com.nilhcem.fakesmtp.gui.listeners;
 
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.I18n;
-import java.awt.Container;
-import java.awt.Desktop;
-import java.awt.Font;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URI;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.event.HyperlinkEvent;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements the About action.
@@ -21,8 +18,9 @@ import lombok.extern.slf4j.Slf4j;
  * @author Vest
  * @since 2.1
  */
-@Slf4j
 public class AboutActionListener implements ActionListener {
+
+	private static final Logger log = LoggerFactory.getLogger(AboutActionListener.class);
 
 	private final I18n i18n = I18n.INSTANCE;
 	private final Container parent;
