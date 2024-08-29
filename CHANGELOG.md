@@ -1,3 +1,8 @@
+# v2.6.2
+
+- Logs : console appender should not log all the messages (for all loggers in the system) (#28)
+- Minor dependency updates
+
 # v2.6.1
 
 - Remove duplicate dependencies (jakarta mail/activation) (#27)
