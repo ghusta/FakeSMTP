@@ -2,20 +2,19 @@ package com.nilhcem.fakesmtp.integration;
 
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.test.TestConfig;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailAttachment;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.MultiPartEmail;
-import org.apache.commons.mail.SimpleEmail;
+import org.apache.commons.mail2.core.EmailConstants;
+import org.apache.commons.mail2.core.EmailException;
+import org.apache.commons.mail2.jakarta.Email;
+import org.apache.commons.mail2.jakarta.EmailAttachment;
+import org.apache.commons.mail2.jakarta.HtmlEmail;
+import org.apache.commons.mail2.jakarta.MultiPartEmail;
+import org.apache.commons.mail2.jakarta.SimpleEmail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
-
-import static org.apache.commons.mail.EmailConstants.TEXT_PLAIN;
 
 public final class SendEmailsIT {
 
@@ -53,7 +52,7 @@ public final class SendEmailsIT {
 		email.setStartTLSEnabled(true);
 		email.setFrom("user@gmail.com");
 		email.addTo("foo@bar.com");
-		email.addHeader("Content-Type", TEXT_PLAIN + "; charset=" + StandardCharsets.UTF_8);
+		email.addHeader("Content-Type", EmailConstants.TEXT_PLAIN + "; charset=" + StandardCharsets.UTF_8);
 		email.setSubject(EMOJI_EMAIL + " Simple email using Unicode / Emojis " + EMOJI_LOVE_LETTER);
 		email.setMsg("This is a simple plain text email / UTF-8 \n" +
 				"\\_" + EMOJI_HAPPY_FACE + "_/ \n"
