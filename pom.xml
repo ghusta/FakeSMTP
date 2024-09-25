@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-swing</artifactId>
-			<version>11.3</version>
+			<version>11.4.2</version>
 		</dependency>
 
 		<!-- SubEtha SMTP: easy-to-use server-side SMTP library for Java -->
