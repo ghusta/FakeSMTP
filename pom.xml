@@ -86,7 +86,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 
 		<javafx.version>21.0.1</javafx.version>
 		<junit.version>5.10.1</junit.version>
