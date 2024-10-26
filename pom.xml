@@ -220,14 +220,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.5.0</version>
+				<version>3.5.1</version>
 			</plugin>
 
 			<!-- Integration tests. Launch them with "$ mvn integration-test" -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>3.5.0</version>
+				<version>3.5.1</version>
 				<executions>
 					<execution>
 						<id>integration-test</id>
