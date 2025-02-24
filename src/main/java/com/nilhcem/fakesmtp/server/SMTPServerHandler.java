@@ -1,5 +1,6 @@
 package com.nilhcem.fakesmtp.server;
 
+import com.nilhcem.fakesmtp.core.concurrency.VirtualThreadUtils;
 import com.nilhcem.fakesmtp.core.exception.BindPortException;
 import com.nilhcem.fakesmtp.core.exception.OutOfRangePortException;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import org.subethamail.smtp.server.SMTPServer;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.Executors;
 
 /**
  * Starts and stops the SMTP server.
@@ -54,6 +56,7 @@ public enum SMTPServerHandler {
 //					.simpleMessageListener(myListener)
 					.messageHandlerFactory(mhf)
 					.authenticationHandlerFactory(new SMTPAuthHandlerFactory())
+					.executorService(VirtualThreadUtils.getVirtualThreadExecutor().orElseGet(Executors::newCachedThreadPool))
 					.bindAddress(bindAddress == null ? anyLocalAddress : bindAddress)
 					.port(port)
 					.build();
