@@ -42,12 +42,9 @@ public class MailServerTest {
 			EmailModel model = (EmailModel)arg;
 
 			assertThat(model.from()).isEqualTo(from);
-			assertThat(model.to()).isEqualTo(to);
+			assertThat(model.recipient()).isEqualTo(to);
 			assertThat(model.subject()).isEqualTo(subject);
-			assertThat(model.to()).isEqualTo(to);
-			assertThat(model.emailStr()).isNotNull();
 			assertThat(model.emailStr()).isNotEmpty();
-			assertThat(model.filePath()).isNotNull();
 			assertThat(model.filePath()).isNotEmpty();
 
 			File file = new File(model.filePath());
