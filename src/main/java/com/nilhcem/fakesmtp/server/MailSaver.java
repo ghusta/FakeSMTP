@@ -4,7 +4,6 @@ import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.model.UIModel;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,7 +189,7 @@ public final class MailSaver {
 
 		// Copy String to file
 		try {
-			FileUtils.writeStringToFile(file, mailContent, Charset.defaultCharset());
+			Files.writeString(file.toPath(), mailContent, Charset.defaultCharset());
 		} catch (IOException e) {
 			// If we can't save file, we display the error in the SMTP logs
 			Logger smtpLogger = LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class);
