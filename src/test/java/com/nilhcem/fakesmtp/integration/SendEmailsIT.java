@@ -134,6 +134,23 @@ public final class SendEmailsIT {
 	}
 
 	@Test
+	void sendEmailToMultipleRecipients() throws EmailException {
+		Email email = new SimpleEmail();
+		email.setHostName(TestConfig.HOST);
+		email.setSmtpPort(TestConfig.PORT_INTEGRATION_TESTS);
+		email.setFrom("info@example.com");
+		email.addTo("test1@example.com");
+		email.addTo("test2@example.com");
+		email.addCc("test3@example.com");
+		email.addCc("test4@example.com");
+		email.addBcc("test5@example.com");
+		email.addBcc("test6@example.com");
+		email.setSubject("Hi everyone");
+		email.setMsg("Hello to everyone !");
+		email.send();
+	}
+
+	@Test
 	void sendEmailWithDots() throws EmailException {
 		Email email = new SimpleEmail();
 		email.setDebug(true);
