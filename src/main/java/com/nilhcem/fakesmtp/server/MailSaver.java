@@ -16,6 +16,7 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,8 @@ import java.util.concurrent.Flow;
 import java.util.concurrent.SubmissionPublisher;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 /**
  * Saves emails and notifies components, so they can refresh their views with new data.
@@ -171,7 +174,15 @@ public final class MailSaver {
 		if (ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			return null;
 		}
-		String filePath = "%s%s%s".formatted(UIModel.INSTANCE.getSavePath(), File.separator,
+		Path saveDirectory = Path.of(UIModel.INSTANCE.getSavePath());
+		if (!Files.exists(saveDirectory) || !Files.isDirectory(saveDirectory)) {
+			try {
+				Files.createDirectory(saveDirectory);
+			} catch (IOException e) {
+				log.error(e.toString());
+			}
+		}
+		String filePath = "%s%s%s".formatted(saveDirectory, File.separator,
 				dateTimeFormatForFilename.format(LocalDateTime.now()));
 
 		// Create file
@@ -189,11 +200,11 @@ public final class MailSaver {
 
 		// Copy String to file
 		try {
-			Files.writeString(file.toPath(), mailContent, Charset.defaultCharset());
+			Files.writeString(file.toPath(), mailContent, Charset.defaultCharset(), CREATE_NEW);
 		} catch (IOException e) {
 			// If we can't save file, we display the error in the SMTP logs
 			Logger smtpLogger = LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class);
-			smtpLogger.error("Error: Can't save email: {}", e.getMessage());
+			smtpLogger.error("Error: Can't save email: {}", e.toString());
 			return null;
 		}
 		return file.getAbsolutePath();
