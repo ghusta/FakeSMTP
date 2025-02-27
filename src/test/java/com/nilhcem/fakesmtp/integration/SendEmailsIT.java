@@ -10,6 +10,7 @@ import org.apache.commons.mail2.jakarta.HtmlEmail;
 import org.apache.commons.mail2.jakarta.MultiPartEmail;
 import org.apache.commons.mail2.jakarta.SimpleEmail;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,7 @@ public final class SendEmailsIT {
 		email.send();
 	}
 
-	@Test
+	@RepeatedTest(3)
 	void sendSimpleTestEmailWithUTF8() throws EmailException {
 		Email email = new SimpleEmail();
 		email.setHostName(TestConfig.HOST);
