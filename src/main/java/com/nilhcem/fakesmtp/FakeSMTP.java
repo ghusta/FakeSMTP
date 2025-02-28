@@ -1,24 +1,21 @@
 package com.nilhcem.fakesmtp;
 
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.Optional;
-
-import javax.swing.UIManager;
-
-import org.apache.commons.cli.ParseException;
-
 import com.apple.eawt.Application;
 import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
 import com.nilhcem.fakesmtp.gui.MainFrame;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
+import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.Optional;
 
 /**
  * Entry point of the application.
@@ -68,6 +65,7 @@ public final class FakeSMTP {
 		if (ArgsHandler.INSTANCE.shouldStartInBackground()) {
 			// option AutoStart is useless (implied)
 			try {
+				log.info("Running on Java Runtime {}", Runtime.version());
 				log.info("Starting server...");
 				SMTPServerHandler.INSTANCE.startServer(getPort(), getBindAddress());
 			} catch (NumberFormatException e) {
