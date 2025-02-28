@@ -41,13 +41,13 @@ public class MailServerTest {
 			EmailModel model = (EmailModel)arg;
 
 			assertThat(model.from()).isEqualTo(from);
-			assertThat(model.recipient()).isEqualTo(to);
+			assertThat(model.recipients().get(0)).isEqualTo(to);
 			assertThat(model.subject()).isEqualTo(subject);
 			assertThat(model.emailContent()).isNotEmpty();
 			assertThat(model.filePath())
 					.isNotNull()
 					.isNotEmptyFile();
-			
+
 			// Delete
 			UIModel.INSTANCE.getListMailsMap().put(0, String.valueOf(model.filePath()));
 			saver.deleteEmails();

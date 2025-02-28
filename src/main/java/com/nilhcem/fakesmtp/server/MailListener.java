@@ -1,7 +1,9 @@
 package com.nilhcem.fakesmtp.server;
 
-import java.io.InputStream;
 import org.subethamail.smtp.helper.SimpleMessageListener;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Listens to incoming emails and redirects them to the {@code MailSaver} object.
@@ -9,6 +11,7 @@ import org.subethamail.smtp.helper.SimpleMessageListener;
  * @author Nilhcem
  * @since 1.0
  */
+@Deprecated
 public final class MailListener implements SimpleMessageListener {
 	private final MailSaver saver;
 
@@ -41,6 +44,6 @@ public final class MailListener implements SimpleMessageListener {
      */
 	@Override
 	public void deliver(String from, String recipient, InputStream data) {
-		saver.saveEmailAndNotify(from, recipient, data);
+		saver.saveEmailAndNotify(from, List.of(recipient), data);
 	}
 }
