@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Observer;
@@ -42,21 +41,17 @@ public class MailServerTest {
 			EmailModel model = (EmailModel)arg;
 
 			assertThat(model.from()).isEqualTo(from);
-			assertThat(model.to()).isEqualTo(to);
+			assertThat(model.recipient()).isEqualTo(to);
 			assertThat(model.subject()).isEqualTo(subject);
-			assertThat(model.to()).isEqualTo(to);
-			assertThat(model.emailStr()).isNotNull();
-			assertThat(model.emailStr()).isNotEmpty();
-			assertThat(model.filePath()).isNotNull();
-			assertThat(model.filePath()).isNotEmpty();
-
-			File file = new File(model.filePath());
-			assertThat(file).exists();
-
+			assertThat(model.emailContent()).isNotEmpty();
+			assertThat(model.filePath())
+					.isNotNull()
+					.isNotEmptyFile();
+			
 			// Delete
-			UIModel.INSTANCE.getListMailsMap().put(0, model.filePath());
+			UIModel.INSTANCE.getListMailsMap().put(0, String.valueOf(model.filePath()));
 			saver.deleteEmails();
-			assertThat(file.exists()).isFalse();
+			assertThat(model.filePath()).doesNotExist();
 		};
 //		saver.addObserver(mockObserver);
 //		assertThat(saver.countObservers()).isNotZero();

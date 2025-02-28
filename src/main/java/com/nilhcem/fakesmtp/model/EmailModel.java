@@ -1,5 +1,6 @@
 package com.nilhcem.fakesmtp.model;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 /**
@@ -15,9 +16,9 @@ import java.time.LocalDateTime;
 public record EmailModel(
 		LocalDateTime receivedDate,
 		String from,
-		String to,
+		String recipient,
 		String subject,
-		String emailStr,
-		String filePath
+		String emailContent,
+		Path filePath
 ) {
 }

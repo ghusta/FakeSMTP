@@ -57,7 +57,7 @@ public final class LastMailPane implements Observer {
 	}
 
 	public void onNewMail(EmailModel email) {
-		lastMailArea.setText(email.emailStr());
+		lastMailArea.setText(email.emailContent());
 	}
 
 }

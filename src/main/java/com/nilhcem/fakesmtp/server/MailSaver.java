@@ -71,24 +71,24 @@ public final class MailSaver {
 	 * Saves incoming email in file system and notifies observers.
 	 *
 	 * @param from the user who send the email.
-	 * @param to the recipient of the email.
+	 * @param recipient the recipient of the email.
 	 * @param data an InputStream object containing the email.
 	 * @see com.nilhcem.fakesmtp.gui.MainPanel#addObservers to see which observers will be notified
 	 */
-	public void saveEmailAndNotify(String from, String to, InputStream data) {
+	public void saveEmailAndNotify(String from, String recipient, InputStream data) {
 		List<String> relayDomains = UIModel.INSTANCE.getRelayDomains();
 
 		if (relayDomains != null) {
 			boolean matches = false;
 			for (String domain : relayDomains) {
-				if (to.endsWith(domain)) {
+				if (recipient.endsWith(domain)) {
 					matches = true;
 					break;
 				}
 			}
 
 			if (!matches) {
-				log.debug("Destination {} doesn't match relay domains", to);
+				log.debug("Destination {} doesn't match relay domains", recipient);
 				return;
 			}
 		}
@@ -99,7 +99,39 @@ public final class MailSaver {
 
 		synchronized (getLock()) {
 			String filePath = saveEmailToFile(mailContent);
-			EmailModel model = new EmailModel(LocalDateTime.now(), from, to, subject, mailContent, filePath);
+			EmailModel model = new EmailModel(LocalDateTime.now(), from, recipient, subject, mailContent,
+					(filePath != null ? Path.of(filePath) : null));
+
+			emailPublisher.submit(model);
+		}
+	}
+
+	public void saveEmailAndNotify(String from, String recipient, String messageContent) {
+		List<String> relayDomains = UIModel.INSTANCE.getRelayDomains();
+
+		if (relayDomains != null) {
+			boolean matches = false;
+			for (String domain : relayDomains) {
+				if (recipient.endsWith(domain)) {
+					matches = true;
+					break;
+				}
+			}
+
+			if (!matches) {
+				log.debug("Destination {} doesn't match relay domains", recipient);
+				return;
+			}
+		}
+
+		// We move everything that we can move outside the synchronized block to limit the impact
+		String mailContent = messageContent;
+		String subject = getSubjectFromStr(mailContent);
+
+		synchronized (getLock()) {
+			String filePath = saveEmailToFile(mailContent);
+			EmailModel model = new EmailModel(LocalDateTime.now(), from, recipient, subject, mailContent,
+					(filePath != null ? Path.of(filePath) : null));
 
 			emailPublisher.submit(model);
 		}
