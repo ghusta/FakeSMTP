@@ -1,3 +1,13 @@
+# v2.6.3
+
+- Logs : print Java version at application startup
+- Minor dependency updates
+    - logback
+    - subethasmtp
+- Minor refactoring
+    - Remove commons-io
+    - Rename fields in EmailModel
+
 # v2.6.2
 
 - Logs : console appender should not log all the messages (for all loggers in the system) (#28)
