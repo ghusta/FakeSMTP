@@ -152,6 +152,21 @@ public final class SendEmailsIT {
 	}
 
 	@Test
+	void sendEmailToMultipleRecipients_onlyBcc() throws EmailException {
+		Email email = new SimpleEmail();
+		email.setHostName(TestConfig.HOST);
+		email.setSmtpPort(TestConfig.PORT_INTEGRATION_TESTS);
+		email.setFrom("info@example.com");
+		email.addBcc("test5@example.com");
+		email.addBcc("test6@example.com");
+		email.addBcc("test7@example.com");
+		email.addBcc("test8@example.com");
+		email.setSubject("Hi everyone (BCC)");
+		email.setMsg("Hello to everyone (hidden recipients) !");
+		email.send();
+	}
+
+	@Test
 	void sendEmailWithDots() throws EmailException {
 		Email email = new SimpleEmail();
 		email.setDebug(true);
