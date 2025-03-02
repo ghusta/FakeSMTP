@@ -209,7 +209,9 @@ public final class MailsListPane implements Observer {
 			subject = email.subject();
 		}
 
-		model.addRow(new Object[] {dateTimeFormatter.format(email.receivedDate()), email.from(), email.recipient(), subject});
+		String recipients = String.join(";", email.recipients());
+		model.addRow(new Object[]{dateTimeFormatter.format(email.receivedDate()),
+				email.from(), recipients, subject});
 		UIModel.INSTANCE.getListMailsMap().put(nbElements++, String.valueOf(email.filePath()));
 	}
 

@@ -28,6 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
+import static java.nio.file.StandardOpenOption.WRITE;
 
 /**
  * Saves emails and notifies components, so they can refresh their views with new data.
@@ -71,25 +72,21 @@ public final class MailSaver {
 	 * Saves incoming email in file system and notifies observers.
 	 *
 	 * @param from the user who send the email.
-	 * @param recipient the recipient of the email.
+	 * @param recipients the recipients of the email.
 	 * @param data an InputStream object containing the email.
 	 * @see com.nilhcem.fakesmtp.gui.MainPanel#addObservers to see which observers will be notified
 	 */
-	public void saveEmailAndNotify(String from, String recipient, InputStream data) {
+	public void saveEmailAndNotify(String from, List<String> recipients, InputStream data) {
 		List<String> relayDomains = UIModel.INSTANCE.getRelayDomains();
 
 		if (relayDomains != null) {
-			boolean matches = false;
-			for (String domain : relayDomains) {
-				if (recipient.endsWith(domain)) {
-					matches = true;
-					break;
+			for (String recipient : recipients) {
+				boolean matches = relayDomains.stream()
+						.anyMatch(recipient::endsWith);
+				if (!matches) {
+					log.debug("Recipient '{}' doesn't match relay domains", recipient);
+					return;
 				}
-			}
-
-			if (!matches) {
-				log.debug("Destination {} doesn't match relay domains", recipient);
-				return;
 			}
 		}
 
@@ -99,28 +96,26 @@ public final class MailSaver {
 
 		synchronized (getLock()) {
 			String filePath = saveEmailToFile(mailContent);
-			EmailModel model = new EmailModel(LocalDateTime.now(), from, recipient, subject, mailContent,
+			EmailModel model = new EmailModel(LocalDateTime.now(),
+					from, recipients,
+					subject, mailContent,
 					(filePath != null ? Path.of(filePath) : null));
 
 			emailPublisher.submit(model);
 		}
 	}
 
-	public void saveEmailAndNotify(String from, String recipient, String messageContent) {
+	public void saveEmailAndNotify(String from, List<String> recipients, String messageContent) {
 		List<String> relayDomains = UIModel.INSTANCE.getRelayDomains();
 
 		if (relayDomains != null) {
-			boolean matches = false;
-			for (String domain : relayDomains) {
-				if (recipient.endsWith(domain)) {
-					matches = true;
-					break;
+			for (String recipient : recipients) {
+				boolean matches = relayDomains.stream()
+						.anyMatch(recipient::endsWith);
+				if (!matches) {
+					log.debug("Recipient '{}' doesn't match relay domains", recipient);
+					return;
 				}
-			}
-
-			if (!matches) {
-				log.debug("Destination {} doesn't match relay domains", recipient);
-				return;
 			}
 		}
 
@@ -130,7 +125,9 @@ public final class MailSaver {
 
 		synchronized (getLock()) {
 			String filePath = saveEmailToFile(mailContent);
-			EmailModel model = new EmailModel(LocalDateTime.now(), from, recipient, subject, mailContent,
+			EmailModel model = new EmailModel(LocalDateTime.now(),
+					from, recipients,
+					subject, mailContent,
 					(filePath != null ? Path.of(filePath) : null));
 
 			emailPublisher.submit(model);
@@ -232,7 +229,7 @@ public final class MailSaver {
 
 		// Copy String to file
 		try {
-			Files.writeString(file.toPath(), mailContent, Charset.defaultCharset(), CREATE_NEW);
+			Files.writeString(file.toPath(), mailContent, Charset.defaultCharset(), CREATE_NEW, WRITE);
 		} catch (IOException e) {
 			// If we can't save file, we display the error in the SMTP logs
 			Logger smtpLogger = LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class);

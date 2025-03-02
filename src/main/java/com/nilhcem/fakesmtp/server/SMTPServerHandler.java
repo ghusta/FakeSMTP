@@ -5,6 +5,7 @@ import com.nilhcem.fakesmtp.core.exception.OutOfRangePortException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.subethamail.smtp.MessageHandlerFactory;
 import org.subethamail.smtp.server.SMTPServer;
 
 import java.net.InetAddress;
@@ -43,9 +44,11 @@ public enum SMTPServerHandler {
 		log.debug("Starting server on port {}", port);
 		try {
 			InetAddress anyLocalAddress = InetAddress.getByName("0.0.0.0");
+			MessageHandlerFactory mhf = ctx -> new MultipleRecipientsMessageHandler(mailSaver);
 			smtpServer = new SMTPServer.Builder()
 					.insertReceivedHeaders(false)
-					.simpleMessageListener(myListener)
+//					.simpleMessageListener(myListener)
+					.messageHandlerFactory(mhf)
 					.authenticationHandlerFactory(new SMTPAuthHandlerFactory())
 					.bindAddress(bindAddress == null ? anyLocalAddress : bindAddress)
 					.port(port)
