@@ -2,6 +2,7 @@ package com.nilhcem.fakesmtp.model;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * A model representing a received email.
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 public record EmailModel(
 		LocalDateTime receivedDate,
 		String from,
-		String recipient,
+		List<String> recipients,
 		String subject,
 		String emailContent,
 		Path filePath
