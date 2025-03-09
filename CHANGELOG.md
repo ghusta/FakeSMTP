@@ -1,3 +1,7 @@
+# v2.7.0
+
+- Feature: Message with multiple recipients should be handled once (#35)
+
 # v2.6.3
 
 - Logs : print Java version at application startup
