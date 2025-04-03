@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.nilhcem.fakesmtp</groupId>
@@ -10,7 +10,6 @@
 	<name>Fake SMTP</name>
 	<description>Dummy SMTP server for testing</description>
 	<url>https://github.com/Nilhcem/FakeSMTP</url>
-
 	<!-- License -->
 	<licenses>
 		<license>
@@ -31,7 +30,6 @@
 			<timezone>Europe/Paris</timezone>
 		</developer>
 	</developers>
-
 	<contributors>
 		<contributor>
 			<name>jasonpenny</name>
@@ -89,6 +87,18 @@
 		<java.version>17</java.version>
 		<docker.image>fakesmtp</docker.image>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-bom</artifactId>
+				<version>2.0.17</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<!-- MIG Layout: layout for Swing -->
 		<dependency>
@@ -115,7 +125,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>2.0.17</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
