@@ -91,7 +91,7 @@
 		<javafx.version>23.0.2</javafx.version>
 		<ikonli.version>12.4.0</ikonli.version>
 		<junit.version>5.12.2</junit.version>
-		<lombok.version>1.18.32</lombok.version>
+		<lombok.version>1.18.38</lombok.version>
 
 		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
 
