@@ -4,6 +4,8 @@ import com.nilhcem.fakesmtp.core.ArgsHandler;
 import com.nilhcem.fakesmtp.core.Configuration;
 import com.nilhcem.fakesmtp.model.EmailModel;
 import com.nilhcem.fakesmtp.model.UIModel;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
  * @author Nilhcem
  * @since 1.0
  */
+@NullMarked
 public final class MailSaver {
 
 	private static final Logger log = LoggerFactory.getLogger(MailSaver.class);
@@ -199,7 +202,7 @@ public final class MailSaver {
 	 * @param mailContent the content of the email to be saved.
 	 * @return the path of the created file.
 	 */
-	private String saveEmailToFile(String mailContent) {
+	private @Nullable String saveEmailToFile(String mailContent) {
 		if (ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			return null;
 		}

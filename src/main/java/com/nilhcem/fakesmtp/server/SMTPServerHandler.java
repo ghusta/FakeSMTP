@@ -3,6 +3,8 @@ package com.nilhcem.fakesmtp.server;
 import com.nilhcem.fakesmtp.core.exception.BindPortException;
 import com.nilhcem.fakesmtp.core.exception.OutOfRangePortException;
 import lombok.Getter;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.subethamail.smtp.MessageHandlerFactory;
@@ -17,6 +19,7 @@ import java.net.UnknownHostException;
  * @author Nilhcem
  * @since 1.0
  */
+@NullMarked
 public enum SMTPServerHandler {
 	INSTANCE;
 
@@ -40,7 +43,7 @@ public enum SMTPServerHandler {
 	 * @throws OutOfRangePortException when port is out of range.
 	 * @throws IllegalArgumentException when port is out of range.
 	 */
-	public void startServer(int port, InetAddress bindAddress) throws BindPortException, OutOfRangePortException, UnknownHostException {
+	public void startServer(int port, @Nullable InetAddress bindAddress) throws BindPortException, OutOfRangePortException, UnknownHostException {
 		log.debug("Starting server on port {}", port);
 		try {
 			InetAddress anyLocalAddress = InetAddress.getByName("0.0.0.0");

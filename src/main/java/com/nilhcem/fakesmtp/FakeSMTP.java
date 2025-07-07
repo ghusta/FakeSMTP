@@ -7,6 +7,8 @@ import com.nilhcem.fakesmtp.core.exception.UncaughtExceptionHandler;
 import com.nilhcem.fakesmtp.gui.MainFrame;
 import com.nilhcem.fakesmtp.server.SMTPServerHandler;
 import org.apache.commons.cli.ParseException;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import java.util.Optional;
  * @author Nilhcem
  * @since 1.0
  */
+@NullMarked
 public final class FakeSMTP {
 
 	private static final Logger log = LoggerFactory.getLogger(FakeSMTP.class);
@@ -121,7 +124,7 @@ public final class FakeSMTP {
 	 * @return an InetAddress representing the specified bind address, or null, if not specified
 	 * @throws UnknownHostException if the bind address is invalid
 	 */
-	private static InetAddress getBindAddress() throws UnknownHostException {
+	private static @Nullable InetAddress getBindAddress() throws UnknownHostException {
 		String bindAddressStr = ArgsHandler.INSTANCE.getBindAddress();
 		if (bindAddressStr == null || bindAddressStr.isEmpty()) {
 			return null;
