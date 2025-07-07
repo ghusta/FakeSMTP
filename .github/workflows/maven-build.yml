@@ -32,6 +32,10 @@ jobs:
 
   owasp-dependency-check:
     runs-on: ubuntu-latest
+
+    env:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
