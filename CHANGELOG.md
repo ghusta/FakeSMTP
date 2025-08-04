@@ -1,3 +1,9 @@
+# v2.7.1
+
+- Upgrade subethasmtp to 7.1.6
+- Upgrade commons-cli to 1.10.0
+- Add JSpecify (#38)
+
 # v2.7.0
 
 - Feature: Message with multiple recipients should be handled once (#35)
