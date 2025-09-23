@@ -32,59 +32,59 @@ public enum ArgsHandler {
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(ArgsHandler.class);
 
 	private final Option optionEmailsDir = Option.builder("o")
-			.longOpt("output-dir")
-			.hasArg(true)
-			.required(false)
-			.desc("Emails output directory")
-			.build();
+            .longOpt("output-dir")
+            .hasArg(true)
+            .required(false)
+            .desc("Emails output directory")
+            .get();
 
 	private final Option optionAutoStart = Option.builder("s")
-			.longOpt("start-server")
-			.hasArg(false)
-			.desc("Automatically starts the SMTP server at launch")
-			.build();
+            .longOpt("start-server")
+            .hasArg(false)
+            .desc("Automatically starts the SMTP server at launch")
+            .get();
 
 	private final Option optionPort = Option.builder("p")
-			.longOpt("port")
-			.hasArg(true)
-			.type(Number.class)
-			.desc("SMTP port number")
-			.build();
+            .longOpt("port")
+            .hasArg(true)
+            .type(Number.class)
+            .desc("SMTP port number")
+            .get();
 
 	private final Option optionBackgroundStart = Option.builder("b")
-			.longOpt("background")
-			.hasArg(false)
-			.desc("If specified, does not start the GUI. It implies auto start server.")
-			.build();
+            .longOpt("background")
+            .hasArg(false)
+            .desc("If specified, does not start the GUI. It implies auto start server.")
+            .get();
 
 	private final Option optionRelayDomains = Option.builder("r")
-			.longOpt("relay-domains")
-			.hasArgs()
-			.valueSeparator(',')
-			.required(false)
-			.desc("Comma separated email domain(s) for which relay is accepted. If not specified, relays to any domain. " +
-					"If specified, relays only emails matching these domain(s), dropping (not saving) others")
-			.build();
+            .longOpt("relay-domains")
+            .hasArgs()
+            .valueSeparator(',')
+            .required(false)
+            .desc("Comma separated email domain(s) for which relay is accepted. If not specified, relays to any domain. " +
+                    "If specified, relays only emails matching these domain(s), dropping (not saving) others")
+            .get();
 
 	private final Option optionMemoryMode = Option.builder("m")
-			.longOpt("memory-mode")
-			.hasArg(false)
-			.desc("Disable the persistence in order to avoid the overhead that it adds")
-			.build();
+            .longOpt("memory-mode")
+            .hasArg(false)
+            .desc("Disable the persistence in order to avoid the overhead that it adds")
+            .get();
 
 	private final Option optionBindAddress = Option.builder("a")
-			.longOpt("bind-address")
-			.hasArg(true)
-			.required(false)
-			.desc("IP address or hostname to bind to. Binds to all local IP addresses if not specified. " +
-					"Only works together with the -b (--background) argument.")
-			.build();
+            .longOpt("bind-address")
+            .hasArg(true)
+            .required(false)
+            .desc("IP address or hostname to bind to. Binds to all local IP addresses if not specified. " +
+                    "Only works together with the -b (--background) argument.")
+            .get();
 
 	private final Option optionEmlViewer = Option.builder("e")
-			.longOpt("eml-viewer")
-			.hasArg(true)
-			.desc("Executable of program used for viewing emails")
-			.build();
+            .longOpt("eml-viewer")
+            .hasArg(true)
+            .desc("Executable of program used for viewing emails")
+            .get();
 
 	private final Options options;
 
@@ -144,7 +144,8 @@ public enum ArgsHandler {
 				.addOption(optionRelayDomains)
 				.addOption(optionMemoryMode)
 				.addOption(optionEmlViewer)
-				.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
+				.addOption(Option.builder("h").longOpt("help").desc("Print this message")
+                        .get());
 	}
 
 	/**
@@ -162,7 +163,7 @@ public enum ArgsHandler {
 			UIModel.INSTANCE.setSavePath(outputDirectory);
 		}
 
-		Number parsedPort = (Number) cmd.getParsedOptionValue(optionPort);
+		Number parsedPort = cmd.getParsedOptionValue(optionPort);
 		if (parsedPort == null) {
 			port = Optional.empty();
 		} else {
