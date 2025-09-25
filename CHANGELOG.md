@@ -1,3 +1,7 @@
+# v2.8.0
+
+- Upgrade subethasmtp to 7.2.0
+
 # v2.7.3
 
 - Dependencies updates
