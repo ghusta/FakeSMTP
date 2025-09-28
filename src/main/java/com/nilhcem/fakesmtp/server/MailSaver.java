@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -214,32 +213,31 @@ public final class MailSaver {
 				log.error(e.toString());
 			}
 		}
-		String filePath = "%s%s%s".formatted(saveDirectory, File.separator,
-				dateTimeFormatForFilename.format(LocalDateTime.now()));
+        String fileTimestamp = dateTimeFormatForFilename.format(LocalDateTime.now());
 
 		// Create file
 		int i = 0;
-		File file = null;
-		while (file == null || file.exists()) {
-			String iStr;
+        Path filePath = null;
+        while (filePath == null || Files.exists(filePath)) {
+            String counter;
 			if (i++ > 0) {
-				iStr = "_" + i;
+                counter = "_" + i;
 			} else {
-				iStr = "";
+                counter = "";
 			}
-			file = new File(filePath + iStr + Configuration.getInstance().get("emails.suffix"));
+            filePath = saveDirectory.resolve(fileTimestamp + counter + Configuration.getInstance().get("emails.suffix"));
 		}
 
 		// Copy String to file
 		try {
-			Files.writeString(file.toPath(), mailContent, Charset.defaultCharset(), CREATE_NEW, WRITE);
+            Files.writeString(filePath, mailContent, Charset.defaultCharset(), CREATE_NEW, WRITE);
 		} catch (IOException e) {
 			// If we can't save file, we display the error in the SMTP logs
 			Logger smtpLogger = LoggerFactory.getLogger(org.subethamail.smtp.server.Session.class);
 			smtpLogger.error("Error: Can't save email: {}", e.toString());
 			return null;
 		}
-		return file.getAbsolutePath();
+        return filePath.toAbsolutePath().toString();
 	}
 
 	/**
