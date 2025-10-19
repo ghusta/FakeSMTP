@@ -18,7 +18,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -146,7 +145,7 @@ public final class MailSaver {
 		}
 		for (String value : mails.values()) {
 			try {
-				if (!Files.deleteIfExists(Paths.get(value))) {
+				if (!Files.deleteIfExists(Path.of(value))) {
 					log.error("Impossible to delete file {}", value);
 				}
 			} catch (IOException | SecurityException e) {
