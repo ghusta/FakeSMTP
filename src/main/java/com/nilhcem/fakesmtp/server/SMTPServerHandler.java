@@ -29,6 +29,7 @@ public enum SMTPServerHandler {
 	private final MailSaver mailSaver = new MailSaver();
 	private final MailListener myListener = new MailListener(mailSaver);
 	@Getter
+    @Nullable
 	private SMTPServer smtpServer;
 
 	SMTPServerHandler() {
@@ -58,10 +59,12 @@ public enum SMTPServerHandler {
 					.build();
 			smtpServer.start();
 		} catch (RuntimeException exception) {
-			if (exception.getMessage().contains("BindException")) { // Can't open port
+            if (exception.getMessage() != null
+                    && exception.getMessage().contains("BindException")) { // Can't open port
 				log.error("{}. Port {}", exception.getMessage(), port);
 				throw new BindPortException(exception, port);
-			} else if (exception.getMessage().contains("out of range")) { // Port out of range
+            } else if (exception.getMessage() != null
+                    && exception.getMessage().contains("out of range")) { // Port out of range
 				log.error("Port {} out of range.", port);
 				throw new OutOfRangePortException(exception, port);
 			} else { // Unknown error
