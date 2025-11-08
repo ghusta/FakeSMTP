@@ -78,32 +78,8 @@ public final class MailSaver {
 	 * @see com.nilhcem.fakesmtp.gui.MainPanel#addObservers to see which observers will be notified
 	 */
 	public void saveEmailAndNotify(String from, List<String> recipients, InputStream data) {
-		List<String> relayDomains = UIModel.INSTANCE.getRelayDomains();
-
-		if (relayDomains != null) {
-			for (String recipient : recipients) {
-				boolean matches = relayDomains.stream()
-						.anyMatch(recipient::endsWith);
-				if (!matches) {
-					log.debug("Recipient '{}' doesn't match relay domains", recipient);
-					return;
-				}
-			}
-		}
-
-		// We move everything that we can move outside the synchronized block to limit the impact
 		String mailContent = convertStreamToString(data);
-		String subject = getSubjectFromStr(mailContent);
-
-		synchronized (getLock()) {
-			String filePath = saveEmailToFile(mailContent);
-			EmailModel model = new EmailModel(LocalDateTime.now(),
-					from, recipients,
-					subject, mailContent,
-					(filePath != null ? Path.of(filePath) : null));
-
-			emailPublisher.submit(model);
-		}
+        saveEmailAndNotify(from , recipients , mailContent);
 	}
 
 	public void saveEmailAndNotify(String from, List<String> recipients, String messageContent) {
