@@ -1,5 +1,6 @@
 package com.nilhcem.fakesmtp.server;
 
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.subethamail.smtp.MessageHandler;
@@ -12,6 +13,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MultipleRecipientsMessageHandler implements MessageHandler {
 
@@ -21,25 +23,29 @@ public class MultipleRecipientsMessageHandler implements MessageHandler {
 
     private final MailSaver saver;
 
-    private String from;
+    private String from = "";
     private final List<String> recipients = new ArrayList<>();
-    private String content;
+    private String content = "";
 
     public MultipleRecipientsMessageHandler(MailSaver saver) {
+        Objects.requireNonNull(saver);
         this.saver = saver;
     }
 
     @Override
     public void from(String from) throws RejectException {
+        Objects.requireNonNull(from);
         this.from = from;
     }
 
     @Override
     public void recipient(String recipient) {
+        Objects.requireNonNull(recipient);
         this.recipients.add(recipient);
     }
 
     @Override
+    @Nullable
     public String data(InputStream data) throws RejectException, IOException {
         content = convertStreamToString(data);
         return null;
