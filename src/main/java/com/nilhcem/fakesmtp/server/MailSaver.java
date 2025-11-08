@@ -82,7 +82,7 @@ public final class MailSaver {
         saveEmailAndNotify(from , recipients , mailContent);
 	}
 
-	public void saveEmailAndNotify(String from, List<String> recipients, String messageContent) {
+	public void saveEmailAndNotify(String from, List<String> recipients, String mailContent) {
 		List<String> relayDomains = UIModel.INSTANCE.getRelayDomains();
 
 		if (relayDomains != null) {
@@ -97,8 +97,7 @@ public final class MailSaver {
 		}
 
 		// We move everything that we can move outside the synchronized block to limit the impact
-		String mailContent = messageContent;
-		String subject = getSubjectFromStr(mailContent);
+        String subject = getSubjectFromStr(mailContent);
 
 		synchronized (getLock()) {
 			String filePath = saveEmailToFile(mailContent);
