@@ -12,6 +12,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -89,27 +90,30 @@ public enum ArgsHandler {
 	private final Options options;
 
 	/**
-	 * The port, as specified by the user, or a {@code null} string if unspecified.
+     * The port, as specified by the user, or {@code null} if unspecified.
 	 */
 	@Getter
-	private Optional<Integer> port;
+    private Optional<Integer> port = Optional.empty();
 
 	/**
 	 * The bind address, as specified by the user, or a {@code null} string if unspecified.
 	 */
 	@Getter
+    @Nullable
 	private String bindAddress;
 
 	/**
 	 * The output directory, as specified by the user, or a {@code null} string if unspecified.
 	 */
 	@Getter
+    @Nullable
 	private String outputDirectory;
 
 	/**
 	 * The name of executable used for viewing eml files, as specified by the user, or a {@code null} string if unspecified.
 	 */
 	@Getter
+    @Nullable
 	private String emlViewer;
 
 	@Getter
