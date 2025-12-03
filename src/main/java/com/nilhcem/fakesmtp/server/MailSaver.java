@@ -100,11 +100,11 @@ public final class MailSaver {
         String subject = getSubjectFromStr(mailContent);
 
 		synchronized (getLock()) {
-			String filePath = saveEmailToFile(mailContent);
+            Path filePath = saveEmailToFile(mailContent);
 			EmailModel model = new EmailModel(LocalDateTime.now(),
 					from, recipients,
 					subject, mailContent,
-					(filePath != null ? Path.of(filePath) : null));
+                    filePath);
 
 			emailPublisher.submit(model);
 		}
@@ -175,7 +175,7 @@ public final class MailSaver {
 	 * @param mailContent the content of the email to be saved.
 	 * @return the path of the created file.
 	 */
-	private @Nullable String saveEmailToFile(String mailContent) {
+    private @Nullable Path saveEmailToFile(String mailContent) {
 		if (ArgsHandler.INSTANCE.isMemoryModeEnabled()) {
 			return null;
 		}
@@ -211,7 +211,7 @@ public final class MailSaver {
 			smtpLogger.error("Error: Can't save email: {}", e.toString());
 			return null;
 		}
-        return filePath.toAbsolutePath().toString();
+        return filePath.toAbsolutePath();
 	}
 
 	/**
