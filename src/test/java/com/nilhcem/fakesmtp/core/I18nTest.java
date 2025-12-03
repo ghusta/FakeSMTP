@@ -8,17 +8,17 @@ import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class I18nTest {
+class I18nTest {
 	private static Locale defaultLocale;
 
 	@BeforeAll
-	public static void initLocale() {
+	static void initLocale() {
 		defaultLocale = Locale.getDefault();
 		Locale.setDefault(Locale.TAIWAN);
 	}
 
 	@AfterAll
-	public static void resetLocale() {
+	static void resetLocale() {
 		Locale.setDefault(defaultLocale);
 	}
 

@@ -14,11 +14,11 @@ import java.util.Observer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MailServerTest {
+class MailServerTest {
 	private static MailSaver saver;
 
 	@BeforeAll
-	public static void createMailSaver() {
+	static void createMailSaver() {
 		saver = new MailSaver();
 	}
 

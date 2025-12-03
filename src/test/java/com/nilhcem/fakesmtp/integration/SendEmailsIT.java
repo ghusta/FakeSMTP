@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
-public final class SendEmailsIT {
+final class SendEmailsIT {
 
 	private static final Logger logger = LoggerFactory.getLogger(SendEmailsIT.class);
 
@@ -27,7 +27,7 @@ public final class SendEmailsIT {
 	private static final String EMOJI_ALIEN = "👽";
 
 	@BeforeAll
-	public static void displayInfo() {
+	static void displayInfo() {
 		logger.info("Launching integration tests...");
 		logger.info("You need to run the project and launch the SMTP server on port {} before testing.", TestConfig.PORT_INTEGRATION_TESTS);
 	}
