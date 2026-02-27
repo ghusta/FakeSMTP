@@ -46,7 +46,7 @@ jobs:
           cache: 'maven'
       - name: OWASP Dependency Check
         run: ./mvnw -ntp org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=7.0 -DnvdApiKeyEnvironmentVariable=NVD_API_KEY
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: dependency-check-report
           path: target/dependency-check-report.html
