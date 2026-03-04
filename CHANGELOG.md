@@ -1,3 +1,7 @@
+# v2.8.2
+
+- Upgrade subethasmtp to 7.2.2
+
 # v2.8.0
 
 - Upgrade subethasmtp to 7.2.0
