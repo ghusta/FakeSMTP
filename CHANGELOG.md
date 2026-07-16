@@ -1,3 +1,8 @@
+# v2.8.3
+
+- Upgrade Logback 1.5.38
+- Upgrade Lombok 1.18.46
+
 # v2.8.2
 
 - Upgrade subethasmtp to 7.2.2
