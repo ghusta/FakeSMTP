@@ -87,7 +87,7 @@
 		<java.version>17</java.version>
 		<docker.image>fakesmtp</docker.image>
 
-        <lombok.version>1.18.46</lombok.version>
+        <lombok.version>1.18.48</lombok.version>
     </properties>
 
 	<dependencyManagement>
