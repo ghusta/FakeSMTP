@@ -1,3 +1,8 @@
+# v2.8.4
+
+- Upgrade Logback 1.6.3
+- Upgrade Lombok 1.18.48
+
 # v2.8.3
 
 - Upgrade Logback 1.5.38
