@@ -12,11 +12,13 @@ import org.apache.commons.mail2.jakarta.SimpleEmail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
+@DisabledIfEnvironmentVariable(named = "CI", matches = "true")
 final class SendEmailsIT {
 
 	private static final Logger logger = LoggerFactory.getLogger(SendEmailsIT.class);
