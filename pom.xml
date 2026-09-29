@@ -4,7 +4,7 @@
 
 	<groupId>com.nilhcem.fakesmtp</groupId>
 	<artifactId>fakesmtp</artifactId>
-	<version>3.2.0-SNAPSHOT</version>
+	<version>3.3.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Fake SMTP</name>
@@ -88,7 +88,7 @@
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 		<java.version>25</java.version>
 
-		<javafx.version>25.0.4</javafx.version>
+		<javafx.version>27</javafx.version>
 		<ikonli.version>12.4.0</ikonli.version>
 		<junit.version>5.12.2</junit.version>
 		<lombok.version>1.18.38</lombok.version>
