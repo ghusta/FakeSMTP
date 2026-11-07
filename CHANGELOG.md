@@ -1,3 +1,7 @@
+# v2.8.5
+
+- Upgrade Logback 1.6.6
+
 # v2.8.4
 
 - Upgrade Logback 1.6.3
